@@ -532,6 +532,20 @@
             font-weight: 700;
         }
 
+        /* STRUCTURE DUAL COLUMN UNTUK LANDSCAPE */
+        .quiz-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .quiz-left-col, .quiz-right-col {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
         /* PASSAGE / CERITA */
         .passage-box {
             background: linear-gradient(135deg, #fcfaff, #fdf2f8);
@@ -755,6 +769,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
+            z-index: 10;
         }
 
         .whiteboard-title {
@@ -803,8 +818,8 @@
             border-color: var(--purple-dark);
         }
 
-        .size-btn {
-            padding: 3px 8px;
+        .size-btn, .mode-btn, .page-btn {
+            padding: 4px 10px;
             border-radius: 12px;
             border: 1px solid var(--card-border);
             background: #fff;
@@ -812,10 +827,12 @@
             font-weight: 800;
             cursor: pointer;
             color: var(--text-main);
+            transition: all 0.2s;
         }
-        .size-btn.active {
+        .size-btn.active, .mode-btn.active, .page-btn.active {
             background: var(--purple-dark);
             color: #fff;
+            border-color: var(--purple-dark);
         }
 
         .wb-btn-clear {
@@ -840,18 +857,19 @@
             cursor: pointer;
         }
 
+        /* CONTAINER BODY BERKAPASITAS SCROLL DENGAN 2 JARI */
         .whiteboard-body {
             flex: 1;
             position: relative;
             background: #fdfdfd;
             background-image: radial-gradient(#e0d7f5 1.5px, transparent 1.5px);
             background-size: 24px 24px;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         #wb-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            display: block;
             touch-action: none;
             cursor: crosshair;
         }
@@ -878,10 +896,11 @@
             touch-action: none;
         }
 
+        /* POSISI TOMBOL CORET SOAL DINAMIS UNTUK TABLET */
         .draw-toggle-btn {
             position: fixed;
             top: 14px;
-            right: 16px;
+            right: 24px;
             z-index: 100;
             padding: 8px 14px;
             background: linear-gradient(135deg, #ff7043, #f4511e);
@@ -904,7 +923,7 @@
         .draw-toolbar {
             position: fixed;
             top: 55px;
-            right: 16px;
+            right: 24px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -1109,6 +1128,53 @@
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== RESPONSIVE LANDSCAPE MODE & TABLET ADJUSTMENTS ===== */
+        @media (orientation: landscape) and (min-width: 600px) {
+            .container {
+                max-width: 1000px;
+                padding-bottom: 20px;
+            }
+
+            .quiz-content-wrapper {
+                flex-direction: row;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .quiz-left-col {
+                width: 50%;
+                max-height: 70vh;
+                overflow-y: auto;
+                padding-right: 6px;
+            }
+
+            .quiz-right-col {
+                width: 50%;
+            }
+
+            .passage-box {
+                max-height: 280px;
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+
+            .draw-toggle-btn {
+                right: calc((100vw - 1000px) / 2 + 24px);
+            }
+
+            .draw-toolbar {
+                right: calc((100vw - 1000px) / 2 + 24px);
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 1040px) {
+            .draw-toggle-btn, .draw-toolbar {
+                right: 5vw;
+            }
+        }
     </style>
 </head>
 
@@ -1142,13 +1208,32 @@
         </div>
     </div>
 
-    <!-- ===== PAPAN TULIS MODAL OVERLAY (BESAR) ===== -->
+    <!-- ===== PAPAN TULIS MODAL OVERLAY ===== -->
     <div id="whiteboard-modal">
         <div class="whiteboard-card">
             <div class="whiteboard-header">
-                <div class="whiteboard-title">✏️ Papan Coretan / Oret-oretan Layar Penuh</div>
+                <div class="whiteboard-title">✏️ Papan Coretan &amp; Bangun Datar</div>
                 <div class="whiteboard-tools">
+                    <!-- PILIHAN HALAMAN -->
                     <div class="tool-group">
+                        <span class="tool-label">Halaman:</span>
+                        <button class="page-btn active wb-page-btn" data-page="0">Hal 1</button>
+                        <button class="page-btn wb-page-btn" data-page="1">Hal 2</button>
+                        <button class="page-btn wb-page-btn" data-page="2">Hal 3</button>
+                    </div>
+
+                    <!-- ALAT / MODE PENULISAN -->
+                    <div class="tool-group">
+                        <span class="tool-label">Alat:</span>
+                        <button class="mode-btn active wb-mode-btn" data-mode="pen">✏️ Pen</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="eraser">🧹 Hapus</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="rect">🔲 Kotak</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="circle">⚪ Lingkaran</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="triangle">🔺 Segitiga</button>
+                    </div>
+
+                    <!-- WARNA -->
+                    <div class="tool-group" id="wb-color-group">
                         <span class="tool-label">Warna:</span>
                         <div class="color-dot active modal-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
                         <div class="color-dot modal-color" style="background:#e53935;" data-color="#e53935"></div>
@@ -1156,13 +1241,16 @@
                         <div class="color-dot modal-color" style="background:#43a047;" data-color="#43a047"></div>
                         <div class="color-dot modal-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
                     </div>
+
+                    <!-- UKURAN -->
                     <div class="tool-group">
                         <span class="tool-label">Ukuran:</span>
                         <button class="size-btn active modal-size" data-size="3">Halus</button>
                         <button class="size-btn modal-size" data-size="6">Sedang</button>
-                        <button class="size-btn modal-size" data-size="12">Tebal</button>
+                        <button class="size-btn modal-size" data-size="14">Tebal</button>
                     </div>
-                    <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Hapus</button>
+
+                    <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Bersihkan</button>
                     <button class="wb-btn-close" id="wb-close-btn">❌ Tutup</button>
                 </div>
             </div>
@@ -1290,42 +1378,52 @@
                     <span>✏️ Buka Papan Tulis / Oret-oretan</span>
                 </button>
 
-                <!-- CERITA -->
-                <div id="passage-container" class="passage-box" style="display: none;">
-                    <div id="passage-title" class="passage-title">Cerita / Bacaan</div>
-                    <div id="passage-content" class="passage-content"></div>
-                </div>
+                <!-- WRAPPER UNTUK MODE LANDSCAPE (2 KOLOM) -->
+                <div class="quiz-content-wrapper">
+                    <!-- KOLOM KIRI: CERITA, ILUSTRASI, TIPS & SOAL -->
+                    <div class="quiz-left-col">
+                        <!-- CERITA -->
+                        <div id="passage-container" class="passage-box" style="display: none;">
+                            <div id="passage-title" class="passage-title">Cerita / Bacaan</div>
+                            <div id="passage-content" class="passage-content"></div>
+                        </div>
 
-                <!-- ILUSTRASI -->
-                <div id="illustration-container" class="illustration-box" style="display: none;">
-                    <div id="illustration-html-wrap" style="width: 100%; overflow-x: auto;"></div>
-                    <img id="illustration-img-wrap" src="" alt="Ilustrasi Soal" style="display: none;" onerror="this.style.display='none';" />
-                </div>
+                        <!-- ILUSTRASI -->
+                        <div id="illustration-container" class="illustration-box" style="display: none;">
+                            <div id="illustration-html-wrap" style="width: 100%; overflow-x: auto;"></div>
+                            <img id="illustration-img-wrap" src="" alt="Ilustrasi Soal" style="display: none;" onerror="this.style.display='none';" />
+                        </div>
 
-                <!-- TIPS -->
-                <div id="tips-container" class="tips-box" style="display: none;">
-                    <span style="font-size: 18px;">💡</span>
-                    <div style="flex:1;">
-                        <strong style="display: block; margin-bottom: 3px; color:#d39e00;">Tips Belajar:</strong>
-                        <div id="tips-content" style="line-height: 1.5; font-weight: 500;"></div>
+                        <!-- TIPS -->
+                        <div id="tips-container" class="tips-box" style="display: none;">
+                            <span style="font-size: 18px;">💡</span>
+                            <div style="flex:1;">
+                                <strong style="display: block; margin-bottom: 3px; color:#d39e00;">Tips Belajar:</strong>
+                                <div id="tips-content" style="line-height: 1.5; font-weight: 500;"></div>
+                            </div>
+                        </div>
+
+                        <!-- PERTANYAAN -->
+                        <div class="question-box" id="question-text"></div>
+                    </div>
+
+                    <!-- KOLOM KANAN: OPSI JAWABAN & NAVIGASI -->
+                    <div class="quiz-right-col">
+                        <!-- OPSI JAWABAN -->
+                        <div class="options-list" id="options-container"></div>
+
+                        <!-- NAVIGASI TOMBOL -->
+                        <div class="nav-actions">
+                            <button id="btn-prev" class="btn btn-outline" style="flex: 0.6;">⬅️</button>
+                            <button id="btn-next" class="btn btn-secondary" style="flex: 1;">Berikutnya ➡️</button>
+                            <button id="btn-submit" class="btn btn-primary" style="display: none; flex: 1;">✨ Selesai ✨</button>
+                        </div>
+
+                        <!-- PALETTE NOMOR SOAL -->
+                        <div class="palette-grid" id="palette-container"></div>
                     </div>
                 </div>
 
-                <!-- PERTANYAAN -->
-                <div class="question-box" id="question-text"></div>
-
-                <!-- OPSI JAWABAN -->
-                <div class="options-list" id="options-container"></div>
-
-                <!-- NAVIGASI TOMBOL -->
-                <div class="nav-actions">
-                    <button id="btn-prev" class="btn btn-outline" style="flex: 0.6;">⬅️</button>
-                    <button id="btn-next" class="btn btn-secondary" style="flex: 1;">Berikutnya ➡️</button>
-                    <button id="btn-submit" class="btn btn-primary" style="display: none; flex: 1;">✨ Selesai ✨</button>
-                </div>
-
-                <!-- PALETTE NOMOR SOAL -->
-                <div class="palette-grid" id="palette-container"></div>
             </div>
         </section>
 
@@ -1582,14 +1680,24 @@
         }
 
         // ============================================================
-        //  2. FITUR PAPAN TULIS MODAL (BESAR/FULLSCREEN)
+        //  2. FITUR PAPAN TULIS MODAL (DENGAN SCROLL 2 JARI & MULTI-PAGE)
         // ============================================================
         const wbState = {
             isDrawing: false,
+            isPanning: false,
+            mode: 'pen', // 'pen', 'eraser', 'rect', 'circle', 'triangle'
             color: '#2d1a4a',
             size: 3,
-            lastX: 0,
-            lastY: 0
+            currentPage: 0,
+            pages: [null, null, null],
+            startX: 0,
+            startY: 0,
+            panStartX: 0,
+            panStartY: 0,
+            initialScrollLeft: 0,
+            initialScrollTop: 0,
+            snapshot: null,
+            rafPending: false
         };
 
         function initWhiteboard() {
@@ -1598,12 +1706,27 @@
             const closeBtn = document.getElementById('wb-close-btn');
             const clearBtn = document.getElementById('wb-clear-btn');
             const canvas = document.getElementById('wb-canvas');
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { desynchronized: true });
             const body = document.getElementById('wb-body');
 
+            function saveCurrentPage() {
+                if (canvas.width > 0 && canvas.height > 0) {
+                    wbState.pages[wbState.currentPage] = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            function loadCurrentPage() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (wbState.pages[wbState.currentPage]) {
+                    ctx.putImageData(wbState.pages[wbState.currentPage], 0, 0);
+                }
+            }
+
             function resizeCanvas() {
-                canvas.width = body.clientWidth;
-                canvas.height = body.clientHeight;
+                saveCurrentPage();
+                canvas.width = Math.max(body.clientWidth * 2, 1200);
+                canvas.height = Math.max(body.clientHeight * 2, 1200);
+                loadCurrentPage();
             }
 
             openBtn.addEventListener('click', () => {
@@ -1612,13 +1735,40 @@
             });
 
             closeBtn.addEventListener('click', () => {
+                saveCurrentPage();
                 modal.classList.remove('active');
             });
 
             clearBtn.addEventListener('click', () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                wbState.pages[wbState.currentPage] = null;
             });
 
+            // Pengaturan Halaman
+            document.querySelectorAll('.wb-page-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const newPage = parseInt(e.target.getAttribute('data-page'), 10);
+                    if (newPage === wbState.currentPage) return;
+
+                    saveCurrentPage();
+                    document.querySelectorAll('.wb-page-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    wbState.currentPage = newPage;
+                    loadCurrentPage();
+                });
+            });
+
+            // Pengaturan Mode
+            document.querySelectorAll('.wb-mode-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.wb-mode-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    wbState.mode = e.target.getAttribute('data-mode');
+                });
+            });
+
+            // Pengaturan Warna
             document.querySelectorAll('.modal-color').forEach(dot => {
                 dot.addEventListener('click', (e) => {
                     document.querySelectorAll('.modal-color').forEach(d => d.classList.remove('active'));
@@ -1627,6 +1777,7 @@
                 });
             });
 
+            // Pengaturan Ukuran
             document.querySelectorAll('.modal-size').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.modal-size').forEach(b => b.classList.remove('active'));
@@ -1635,53 +1786,186 @@
                 });
             });
 
-            function getPos(e) {
+            function getPos(e, touchIndex = 0) {
                 const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                const clientX = e.touches ? e.touches[touchIndex].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[touchIndex].clientY : e.clientY;
                 return {
                     x: clientX - rect.left,
                     y: clientY - rect.top
                 };
             }
 
-            function startDraw(e) {
+            // PENANGANAN TOUCH EVENTS KHUSUS UNTUK MEMISAHKAN 1 JARI (DRAW) & 2 JARI (SCROLL/PAN)
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    // 2 JARI DITETAPKAN UNTUK SCROLLING
+                    wbState.isDrawing = false;
+                    wbState.isPanning = true;
+
+                    const p1 = e.touches[0];
+                    const p2 = e.touches[1];
+                    wbState.panStartX = (p1.clientX + p2.clientX) / 2;
+                    wbState.panStartY = (p1.clientY + p2.clientY) / 2;
+                    wbState.initialScrollLeft = body.scrollLeft;
+                    wbState.initialScrollTop = body.scrollTop;
+                } else if (e.touches.length === 1) {
+                    // 1 JARI DITETAPKAN UNTUK MELUKIS
+                    wbState.isPanning = false;
+                    wbState.isDrawing = true;
+                    const pos = getPos(e, 0);
+                    wbState.startX = pos.x;
+                    wbState.startY = pos.y;
+
+                    if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                        wbState.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(pos.x, pos.y);
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('touchmove', (e) => {
+                if (wbState.isPanning && e.touches.length === 2) {
+                    e.preventDefault();
+                    const p1 = e.touches[0];
+                    const p2 = e.touches[1];
+                    const currentX = (p1.clientX + p2.clientX) / 2;
+                    const currentY = (p1.clientY + p2.clientY) / 2;
+
+                    const deltaX = currentX - wbState.panStartX;
+                    const deltaY = currentY - wbState.panStartY;
+
+                    body.scrollLeft = wbState.initialScrollLeft - deltaX;
+                    body.scrollTop = wbState.initialScrollTop - deltaY;
+                    return;
+                }
+
+                if (wbState.isDrawing && e.touches.length === 1) {
+                    e.preventDefault();
+                    if (wbState.rafPending) return;
+                    wbState.rafPending = true;
+
+                    requestAnimationFrame(() => {
+                        wbState.rafPending = false;
+                        const pos = getPos(e, 0);
+
+                        ctx.lineWidth = wbState.size;
+                        ctx.lineCap = 'round';
+                        ctx.lineJoin = 'round';
+
+                        if (wbState.mode === 'pen') {
+                            ctx.globalCompositeOperation = 'source-over';
+                            ctx.strokeStyle = wbState.color;
+                            ctx.lineTo(pos.x, pos.y);
+                            ctx.stroke();
+                        } else if (wbState.mode === 'eraser') {
+                            ctx.globalCompositeOperation = 'destination-out';
+                            ctx.lineTo(pos.x, pos.y);
+                            ctx.stroke();
+                        } else if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                            ctx.globalCompositeOperation = 'source-over';
+                            if (wbState.snapshot) {
+                                ctx.putImageData(wbState.snapshot, 0, 0);
+                            }
+                            ctx.strokeStyle = wbState.color;
+                            ctx.beginPath();
+
+                            if (wbState.mode === 'rect') {
+                                const width = pos.x - wbState.startX;
+                                const height = pos.y - wbState.startY;
+                                ctx.strokeRect(wbState.startX, wbState.startY, width, height);
+                            } else if (wbState.mode === 'circle') {
+                                const radius = Math.hypot(pos.x - wbState.startX, pos.y - wbState.startY);
+                                ctx.arc(wbState.startX, wbState.startY, radius, 0, Math.PI * 2);
+                                ctx.stroke();
+                            } else if (wbState.mode === 'triangle') {
+                                ctx.moveTo(wbState.startX, pos.y);
+                                ctx.lineTo(wbState.startX + (pos.x - wbState.startX) / 2, wbState.startY);
+                                ctx.lineTo(pos.x, pos.y);
+                                ctx.closePath();
+                                ctx.stroke();
+                            }
+                        }
+                    });
+                }
+            }, { passive: false });
+
+            const stopTouch = () => {
+                if (wbState.isDrawing) {
+                    wbState.isDrawing = false;
+                    ctx.beginPath();
+                    saveCurrentPage();
+                }
+                wbState.isPanning = false;
+            };
+
+            canvas.addEventListener('touchend', stopTouch);
+            canvas.addEventListener('touchcancel', stopTouch);
+
+            // MOUSE EVENTS UNTUK DESKTOP TESTING
+            canvas.addEventListener('mousedown', (e) => {
                 wbState.isDrawing = true;
                 const pos = getPos(e);
-                wbState.lastX = pos.x;
-                wbState.lastY = pos.y;
-            }
+                wbState.startX = pos.x;
+                wbState.startY = pos.y;
 
-            function draw(e) {
-                if (!wbState.isDrawing) return;
-                e.preventDefault();
-                const pos = getPos(e);
+                if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                    wbState.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                }
 
                 ctx.beginPath();
-                ctx.moveTo(wbState.lastX, wbState.lastY);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.strokeStyle = wbState.color;
+                ctx.moveTo(pos.x, pos.y);
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (!wbState.isDrawing) return;
+                const pos = getPos(e);
+
                 ctx.lineWidth = wbState.size;
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
-                ctx.stroke();
 
-                wbState.lastX = pos.x;
-                wbState.lastY = pos.y;
-            }
+                if (wbState.mode === 'pen') {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = wbState.color;
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                } else if (wbState.mode === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                } else if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                    ctx.globalCompositeOperation = 'source-over';
+                    if (wbState.snapshot) {
+                        ctx.putImageData(wbState.snapshot, 0, 0);
+                    }
+                    ctx.strokeStyle = wbState.color;
+                    ctx.beginPath();
 
-            function stopDraw() {
-                wbState.isDrawing = false;
-            }
+                    if (wbState.mode === 'rect') {
+                        const width = pos.x - wbState.startX;
+                        const height = pos.y - wbState.startY;
+                        ctx.strokeRect(wbState.startX, wbState.startY, width, height);
+                    } else if (wbState.mode === 'circle') {
+                        const radius = Math.hypot(pos.x - wbState.startX, pos.y - wbState.startY);
+                        ctx.arc(wbState.startX, wbState.startY, radius, 0, Math.PI * 2);
+                        ctx.stroke();
+                    } else if (wbState.mode === 'triangle') {
+                        ctx.moveTo(wbState.startX, pos.y);
+                        ctx.lineTo(wbState.startX + (pos.x - wbState.startX) / 2, wbState.startY);
+                        ctx.lineTo(pos.x, pos.y);
+                        ctx.closePath();
+                        ctx.stroke();
+                    }
+                }
+            });
 
-            canvas.addEventListener('mousedown', startDraw);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDraw);
-            canvas.addEventListener('mouseleave', stopDraw);
+            canvas.addEventListener('mouseup', stopTouch);
+            canvas.addEventListener('mouseleave', stopTouch);
 
-            canvas.addEventListener('touchstart', startDraw, { passive: false });
-            canvas.addEventListener('touchmove', draw, { passive: false });
-            canvas.addEventListener('touchend', stopDraw);
+            window.addEventListener('resize', resizeCanvas);
         }
 
         // ============================================================
@@ -2316,7 +2600,6 @@
                     ctx.save();
                     ctx.globalAlpha = p.alpha;
                     ctx.font = '16px serif';
-                    ctx.textAlign = 'center';
                     ctx.fillText(p.emoji, p.x, p.y);
                     ctx.restore();
                 }
