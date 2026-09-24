@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
     <title>✨ Ayya's Learning Wonderland ✨</title>
 
     <!-- Google Fonts -->
@@ -82,7 +82,7 @@
 
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 480px;
+            max-width: 720px;
             margin: 0 auto;
             min-height: 100vh;
             display: flex;
@@ -856,6 +856,77 @@
             cursor: crosshair;
         }
 
+        /* ===== FITUR CORET-CORET LANGSUNG PADA SOAL ===== */
+        .quiz-card-relative {
+            position: relative;
+        }
+
+        #direct-draw-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+            border-radius: var(--radius-lg);
+        }
+
+        #direct-draw-canvas.drawing-active {
+            pointer-events: auto;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .draw-toggle-btn {
+            position: fixed;
+            top: 14px;
+            right: 16px;
+            z-index: 100;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #ff7043, #f4511e);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(244, 81, 30, 0.4);
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .draw-toggle-btn.active {
+            background: linear-gradient(135deg, #e53935, #c62828);
+        }
+
+        .draw-toolbar {
+            position: fixed;
+            top: 55px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid var(--purple-dark);
+            border-radius: 16px;
+            padding: 8px 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .draw-toolbar.show {
+            display: flex;
+        }
+
+        .draw-toolbar .tool-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         /* ===== RESULT SECTION ===== */
         .result-box {
             text-align: center;
@@ -1048,25 +1119,48 @@
     <div id="confetti-container"></div>
     <div id="security-toast">Tindakan tersebut tidak diperbolehkan saat kuis.</div>
 
-    <!-- ===== PAPAN TULIS MODAL OVERLAY ===== -->
+    <!-- ===== TOOLBAR CORET LANGSUNG DI SOAL ===== -->
+    <button id="toggle-direct-draw-btn" class="draw-toggle-btn">
+        <span>✏️ Coret Soal</span>
+    </button>
+
+    <div id="direct-draw-toolbar" class="draw-toolbar">
+        <div class="tool-row">
+            <span class="tool-label">Warna:</span>
+            <div class="color-dot active direct-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
+            <div class="color-dot direct-color" style="background:#e53935;" data-color="#e53935"></div>
+            <div class="color-dot direct-color" style="background:#1e88e5;" data-color="#1e88e5"></div>
+            <div class="color-dot direct-color" style="background:#43a047;" data-color="#43a047"></div>
+            <div class="color-dot direct-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
+        </div>
+        <div class="tool-row">
+            <span class="tool-label">Ukuran:</span>
+            <button class="size-btn active direct-size" data-size="3">Halus</button>
+            <button class="size-btn direct-size" data-size="6">Sedang</button>
+            <button class="size-btn direct-size" data-size="12">Tebal</button>
+            <button class="wb-btn-clear" id="direct-clear-btn" style="padding: 3px 8px; font-size: 11px;">🗑️ Hapus</button>
+        </div>
+    </div>
+
+    <!-- ===== PAPAN TULIS MODAL OVERLAY (BESAR) ===== -->
     <div id="whiteboard-modal">
         <div class="whiteboard-card">
             <div class="whiteboard-header">
-                <div class="whiteboard-title">✏️ Papan Coretan / Oret-oretan</div>
+                <div class="whiteboard-title">✏️ Papan Coretan / Oret-oretan Layar Penuh</div>
                 <div class="whiteboard-tools">
                     <div class="tool-group">
                         <span class="tool-label">Warna:</span>
-                        <div class="color-dot active" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
-                        <div class="color-dot" style="background:#e53935;" data-color="#e53935"></div>
-                        <div class="color-dot" style="background:#1e88e5;" data-color="#1e88e5"></div>
-                        <div class="color-dot" style="background:#43a047;" data-color="#43a047"></div>
-                        <div class="color-dot" style="background:#8e24aa;" data-color="#8e24aa"></div>
+                        <div class="color-dot active modal-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
+                        <div class="color-dot modal-color" style="background:#e53935;" data-color="#e53935"></div>
+                        <div class="color-dot modal-color" style="background:#1e88e5;" data-color="#1e88e5"></div>
+                        <div class="color-dot modal-color" style="background:#43a047;" data-color="#43a047"></div>
+                        <div class="color-dot modal-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
                     </div>
                     <div class="tool-group">
                         <span class="tool-label">Ukuran:</span>
-                        <button class="size-btn active" data-size="3">Halus</button>
-                        <button class="size-btn" data-size="6">Sedang</button>
-                        <button class="size-btn" data-size="12">Tebal</button>
+                        <button class="size-btn active modal-size" data-size="3">Halus</button>
+                        <button class="size-btn modal-size" data-size="6">Sedang</button>
+                        <button class="size-btn modal-size" data-size="12">Tebal</button>
                     </div>
                     <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Hapus</button>
                     <button class="wb-btn-close" id="wb-close-btn">❌ Tutup</button>
@@ -1170,7 +1264,10 @@
 
         <!-- VIEW: QUIZ -->
         <section id="view-quiz" class="view-section">
-            <div class="card">
+            <div class="card quiz-card-relative" id="quiz-card-container">
+                <!-- CANVAS UNTUK CORET LANGSUNG DI ATAS SOAL -->
+                <canvas id="direct-draw-canvas"></canvas>
+
                 <div class="quiz-package-header">
                     <div class="quiz-sheet-badge">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
@@ -1188,7 +1285,7 @@
                     <span id="label-subject" class="quiz-sheet-badge" style="background: rgba(179,136,255,0.12); font-size: 11px;">Materi</span>
                 </div>
 
-                <!-- TOMBOL PAPAN TULIS CORETAN -->
+                <!-- TOMBOL PAPAN TULIS CORETAN (BESAR/MODAL) -->
                 <button class="whiteboard-btn" id="open-whiteboard-btn">
                     <span>✏️ Buka Papan Tulis / Oret-oretan</span>
                 </button>
@@ -1301,7 +1398,7 @@
             "Setiap soal adalah kesempatan untuk belajar hal baru! ✨",
             "Percaya pada dirimu sendiri, kamu anak hebat! ⭐",
             "Belajar itu menyenangkan jika dilakukan dengan riang gembira! 🦄",
-            "Terus semangat belajar, masa depan cerah menantimu! 🌈",
+            "Terus semangat belajar, masa depan cerah menantimu! 🌟",
             "Satu langkah kecil hari ini adalah awal dari kesuksesan besar besok! 🌟"
         ];
 
@@ -1364,7 +1461,128 @@
         document.addEventListener('dragstart', e => { e.preventDefault(); });
 
         // ============================================================
-        //  WHITEBOARD / SCRATCHPAD SCRIPT
+        //  1. FITUR CORET LANGSUNG DI ATAS SOAL
+        // ============================================================
+        const directDrawState = {
+            active: false,
+            isDrawing: false,
+            color: '#2d1a4a',
+            size: 3,
+            lastX: 0,
+            lastY: 0
+        };
+
+        function initDirectDraw() {
+            const canvas = document.getElementById('direct-draw-canvas');
+            const card = document.getElementById('quiz-card-container');
+            const toggleBtn = document.getElementById('toggle-direct-draw-btn');
+            const toolbar = document.getElementById('direct-draw-toolbar');
+            const clearBtn = document.getElementById('direct-clear-btn');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = card.clientWidth;
+                canvas.height = card.clientHeight;
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                directDrawState.active = !directDrawState.active;
+                if (directDrawState.active) {
+                    resizeCanvas();
+                    canvas.classList.add('drawing-active');
+                    toolbar.classList.add('show');
+                    toggleBtn.classList.add('active');
+                    toggleBtn.innerHTML = '<span>❌ Tutup Coret</span>';
+                } else {
+                    canvas.classList.remove('drawing-active');
+                    toolbar.classList.remove('show');
+                    toggleBtn.classList.remove('active');
+                    toggleBtn.innerHTML = '<span>✏️ Coret Soal</span>';
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            document.querySelectorAll('.direct-color').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    document.querySelectorAll('.direct-color').forEach(d => d.classList.remove('active'));
+                    e.target.classList.add('active');
+                    directDrawState.color = e.target.getAttribute('data-color');
+                });
+            });
+
+            document.querySelectorAll('.direct-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.direct-size').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    directDrawState.size = parseInt(e.target.getAttribute('data-size'), 10);
+                });
+            });
+
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function startDraw(e) {
+                if (!directDrawState.active) return;
+                directDrawState.isDrawing = true;
+                const pos = getPos(e);
+                directDrawState.lastX = pos.x;
+                directDrawState.lastY = pos.y;
+            }
+
+            function draw(e) {
+                if (!directDrawState.active || !directDrawState.isDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+
+                ctx.beginPath();
+                ctx.moveTo(directDrawState.lastX, directDrawState.lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.strokeStyle = directDrawState.color;
+                ctx.lineWidth = directDrawState.size;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                directDrawState.lastX = pos.x;
+                directDrawState.lastY = pos.y;
+            }
+
+            function stopDraw() {
+                directDrawState.isDrawing = false;
+            }
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', startDraw, { passive: false });
+            canvas.addEventListener('touchmove', draw, { passive: false });
+            canvas.addEventListener('touchend', stopDraw);
+
+            window.addEventListener('resize', () => {
+                if (directDrawState.active) resizeCanvas();
+            });
+        }
+
+        function clearDirectDrawCanvas() {
+            const canvas = document.getElementById('direct-draw-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // ============================================================
+        //  2. FITUR PAPAN TULIS MODAL (BESAR/FULLSCREEN)
         // ============================================================
         const wbState = {
             isDrawing: false,
@@ -1401,19 +1619,17 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             });
 
-            // Ganti Warna
-            document.querySelectorAll('.color-dot').forEach(dot => {
+            document.querySelectorAll('.modal-color').forEach(dot => {
                 dot.addEventListener('click', (e) => {
-                    document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+                    document.querySelectorAll('.modal-color').forEach(d => d.classList.remove('active'));
                     e.target.classList.add('active');
                     wbState.color = e.target.getAttribute('data-color');
                 });
             });
 
-            // Ganti Ukuran
-            document.querySelectorAll('.size-btn').forEach(btn => {
+            document.querySelectorAll('.modal-size').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.modal-size').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     wbState.size = parseInt(e.target.getAttribute('data-size'), 10);
                 });
@@ -1475,6 +1691,16 @@
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.getElementById('timer-box').style.display = (id === 'view-quiz') ? 'inline-flex' : 'none';
+            
+            const drawToggleBtn = document.getElementById('toggle-direct-draw-btn');
+            const drawToolbar = document.getElementById('direct-draw-toolbar');
+            
+            if (id === 'view-quiz') {
+                drawToggleBtn.style.display = 'inline-flex';
+            } else {
+                drawToggleBtn.style.display = 'none';
+                drawToolbar.classList.remove('show');
+            }
         }
 
         function saveProgressToLocalStorage() {
@@ -1612,6 +1838,7 @@
         //  RENDER QUESTION
         // ============================================================
         function renderQuestion() {
+            clearDirectDrawCanvas();
             const q = state.questions[state.currentIndex];
             const total = state.questions.length;
 
@@ -1792,7 +2019,7 @@
         }
 
         // ============================================================
-        //  SUBMISSION & RESULTS (MENGIRIM PARAMETER SKOR LENGKAP)
+        //  SUBMISSION & RESULTS
         // ============================================================
         async function submitQuiz() {
             const total = state.questions.length;
@@ -1907,6 +2134,7 @@
             localStorage.removeItem('quiz_progress_active');
             showSection('view-home');
             loadSheets();
+            initDirectDraw();
             initWhiteboard();
 
             document.getElementById('btn-start').addEventListener('click', startQuiz);
