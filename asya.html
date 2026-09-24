@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
     <title>✨ Asya's Learning Wonderland ✨</title>
 
     <!-- Google Fonts -->
@@ -82,7 +82,7 @@
 
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 480px;
+            max-width: 720px;
             margin: 0 auto;
             min-height: 100vh;
             display: flex;
@@ -532,7 +532,7 @@
             font-weight: 700;
         }
 
-        /* PASSAGE / PASSAGE BOX */
+        /* PASSAGE / CERITA */
         .passage-box {
             background: linear-gradient(135deg, #fcfaff, #fdf2f8);
             border: 1.5px solid rgba(179, 136, 255, 0.2);
@@ -557,7 +557,7 @@
             white-space: pre-line;
         }
 
-        /* ILLUSTRATION BOX */
+        /* ILUSTRASI */
         .illustration-box {
             margin-bottom: 14px;
             text-align: center;
@@ -575,7 +575,7 @@
             border-radius: var(--radius-sm);
         }
 
-        /* TIPS BOX */
+        /* TIPS */
         .tips-box {
             background: linear-gradient(135deg, #fffcf0, #fff7d9);
             border: 1.5px solid #ffeeba;
@@ -694,6 +694,237 @@
             background: #e8f5e9;
             border-color: #81c784;
             color: #2e7d32;
+        }
+
+        /* ===== FITUR PAPAN TULIS / SCRATCHPAD MODAL ===== */
+        .whiteboard-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 1.5px solid #ffb74d;
+            border-radius: var(--radius-md);
+            color: #e65100;
+            font-weight: 800;
+            font-size: 13.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.15);
+            transition: all 0.2s;
+        }
+        .whiteboard-btn:active { transform: scale(0.97); }
+
+        #whiteboard-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(40, 25, 60, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        #whiteboard-modal.active {
+            display: flex;
+        }
+
+        .whiteboard-card {
+            width: 96vw;
+            height: 92vh;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 3px solid var(--purple);
+        }
+
+        .whiteboard-header {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
+            border-bottom: 2px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .whiteboard-title {
+            font-weight: 800;
+            font-size: 15px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .whiteboard-tools {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255,255,255,0.8);
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .tool-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .color-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .color-dot.active {
+            transform: scale(1.25);
+            border-color: var(--purple-dark);
+        }
+
+        .size-btn {
+            padding: 3px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+        .size-btn.active {
+            background: var(--purple-dark);
+            color: #fff;
+        }
+
+        .wb-btn-clear {
+            padding: 5px 12px;
+            background: #ffebee;
+            color: #c53030;
+            border: 1px solid #ffcdd2;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .wb-btn-close {
+            padding: 5px 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .whiteboard-body {
+            flex: 1;
+            position: relative;
+            background: #fdfdfd;
+            background-image: radial-gradient(#e0d7f5 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        #wb-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        /* ===== FITUR CORET-CORET LANGSUNG PADA SOAL ===== */
+        .quiz-card-relative {
+            position: relative;
+        }
+
+        #direct-draw-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: none;
+            border-radius: var(--radius-lg);
+        }
+
+        #direct-draw-canvas.drawing-active {
+            pointer-events: auto;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .draw-toggle-btn {
+            position: fixed;
+            top: 14px;
+            right: 16px;
+            z-index: 100;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #ff7043, #f4511e);
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(244, 81, 30, 0.4);
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .draw-toggle-btn.active {
+            background: linear-gradient(135deg, #e53935, #c62828);
+        }
+
+        .draw-toolbar {
+            position: fixed;
+            top: 55px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid var(--purple-dark);
+            border-radius: 16px;
+            padding: 8px 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .draw-toolbar.show {
+            display: flex;
+        }
+
+        .draw-toolbar .tool-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* ===== RESULT SECTION ===== */
@@ -821,7 +1052,7 @@
             border-color: #ffb3d9;
         }
 
-        /* SECURITY NOTIFICATION TOAST */
+        /* SECURITY TOAST */
         #security-toast {
             position: fixed;
             bottom: 20px;
@@ -833,7 +1064,7 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: 700;
-            z-index: 1000;
+            z-index: 2000;
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             pointer-events: none;
@@ -854,19 +1085,6 @@
             pointer-events: none;
             z-index: 999;
             overflow: hidden;
-        }
-
-        .confetti-piece {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 2px;
-            animation: confettiFall linear forwards;
-        }
-
-        @keyframes confettiFall {
-            0% { opacity: 1; transform: translateY(-20px) rotate(0deg) scale(1); }
-            100% { opacity: 0; transform: translateY(110vh) rotate(720deg) scale(0.3); }
         }
 
         .loader {
@@ -900,6 +1118,59 @@
     <canvas id="sheep-canvas"></canvas>
     <div id="confetti-container"></div>
     <div id="security-toast">Tindakan tersebut tidak diperbolehkan saat kuis.</div>
+
+    <!-- ===== TOOLBAR CORET LANGSUNG DI SOAL ===== -->
+    <button id="toggle-direct-draw-btn" class="draw-toggle-btn">
+        <span>✏️ Coret Soal</span>
+    </button>
+
+    <div id="direct-draw-toolbar" class="draw-toolbar">
+        <div class="tool-row">
+            <span class="tool-label">Warna:</span>
+            <div class="color-dot active direct-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
+            <div class="color-dot direct-color" style="background:#e53935;" data-color="#e53935"></div>
+            <div class="color-dot direct-color" style="background:#1e88e5;" data-color="#1e88e5"></div>
+            <div class="color-dot direct-color" style="background:#43a047;" data-color="#43a047"></div>
+            <div class="color-dot direct-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
+        </div>
+        <div class="tool-row">
+            <span class="tool-label">Ukuran:</span>
+            <button class="size-btn active direct-size" data-size="3">Halus</button>
+            <button class="size-btn direct-size" data-size="6">Sedang</button>
+            <button class="size-btn direct-size" data-size="12">Tebal</button>
+            <button class="wb-btn-clear" id="direct-clear-btn" style="padding: 3px 8px; font-size: 11px;">🗑️ Hapus</button>
+        </div>
+    </div>
+
+    <!-- ===== PAPAN TULIS MODAL OVERLAY (BESAR) ===== -->
+    <div id="whiteboard-modal">
+        <div class="whiteboard-card">
+            <div class="whiteboard-header">
+                <div class="whiteboard-title">✏️ Papan Coretan / Oret-oretan Layar Penuh</div>
+                <div class="whiteboard-tools">
+                    <div class="tool-group">
+                        <span class="tool-label">Warna:</span>
+                        <div class="color-dot active modal-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
+                        <div class="color-dot modal-color" style="background:#e53935;" data-color="#e53935"></div>
+                        <div class="color-dot modal-color" style="background:#1e88e5;" data-color="#1e88e5"></div>
+                        <div class="color-dot modal-color" style="background:#43a047;" data-color="#43a047"></div>
+                        <div class="color-dot modal-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
+                    </div>
+                    <div class="tool-group">
+                        <span class="tool-label">Ukuran:</span>
+                        <button class="size-btn active modal-size" data-size="3">Halus</button>
+                        <button class="size-btn modal-size" data-size="6">Sedang</button>
+                        <button class="size-btn modal-size" data-size="12">Tebal</button>
+                    </div>
+                    <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Hapus</button>
+                    <button class="wb-btn-close" id="wb-close-btn">❌ Tutup</button>
+                </div>
+            </div>
+            <div class="whiteboard-body" id="wb-body">
+                <canvas id="wb-canvas"></canvas>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== CONTAINER ===== -->
     <div class="container">
@@ -935,14 +1206,12 @@
                 </div>
             </div>
             <div class="timer-badge" id="timer-box" style="display: none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 16 14"></polyline></svg>
                 <span id="timer-display">00:00:00</span>
             </div>
         </header>
 
-        <!-- ========================================================== -->
-        <!-- VIEW: HOME / MODULE SELECTOR                              -->
-        <!-- ========================================================== -->
+        <!-- VIEW: HOME -->
         <section id="view-home" class="view-section active">
             <div class="card">
                 <div class="home-avatar-wrapper">
@@ -965,7 +1234,7 @@
                 </div>
 
                 <div class="home-header">
-                    <div class="home-badge">🌟 Yuk, Belajar &amp; Bermain!</div>
+                    <div class="home-badge">🌟 Asya  Yuk, Belajar &amp; Bermain!</div>
                     <h1 class="home-title">Quiz Wonderland</h1>
                     <p class="home-subtitle">Pilih pelajaran yang ingin kamu kerjakan, Asya ✨</p>
                 </div>
@@ -993,11 +1262,12 @@
             </div>
         </section>
 
-        <!-- ========================================================== -->
-        <!-- VIEW: QUIZ                                                 -->
-        <!-- ========================================================== -->
+        <!-- VIEW: QUIZ -->
         <section id="view-quiz" class="view-section">
-            <div class="card">
+            <div class="card quiz-card-relative" id="quiz-card-container">
+                <!-- CANVAS UNTUK CORET LANGSUNG DI ATAS SOAL -->
+                <canvas id="direct-draw-canvas"></canvas>
+
                 <div class="quiz-package-header">
                     <div class="quiz-sheet-badge">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
@@ -1015,13 +1285,18 @@
                     <span id="label-subject" class="quiz-sheet-badge" style="background: rgba(179,136,255,0.12); font-size: 11px;">Materi</span>
                 </div>
 
-                <!-- PASSAGE / CERITA -->
+                <!-- TOMBOL PAPAN TULIS CORETAN (BESAR/MODAL) -->
+                <button class="whiteboard-btn" id="open-whiteboard-btn">
+                    <span>✏️ Buka Papan Tulis / Oret-oretan</span>
+                </button>
+
+                <!-- CERITA -->
                 <div id="passage-container" class="passage-box" style="display: none;">
                     <div id="passage-title" class="passage-title">Cerita / Bacaan</div>
                     <div id="passage-content" class="passage-content"></div>
                 </div>
 
-                <!-- ILUSTRASI HTML/GAMBAR -->
+                <!-- ILUSTRASI -->
                 <div id="illustration-container" class="illustration-box" style="display: none;">
                     <div id="illustration-html-wrap" style="width: 100%; overflow-x: auto;"></div>
                     <img id="illustration-img-wrap" src="" alt="Ilustrasi Soal" style="display: none;" onerror="this.style.display='none';" />
@@ -1054,9 +1329,7 @@
             </div>
         </section>
 
-        <!-- ========================================================== -->
-        <!-- VIEW: RESULT                                               -->
-        <!-- ========================================================== -->
+        <!-- VIEW: RESULT -->
         <section id="view-result" class="view-section">
             <div class="card">
                 <div class="result-box">
@@ -1143,7 +1416,7 @@
         };
 
         // ============================================================
-        //  JSONP API HELPER (Mengatasi CORS)
+        //  JSONP API HELPER
         // ============================================================
         function callApiJsonp(params) {
             return new Promise((resolve, reject) => {
@@ -1173,7 +1446,7 @@
         }
 
         // ============================================================
-        //  UI SECURITY PROTECTIONS
+        //  SECURITY PROTECTIONS
         // ============================================================
         function showSecurityWarning() {
             const toast = document.getElementById('security-toast');
@@ -1186,25 +1459,248 @@
         document.addEventListener('cut', e => { e.preventDefault(); showSecurityWarning(); });
         document.addEventListener('paste', e => { e.preventDefault(); showSecurityWarning(); });
         document.addEventListener('dragstart', e => { e.preventDefault(); });
-        
-        document.addEventListener('keydown', e => {
-            if (e.key === 'PrintScreen' || e.key === 'F12') {
-                e.preventDefault();
-                showSecurityWarning();
-            }
-            if (e.ctrlKey && ['c', 'v', 'x', 'a', 's', 'p', 'u'].includes(e.key.toLowerCase())) {
-                e.preventDefault();
-                showSecurityWarning();
-            }
-        });
 
         // ============================================================
-        //  VIEW MANAGEMENT & STORAGE RECOVERY
+        //  1. FITUR CORET LANGSUNG DI ATAS SOAL
+        // ============================================================
+        const directDrawState = {
+            active: false,
+            isDrawing: false,
+            color: '#2d1a4a',
+            size: 3,
+            lastX: 0,
+            lastY: 0
+        };
+
+        function initDirectDraw() {
+            const canvas = document.getElementById('direct-draw-canvas');
+            const card = document.getElementById('quiz-card-container');
+            const toggleBtn = document.getElementById('toggle-direct-draw-btn');
+            const toolbar = document.getElementById('direct-draw-toolbar');
+            const clearBtn = document.getElementById('direct-clear-btn');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = card.clientWidth;
+                canvas.height = card.clientHeight;
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                directDrawState.active = !directDrawState.active;
+                if (directDrawState.active) {
+                    resizeCanvas();
+                    canvas.classList.add('drawing-active');
+                    toolbar.classList.add('show');
+                    toggleBtn.classList.add('active');
+                    toggleBtn.innerHTML = '<span>❌ Tutup Coret</span>';
+                } else {
+                    canvas.classList.remove('drawing-active');
+                    toolbar.classList.remove('show');
+                    toggleBtn.classList.remove('active');
+                    toggleBtn.innerHTML = '<span>✏️ Coret Soal</span>';
+                }
+            });
+
+            clearBtn.addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            document.querySelectorAll('.direct-color').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    document.querySelectorAll('.direct-color').forEach(d => d.classList.remove('active'));
+                    e.target.classList.add('active');
+                    directDrawState.color = e.target.getAttribute('data-color');
+                });
+            });
+
+            document.querySelectorAll('.direct-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.direct-size').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    directDrawState.size = parseInt(e.target.getAttribute('data-size'), 10);
+                });
+            });
+
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function startDraw(e) {
+                if (!directDrawState.active) return;
+                directDrawState.isDrawing = true;
+                const pos = getPos(e);
+                directDrawState.lastX = pos.x;
+                directDrawState.lastY = pos.y;
+            }
+
+            function draw(e) {
+                if (!directDrawState.active || !directDrawState.isDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+
+                ctx.beginPath();
+                ctx.moveTo(directDrawState.lastX, directDrawState.lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.strokeStyle = directDrawState.color;
+                ctx.lineWidth = directDrawState.size;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                directDrawState.lastX = pos.x;
+                directDrawState.lastY = pos.y;
+            }
+
+            function stopDraw() {
+                directDrawState.isDrawing = false;
+            }
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', startDraw, { passive: false });
+            canvas.addEventListener('touchmove', draw, { passive: false });
+            canvas.addEventListener('touchend', stopDraw);
+
+            window.addEventListener('resize', () => {
+                if (directDrawState.active) resizeCanvas();
+            });
+        }
+
+        function clearDirectDrawCanvas() {
+            const canvas = document.getElementById('direct-draw-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // ============================================================
+        //  2. FITUR PAPAN TULIS MODAL (BESAR/FULLSCREEN)
+        // ============================================================
+        const wbState = {
+            isDrawing: false,
+            color: '#2d1a4a',
+            size: 3,
+            lastX: 0,
+            lastY: 0
+        };
+
+        function initWhiteboard() {
+            const modal = document.getElementById('whiteboard-modal');
+            const openBtn = document.getElementById('open-whiteboard-btn');
+            const closeBtn = document.getElementById('wb-close-btn');
+            const clearBtn = document.getElementById('wb-clear-btn');
+            const canvas = document.getElementById('wb-canvas');
+            const ctx = canvas.getContext('2d');
+            const body = document.getElementById('wb-body');
+
+            function resizeCanvas() {
+                canvas.width = body.clientWidth;
+                canvas.height = body.clientHeight;
+            }
+
+            openBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+                resizeCanvas();
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            clearBtn.addEventListener('click', () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            document.querySelectorAll('.modal-color').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    document.querySelectorAll('.modal-color').forEach(d => d.classList.remove('active'));
+                    e.target.classList.add('active');
+                    wbState.color = e.target.getAttribute('data-color');
+                });
+            });
+
+            document.querySelectorAll('.modal-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.modal-size').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    wbState.size = parseInt(e.target.getAttribute('data-size'), 10);
+                });
+            });
+
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function startDraw(e) {
+                wbState.isDrawing = true;
+                const pos = getPos(e);
+                wbState.lastX = pos.x;
+                wbState.lastY = pos.y;
+            }
+
+            function draw(e) {
+                if (!wbState.isDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+
+                ctx.beginPath();
+                ctx.moveTo(wbState.lastX, wbState.lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.strokeStyle = wbState.color;
+                ctx.lineWidth = wbState.size;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                wbState.lastX = pos.x;
+                wbState.lastY = pos.y;
+            }
+
+            function stopDraw() {
+                wbState.isDrawing = false;
+            }
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', startDraw, { passive: false });
+            canvas.addEventListener('touchmove', draw, { passive: false });
+            canvas.addEventListener('touchend', stopDraw);
+        }
+
+        // ============================================================
+        //  VIEW MANAGEMENT & LOCAL STORAGE
         // ============================================================
         function showSection(id) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.getElementById('timer-box').style.display = (id === 'view-quiz') ? 'inline-flex' : 'none';
+            
+            const drawToggleBtn = document.getElementById('toggle-direct-draw-btn');
+            const drawToolbar = document.getElementById('direct-draw-toolbar');
+            
+            if (id === 'view-quiz') {
+                drawToggleBtn.style.display = 'inline-flex';
+            } else {
+                drawToggleBtn.style.display = 'none';
+                drawToolbar.classList.remove('show');
+            }
         }
 
         function saveProgressToLocalStorage() {
@@ -1342,6 +1838,7 @@
         //  RENDER QUESTION
         // ============================================================
         function renderQuestion() {
+            clearDirectDrawCanvas();
             const q = state.questions[state.currentIndex];
             const total = state.questions.length;
 
@@ -1353,7 +1850,7 @@
             const pct = ((state.currentIndex + 1) / total) * 100;
             document.getElementById('quiz-progress-fill').style.width = `${pct}%`;
 
-            // Cerita / Bacaan
+            // Cerita
             const passageBox = document.getElementById('passage-container');
             const passageTitle = document.getElementById('passage-title');
             const passageContent = document.getElementById('passage-content');
@@ -1600,18 +2097,19 @@
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<span>✨ Selesai ✨</span>';
 
-            if (score >= 70) {
-                fireConfetti(90);
-                setTimeout(() => fireConfetti(60), 600);
-            }
-
+            // PENGIRIMAN DATA SKOR LENGKAP KE GOOGLE SHEETS
             try {
                 const response = await callApiJsonp({
                     aksi: 'submitHasil',
                     sheet: state.selectedPackage,
+                    modul: state.selectedPackageTitle,
                     skor: score,
+                    benar: correctCount,
+                    salah: incorrectCount,
+                    kosong: unansweredCount,
                     total: total,
-                    salah: incorrectCount
+                    durasi: durationFormatted,
+                    timestamp: new Date().toISOString()
                 });
 
                 if (response && response.status === 'success') {
@@ -1636,6 +2134,8 @@
             localStorage.removeItem('quiz_progress_active_asya');
             showSection('view-home');
             loadSheets();
+            initDirectDraw();
+            initWhiteboard();
 
             document.getElementById('btn-start').addEventListener('click', startQuiz);
             document.getElementById('btn-prev').addEventListener('click', () => navigateQuestion(-1));
