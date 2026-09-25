@@ -1030,17 +1030,29 @@
         </div>
     </div>
 
-    <!-- ===== PAPAN TULIS MODAL OVERLAY (3 HALAMAN, BANGUN DATAR, DOT GRID, ZOOM) ===== -->
+    <!-- ===== PAPAN TULIS MODAL OVERLAY ===== -->
     <div id="whiteboard-modal">
         <div class="whiteboard-card">
             <div class="whiteboard-header">
-                <div class="whiteboard-title">✏️ Papan Coretan &amp; Bangun Datar</div>
+                <div class="whiteboard-title">
+                    <span>✏️ Papan Coretan &amp; Bangun Datar</span>
+                    <span style="font-size: 11px; font-weight: 700; color: #7a6a8f; background: rgba(255,255,255,0.7); padding: 2px 8px; border-radius: 10px;">📐 Area 2x (Cubit Zoom &amp; Geser 2 Jari)</span>
+                </div>
                 <div class="whiteboard-tools">
                     <div class="tool-group">
                         <span class="tool-label">Halaman:</span>
                         <button class="page-btn active wb-page-btn" data-page="0">Hal 1</button>
                         <button class="page-btn wb-page-btn" data-page="1">Hal 2</button>
                         <button class="page-btn wb-page-btn" data-page="2">Hal 3</button>
+                    </div>
+
+                    <!-- FITUR TOMBOL ZOOM PASA TOOLBAR -->
+                    <div class="tool-group">
+                        <span class="tool-label">Zoom:</span>
+                        <button class="size-btn" id="wb-zoom-out-btn" title="Perkecil">🔍-</button>
+                        <span id="wb-zoom-badge" style="font-size: 11px; font-weight: 800; min-width: 36px; text-align: center; color: var(--purple-dark);">100%</span>
+                        <button class="size-btn" id="wb-zoom-in-btn" title="Perbesar">🔍+</button>
+                        <button class="size-btn" id="wb-zoom-reset-btn" title="Reset Zoom">🔄 100%</button>
                     </div>
 
                     <div class="tool-group">
@@ -1446,7 +1458,7 @@
         }
 
         // ============================================================
-        //  2. FITUR PAPAN TULIS MODAL (LATAR PUTIH, DOT GRID & ZOOM 2 JARI)
+        //  2. FITUR PAPAN TULIS MODAL (LATAR PUTIH, DOT GRID, UKURAN 2X & SCROLL 2 JARI)
         // ============================================================
         const wbState = {
             isDrawing: false,
@@ -1479,6 +1491,11 @@
             const canvas = document.getElementById('wb-canvas');
             const ctx = canvas.getContext('2d');
             const body = document.getElementById('wb-body');
+
+            const zoomInBtn = document.getElementById('wb-zoom-in-btn');
+            const zoomOutBtn = document.getElementById('wb-zoom-out-btn');
+            const zoomResetBtn = document.getElementById('wb-zoom-reset-btn');
+            const zoomBadge = document.getElementById('wb-zoom-badge');
 
             function fillBackgroundAndDots() {
                 ctx.save();
@@ -1515,8 +1532,52 @@
             function resizeCanvas() {
                 saveCurrentPage();
                 canvas.width = body.clientWidth;
-                canvas.height = body.clientHeight;
+                canvas.height = body.clientHeight * 2; // Ukuran tinggi 2 kali lipat
                 loadCurrentPage();
+            }
+
+            function applyTransform() {
+                canvas.style.transform = `translate(${wbState.offsetX}px, ${wbState.offsetY}px) scale(${wbState.scale})`;
+                canvas.style.transformOrigin = '0 0';
+                if (zoomBadge) {
+                    zoomBadge.textContent = `${Math.round(wbState.scale * 100)}%`;
+                }
+            }
+
+            function setZoom(newScale, centerScreenX, centerScreenY) {
+                const rect = body.getBoundingClientRect();
+                
+                if (centerScreenX === undefined) centerScreenX = rect.left + rect.width / 2;
+                if (centerScreenY === undefined) centerScreenY = rect.top + rect.height / 2;
+
+                const clampedScale = Math.min(Math.max(0.5, newScale), 4.0);
+                
+                // Titik koordinat canvas sebelum zoom
+                const canvasX = (centerScreenX - rect.left - wbState.offsetX) / wbState.scale;
+                const canvasY = (centerScreenY - rect.top - wbState.offsetY) / wbState.scale;
+
+                wbState.scale = clampedScale;
+
+                // Sesuaikan offset agar titik tengah zoom tetap di posisi semula
+                wbState.offsetX = centerScreenX - rect.left - canvasX * wbState.scale;
+                wbState.offsetY = centerScreenY - rect.top - canvasY * wbState.scale;
+
+                applyTransform();
+            }
+
+            if (zoomInBtn) {
+                zoomInBtn.addEventListener('click', () => setZoom(wbState.scale * 1.25));
+            }
+            if (zoomOutBtn) {
+                zoomOutBtn.addEventListener('click', () => setZoom(wbState.scale / 1.25));
+            }
+            if (zoomResetBtn) {
+                zoomResetBtn.addEventListener('click', () => {
+                    wbState.scale = 1;
+                    wbState.offsetX = 0;
+                    wbState.offsetY = 0;
+                    applyTransform();
+                });
             }
 
             openBtn.addEventListener('click', () => {
@@ -1576,11 +1637,6 @@
                 });
             });
 
-            function applyTransform() {
-                canvas.style.transform = `translate(${wbState.offsetX}px, ${wbState.offsetY}px) scale(${wbState.scale})`;
-                canvas.style.transformOrigin = '0 0';
-            }
-
             function getCanvasPos(clientX, clientY) {
                 const rect = canvas.getBoundingClientRect();
                 return {
@@ -1625,15 +1681,19 @@
                     e.preventDefault();
                     const dist = getDistance(e.touches[0], e.touches[1]);
                     const scaleFactor = dist / wbState.startDist;
-                    let newScale = wbState.startScale * scaleFactor;
-                    newScale = Math.min(Math.max(0.8, newScale), 5);
+                    let newScale = Math.min(Math.max(0.5, wbState.startScale * scaleFactor), 4.0);
 
                     const currentPanX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
                     const currentPanY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+                    const rect = body.getBoundingClientRect();
                     
-                    wbState.offsetX = wbState.startPanX + (currentPanX - wbState.panStartX);
-                    wbState.offsetY = wbState.startPanY + (currentPanY - wbState.panStartY);
+                    const canvasX = (wbState.panStartX - rect.left - wbState.startPanX) / wbState.startScale;
+                    const canvasY = (wbState.panStartY - rect.top - wbState.startPanY) / wbState.startScale;
+
                     wbState.scale = newScale;
+                    wbState.offsetX = currentPanX - rect.left - canvasX * newScale;
+                    wbState.offsetY = currentPanY - rect.top - canvasY * newScale;
 
                     applyTransform();
                     return;
@@ -1751,6 +1811,23 @@
 
             canvas.addEventListener('mouseup', stopTouch);
             canvas.addEventListener('mouseleave', stopTouch);
+
+            // Scroll & Zoom via Wheel / Touchpad
+            body.addEventListener('wheel', (e) => {
+                if (!modal.classList.contains('active')) return;
+                e.preventDefault();
+
+                if (e.ctrlKey) {
+                    // Zoom dengan Ctrl + wheel
+                    const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
+                    setZoom(wbState.scale * zoomFactor, e.clientX, e.clientY);
+                } else {
+                    // Scroll / Pan dengan Wheel biasa
+                    wbState.offsetX -= e.deltaX;
+                    wbState.offsetY -= e.deltaY;
+                    applyTransform();
+                }
+            }, { passive: false });
 
             window.addEventListener('resize', resizeCanvas);
         }
