@@ -22,16 +22,15 @@
             --lavender: #e8ddff;
             --bg-start: #fce4ec;
             --bg-end: #f3e5f5;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --card-border: rgba(255, 255, 255, 0.6);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(255, 255, 255, 0.8);
             --text-main: #3d2a5c;
             --text-muted: #7a6a8f;
             --primary: #b388ff;
             --primary-hover: #9a6ee8;
             --primary-light: #f0ebff;
-            --primary-glow: rgba(179, 136, 255, 0.45);
-            --shadow-card: 0 16px 48px rgba(179, 136, 255, 0.20);
-            --shadow-glow: 0 0 40px rgba(179, 136, 255, 0.15);
+            --primary-glow: rgba(179, 136, 255, 0.3);
+            --shadow-card: 0 12px 36px rgba(179, 136, 255, 0.15);
             --radius-sm: 14px;
             --radius-md: 22px;
             --radius-lg: 32px;
@@ -58,28 +57,6 @@
             position: relative;
         }
 
-        /* ===== FLOATING PARTICLES CANVAS ===== */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ===== 3D PET CHARACTER CANVAS ===== */
-        #sheep-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 40;
-        }
-
         /* ===== CONTAINER ===== */
         .container {
             max-width: 720px;
@@ -99,20 +76,12 @@
             align-items: center;
             padding: 12px 16px;
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid var(--card-border);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-card);
             margin-bottom: 16px;
             position: relative;
             z-index: 2;
-            animation: floatHeader 4s ease-in-out infinite;
-        }
-
-        @keyframes floatHeader {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
         }
 
         .user-tag {
@@ -122,29 +91,6 @@
             font-size: 15px;
             font-weight: 800;
             color: var(--primary);
-        }
-
-        .user-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--pink), var(--purple));
-            padding: 2.5px;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(179, 136, 255, 0.3);
-            animation: avatarGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes avatarGlow {
-            0%, 100% { box-shadow: 0 4px 12px rgba(179, 136, 255, 0.3); }
-            50% { box-shadow: 0 4px 24px rgba(255, 179, 217, 0.5); }
-        }
-
-        .user-avatar svg {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            display: block;
         }
 
         .connection-status {
@@ -169,17 +115,10 @@
             height: 8px;
             border-radius: 50%;
             background: #43a047;
-            animation: pulseDot 2s infinite;
         }
 
         .connection-status.offline .connection-dot {
             background: #e53935;
-            animation: none;
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.6; }
         }
 
         .timer-badge {
@@ -193,7 +132,6 @@
             font-weight: 800;
             font-size: 13px;
             border: 1.5px solid rgba(179, 136, 255, 0.25);
-            box-shadow: 0 2px 8px rgba(179, 136, 255, 0.10);
         }
 
         /* ===== VIEW SECTIONS ===== */
@@ -201,32 +139,18 @@
             display: none;
             flex-direction: column;
             flex: 1;
-            animation: fadeSlideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
 
         .view-section.active {
             display: flex;
         }
 
-        @keyframes fadeSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.97);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
         /* ===== CARD ===== */
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border-radius: var(--radius-lg);
             padding: 24px 18px;
-            box-shadow: var(--shadow-card), var(--shadow-glow);
+            box-shadow: var(--shadow-card);
             border: 1.5px solid var(--card-border);
             flex: 1;
             display: flex;
@@ -236,50 +160,10 @@
         }
 
         /* ===== HOME ===== */
-        .home-avatar-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 12px;
-            border-radius: 50%;
-            padding: 4px;
-            background: linear-gradient(135deg, var(--pink), var(--purple), var(--mint));
-            box-shadow: 0 8px 32px rgba(179, 136, 255, 0.35);
-            animation: avatarPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes avatarPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(179, 136, 255, 0.35); }
-            50% { transform: scale(1.04); box-shadow: 0 8px 48px rgba(255, 179, 217, 0.5); }
-        }
-
-        .home-avatar-wrapper::after {
-            content: '✨';
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 22px;
-            animation: sparkleSpin 4s linear infinite;
-        }
-
-        @keyframes sparkleSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.2); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
-
-        .home-avatar-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            display: block;
-            background: #fff;
-            border: 3px solid rgba(255, 255, 255, 0.7);
-        }
-
         .home-header {
             text-align: center;
             margin-bottom: 16px;
+            margin-top: 10px;
         }
 
         .home-badge {
@@ -292,7 +176,7 @@
             color: var(--purple-dark);
             padding: 5px 16px;
             border-radius: 30px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             border: 1px solid rgba(179, 136, 255, 0.2);
         }
 
@@ -304,7 +188,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             letter-spacing: -0.5px;
         }
 
@@ -324,20 +208,8 @@
             display: flex;
             gap: 12px;
             align-items: center;
-            box-shadow: 0 4px 16px rgba(255, 179, 217, 0.10);
             position: relative;
             overflow: hidden;
-        }
-
-        .motivation-icon {
-            font-size: 28px;
-            flex-shrink: 0;
-            animation: bounceIcon 2.5s ease-in-out infinite;
-        }
-
-        @keyframes bounceIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
         }
 
         .motivation-text {
@@ -390,39 +262,22 @@
             border: 2px solid transparent;
             border-radius: var(--radius-md);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.2s ease;
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
-            box-shadow: 0 6px 16px rgba(179, 136, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(179, 136, 255, 0.08);
             position: relative;
             overflow: hidden;
         }
 
-        .package-item::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, var(--purple), var(--pink));
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 0;
-        }
-
         .package-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(179, 136, 255, 0.2);
+            border-color: var(--primary);
         }
         
-        .package-item:active { transform: scale(0.96); }
+        .package-item:active { transform: scale(0.98); }
 
         .package-item.selected {
-            background: transparent;
-            border-color: transparent;
-            transform: scale(1.03) translateY(-2px);
-            box-shadow: 0 10px 24px var(--primary-glow);
-        }
-
-        .package-item.selected::before {
-            opacity: 1;
+            background: linear-gradient(135deg, var(--purple-dark), var(--pink-dark));
+            box-shadow: 0 6px 18px var(--primary-glow);
         }
 
         .package-name {
@@ -431,12 +286,10 @@
             color: var(--text-main);
             position: relative;
             z-index: 1;
-            transition: color 0.3s;
         }
 
         .package-item.selected .package-name {
             color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
 
         /* ===== BUTTONS ===== */
@@ -453,16 +306,16 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.2s ease;
             position: relative;
         }
 
-        .btn:active { transform: scale(0.96); }
+        .btn:active { transform: scale(0.97); }
 
         .btn-primary {
             background: linear-gradient(135deg, #b388ff, #a06cd5);
             color: #fff;
-            box-shadow: 0 6px 24px var(--primary-glow);
+            box-shadow: 0 4px 16px var(--primary-glow);
         }
 
         .btn-secondary {
@@ -511,14 +364,13 @@
             border-radius: 20px;
             margin-bottom: 14px;
             overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
         }
 
         .quiz-progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--pink), var(--purple), var(--mint));
             width: 0%;
-            transition: width 0.4s ease;
+            transition: width 0.3s ease;
             border-radius: 20px;
         }
 
@@ -530,6 +382,19 @@
             font-size: 13px;
             color: var(--text-muted);
             font-weight: 700;
+        }
+
+        .quiz-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .quiz-left-col, .quiz-right-col {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         /* PASSAGE / CERITA */
@@ -588,7 +453,6 @@
             display: flex;
             gap: 12px;
             align-items: flex-start;
-            box-shadow: 0 4px 12px rgba(255, 200, 0, 0.1);
         }
 
         /* QUESTION & OPTIONS */
@@ -620,12 +484,11 @@
             transition: all 0.2s;
         }
 
-        .option-item:active { transform: scale(0.97); }
+        .option-item:active { transform: scale(0.98); }
 
         .option-item.selected {
             border-color: var(--primary);
             background: linear-gradient(135deg, var(--primary-light), #fce4ec);
-            box-shadow: 0 4px 16px var(--primary-glow);
         }
 
         .option-label {
@@ -696,7 +559,7 @@
             color: #2e7d32;
         }
 
-        /* ===== FITUR PAPAN TULIS / SCRATCHPAD MODAL ===== */
+        /* ===== FITUR PAPAN TULIS / SCRATCHPAD MODAL CANGGIH ===== */
         .whiteboard-btn {
             display: inline-flex;
             align-items: center;
@@ -712,17 +575,14 @@
             font-weight: 800;
             font-size: 13.5px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.15);
             transition: all 0.2s;
         }
-        .whiteboard-btn:active { transform: scale(0.97); }
+        .whiteboard-btn:active { transform: scale(0.98); }
 
         #whiteboard-modal {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(40, 25, 60, 0.65);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             z-index: 1000;
             display: none;
             align-items: center;
@@ -739,7 +599,6 @@
             height: 92vh;
             background: #ffffff;
             border-radius: var(--radius-lg);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -755,6 +614,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
+            z-index: 10;
         }
 
         .whiteboard-title {
@@ -795,16 +655,16 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
             transition: transform 0.2s;
         }
         .color-dot.active {
-            transform: scale(1.25);
+            transform: scale(1.2);
             border-color: var(--purple-dark);
         }
 
-        .size-btn {
-            padding: 3px 8px;
+        .size-btn, .mode-btn, .page-btn {
+            padding: 4px 10px;
             border-radius: 12px;
             border: 1px solid var(--card-border);
             background: #fff;
@@ -813,9 +673,10 @@
             cursor: pointer;
             color: var(--text-main);
         }
-        .size-btn.active {
+        .size-btn.active, .mode-btn.active, .page-btn.active {
             background: var(--purple-dark);
             color: #fff;
+            border-color: var(--purple-dark);
         }
 
         .wb-btn-clear {
@@ -843,15 +704,13 @@
         .whiteboard-body {
             flex: 1;
             position: relative;
-            background: #fdfdfd;
-            background-image: radial-gradient(#e0d7f5 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
+            background: #ffffff;
+            overflow: hidden;
+            touch-action: none;
         }
 
         #wb-canvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            display: block;
             touch-action: none;
             cursor: crosshair;
         }
@@ -881,7 +740,7 @@
         .draw-toggle-btn {
             position: fixed;
             top: 14px;
-            right: 16px;
+            right: 24px;
             z-index: 100;
             padding: 8px 14px;
             background: linear-gradient(135deg, #ff7043, #f4511e);
@@ -891,7 +750,7 @@
             font-weight: 800;
             font-size: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(244, 81, 30, 0.4);
+            box-shadow: 0 4px 12px rgba(244, 81, 30, 0.3);
             display: none;
             align-items: center;
             gap: 6px;
@@ -904,14 +763,13 @@
         .draw-toolbar {
             position: fixed;
             top: 55px;
-            right: 16px;
+            right: 24px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
             border: 1.5px solid var(--purple-dark);
             border-radius: 16px;
             padding: 8px 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             display: none;
             flex-direction: column;
             gap: 8px;
@@ -950,7 +808,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 32px rgba(179, 136, 255, 0.15);
         }
 
         .score-value {
@@ -1065,26 +922,13 @@
             font-size: 13px;
             font-weight: 700;
             z-index: 2000;
-            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
             pointer-events: none;
             text-align: center;
         }
 
         #security-toast.show {
             transform: translateX(-50%) translateY(0);
-        }
-
-        /* CONFETTI CONTAINER */
-        #confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            overflow: hidden;
         }
 
         .loader {
@@ -1109,14 +953,58 @@
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== RESPONSIVE LANDSCAPE MODE & TABLET ADJUSTMENTS ===== */
+        @media (orientation: landscape) and (min-width: 600px) {
+            .container {
+                max-width: 1000px;
+                padding-bottom: 20px;
+            }
+
+            .quiz-content-wrapper {
+                flex-direction: row;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .quiz-left-col {
+                width: 50%;
+                max-height: 70vh;
+                overflow-y: auto;
+                padding-right: 6px;
+            }
+
+            .quiz-right-col {
+                width: 50%;
+            }
+
+            .passage-box {
+                max-height: 280px;
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+
+            .draw-toggle-btn {
+                right: calc((100vw - 1000px) / 2 + 24px);
+            }
+
+            .draw-toolbar {
+                right: calc((100vw - 1000px) / 2 + 24px);
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 1040px) {
+            .draw-toggle-btn, .draw-toolbar {
+                right: 5vw;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <canvas id="particle-canvas"></canvas>
-    <canvas id="sheep-canvas"></canvas>
-    <div id="confetti-container"></div>
     <div id="security-toast">Tindakan tersebut tidak diperbolehkan saat kuis.</div>
 
     <!-- ===== TOOLBAR CORET LANGSUNG DI SOAL ===== -->
@@ -1142,13 +1030,29 @@
         </div>
     </div>
 
-    <!-- ===== PAPAN TULIS MODAL OVERLAY (BESAR) ===== -->
+    <!-- ===== PAPAN TULIS MODAL OVERLAY (3 HALAMAN, BANGUN DATAR, DOT GRID, ZOOM) ===== -->
     <div id="whiteboard-modal">
         <div class="whiteboard-card">
             <div class="whiteboard-header">
-                <div class="whiteboard-title">✏️ Papan Coretan / Oret-oretan Layar Penuh</div>
+                <div class="whiteboard-title">✏️ Papan Coretan &amp; Bangun Datar</div>
                 <div class="whiteboard-tools">
                     <div class="tool-group">
+                        <span class="tool-label">Halaman:</span>
+                        <button class="page-btn active wb-page-btn" data-page="0">Hal 1</button>
+                        <button class="page-btn wb-page-btn" data-page="1">Hal 2</button>
+                        <button class="page-btn wb-page-btn" data-page="2">Hal 3</button>
+                    </div>
+
+                    <div class="tool-group">
+                        <span class="tool-label">Alat:</span>
+                        <button class="mode-btn active wb-mode-btn" data-mode="pen">✏️ Pen</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="eraser">🧹 Hapus</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="rect">🔲 Kotak</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="circle">⚪ Lingkaran</button>
+                        <button class="mode-btn wb-mode-btn" data-mode="triangle">🔺 Segitiga</button>
+                    </div>
+
+                    <div class="tool-group" id="wb-color-group">
                         <span class="tool-label">Warna:</span>
                         <div class="color-dot active modal-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
                         <div class="color-dot modal-color" style="background:#e53935;" data-color="#e53935"></div>
@@ -1156,13 +1060,15 @@
                         <div class="color-dot modal-color" style="background:#43a047;" data-color="#43a047"></div>
                         <div class="color-dot modal-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
                     </div>
+
                     <div class="tool-group">
                         <span class="tool-label">Ukuran:</span>
                         <button class="size-btn active modal-size" data-size="3">Halus</button>
                         <button class="size-btn modal-size" data-size="6">Sedang</button>
-                        <button class="size-btn modal-size" data-size="12">Tebal</button>
+                        <button class="size-btn modal-size" data-size="14">Tebal</button>
                     </div>
-                    <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Hapus</button>
+
+                    <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Bersihkan</button>
                     <button class="wb-btn-close" id="wb-close-btn">❌ Tutup</button>
                 </div>
             </div>
@@ -1178,25 +1084,6 @@
         <!-- ===== TOP BAR ===== -->
         <header class="top-bar">
             <div class="user-tag">
-                <div class="user-avatar" id="mascot-avatar">
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="48" fill="url(#avatarGrad)"/>
-                        <path d="M30 38C30 27 38 20 50 20C62 20 70 27 70 38V48C70 59 62 66 50 66C38 66 30 59 30 48V38Z" fill="#ffb3d9"/>
-                        <circle cx="40" cy="42" r="5" fill="#3d2a5c"/>
-                        <circle cx="60" cy="42" r="5" fill="#3d2a5c"/>
-                        <circle cx="38" cy="40" r="1.5" fill="#fff"/>
-                        <circle cx="58" cy="40" r="1.5" fill="#fff"/>
-                        <path d="M47 52C47 52 49 55 53 52" stroke="#3d2a5c" stroke-width="2.5" stroke-linecap="round"/>
-                        <path d="M32 24L22 14" stroke="#c9b1ff" stroke-width="4" stroke-linecap="round"/>
-                        <path d="M68 24L78 14" stroke="#c9b1ff" stroke-width="4" stroke-linecap="round"/>
-                        <defs>
-                            <linearGradient id="avatarGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#fce4ec"/>
-                                <stop offset="1" stop-color="#e8ddff"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
                 <div>
                     <div>🌸 Ruang Ayya</div>
                     <div id="conn-indicator" class="connection-status">
@@ -1206,7 +1093,7 @@
                 </div>
             </div>
             <div class="timer-badge" id="timer-box" style="display: none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 16 14"></polyline></svg>
                 <span id="timer-display">00:00:00</span>
             </div>
         </header>
@@ -1214,35 +1101,15 @@
         <!-- VIEW: HOME -->
         <section id="view-home" class="view-section active">
             <div class="card">
-                <div class="home-avatar-wrapper">
-                    <svg class="home-avatar-img" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="50" fill="url(#homeGrad)"/>
-                        <circle cx="35" cy="40" r="6" fill="#3d2a5c"/>
-                        <circle cx="65" cy="40" r="6" fill="#3d2a5c"/>
-                        <circle cx="33" cy="38" r="2" fill="#fff"/>
-                        <circle cx="63" cy="38" r="2" fill="#fff"/>
-                        <path d="M42 55C42 55 46 60 50 60C54 60 58 55 58 55" stroke="#3d2a5c" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="50" cy="22" r="12" fill="#ffb3d9"/>
-                        <path d="M25 78C25 65 36 58 50 58C64 58 75 65 75 78V85H25V78Z" fill="#a88beb"/>
-                        <defs>
-                            <linearGradient id="homeGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#fff0f5"/>
-                                <stop offset="1" stop-color="#f0ebff"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-
                 <div class="home-header">
-                    <div class="home-badge">🌟 Ayya  Yuk, Belajar &amp; Bermain!</div>
+                    <div class="home-badge">🌟 Ayya, Yuk Belajar!</div>
                     <h1 class="home-title">Quiz Wonderland</h1>
-                    <p class="home-subtitle">Pilih pelajaran yang ingin kamu kerjakan ✨</p>
+                    <p class="home-subtitle">Pilih pelajaran yang ingin kamu kerjakan, Ayya ✨</p>
                 </div>
 
                 <div class="motivation-card">
-                    <div class="motivation-icon">🦄</div>
                     <div class="motivation-text" id="daily-quote">
-                        "Kamu pasti bisa! Kerjakan dengan tenang dan teliti. 🌸"
+                        "Hai Ayya! Kamu pasti bisa! Kerjakan dengan tenang dan teliti. 🌸"
                     </div>
                 </div>
 
@@ -1251,13 +1118,12 @@
                 <div id="package-container" class="package-grid">
                     <div class="loader" style="grid-column: 1 / -1;">
                         <div class="spinner"></div>
-                        <span>Sedang mencari soal-soal seru...</span>
+                        <span>Sedang mencari soal-soal...</span>
                     </div>
                 </div>
 
                 <button id="btn-start" class="btn btn-primary" disabled style="margin-top: 4px;">
-                    <span>🚀 Mulai Petualangan</span>
-                    <span>✨</span>
+                    <span>🚀 Mulai Belajar</span>
                 </button>
             </div>
         </section>
@@ -1265,7 +1131,6 @@
         <!-- VIEW: QUIZ -->
         <section id="view-quiz" class="view-section">
             <div class="card quiz-card-relative" id="quiz-card-container">
-                <!-- CANVAS UNTUK CORET LANGSUNG DI ATAS SOAL -->
                 <canvas id="direct-draw-canvas"></canvas>
 
                 <div class="quiz-package-header">
@@ -1285,47 +1150,46 @@
                     <span id="label-subject" class="quiz-sheet-badge" style="background: rgba(179,136,255,0.12); font-size: 11px;">Materi</span>
                 </div>
 
-                <!-- TOMBOL PAPAN TULIS CORETAN (BESAR/MODAL) -->
                 <button class="whiteboard-btn" id="open-whiteboard-btn">
                     <span>✏️ Buka Papan Tulis / Oret-oretan</span>
                 </button>
 
-                <!-- CERITA -->
-                <div id="passage-container" class="passage-box" style="display: none;">
-                    <div id="passage-title" class="passage-title">Cerita / Bacaan</div>
-                    <div id="passage-content" class="passage-content"></div>
-                </div>
+                <div class="quiz-content-wrapper">
+                    <div class="quiz-left-col">
+                        <div id="passage-container" class="passage-box" style="display: none;">
+                            <div id="passage-title" class="passage-title">Cerita / Bacaan</div>
+                            <div id="passage-content" class="passage-content"></div>
+                        </div>
 
-                <!-- ILUSTRASI -->
-                <div id="illustration-container" class="illustration-box" style="display: none;">
-                    <div id="illustration-html-wrap" style="width: 100%; overflow-x: auto;"></div>
-                    <img id="illustration-img-wrap" src="" alt="Ilustrasi Soal" style="display: none;" onerror="this.style.display='none';" />
-                </div>
+                        <div id="illustration-container" class="illustration-box" style="display: none;">
+                            <div id="illustration-html-wrap" style="width: 100%; overflow-x: auto;"></div>
+                            <img id="illustration-img-wrap" src="" alt="Ilustrasi Soal" style="display: none;" onerror="this.style.display='none';" />
+                        </div>
 
-                <!-- TIPS -->
-                <div id="tips-container" class="tips-box" style="display: none;">
-                    <span style="font-size: 18px;">💡</span>
-                    <div style="flex:1;">
-                        <strong style="display: block; margin-bottom: 3px; color:#d39e00;">Tips Belajar:</strong>
-                        <div id="tips-content" style="line-height: 1.5; font-weight: 500;"></div>
+                        <div id="tips-container" class="tips-box" style="display: none;">
+                            <span style="font-size: 18px;">💡</span>
+                            <div style="flex:1;">
+                                <strong style="display: block; margin-bottom: 3px; color:#d39e00;">Tips Belajar:</strong>
+                                <div id="tips-content" style="line-height: 1.5; font-weight: 500;"></div>
+                            </div>
+                        </div>
+
+                        <div class="question-box" id="question-text"></div>
+                    </div>
+
+                    <div class="quiz-right-col">
+                        <div class="options-list" id="options-container"></div>
+
+                        <div class="nav-actions">
+                            <button id="btn-prev" class="btn btn-outline" style="flex: 0.6;">⬅️</button>
+                            <button id="btn-next" class="btn btn-secondary" style="flex: 1;">Berikutnya ➡️</button>
+                            <button id="btn-submit" class="btn btn-primary" style="display: none; flex: 1;">✨ Selesai ✨</button>
+                        </div>
+
+                        <div class="palette-grid" id="palette-container"></div>
                     </div>
                 </div>
 
-                <!-- PERTANYAAN -->
-                <div class="question-box" id="question-text"></div>
-
-                <!-- OPSI JAWABAN -->
-                <div class="options-list" id="options-container"></div>
-
-                <!-- NAVIGASI TOMBOL -->
-                <div class="nav-actions">
-                    <button id="btn-prev" class="btn btn-outline" style="flex: 0.6;">⬅️</button>
-                    <button id="btn-next" class="btn btn-secondary" style="flex: 1;">Berikutnya ➡️</button>
-                    <button id="btn-submit" class="btn btn-primary" style="display: none; flex: 1;">✨ Selesai ✨</button>
-                </div>
-
-                <!-- PALETTE NOMOR SOAL -->
-                <div class="palette-grid" id="palette-container"></div>
             </div>
         </section>
 
@@ -1345,13 +1209,12 @@
                     </div>
 
                     <div class="result-message-box" id="res-message">
-                        🌟 Hebat sekali! Terus pertahankan prestasimu ya!
+                        🌟 Hebat sekali Ayya! Terus pertahankan prestasimu ya!
                     </div>
 
-                    <!-- STATUS SINKRONISASI -->
                     <div id="sync-status-box" class="sync-status-box">
                         <svg class="spinner" style="width:16px; height:16px; border-width: 2px;" viewBox="0 0 24 24"></svg>
-                        <span id="sync-status-text">Menyimpan hasil ke awan...</span>
+                        <span id="sync-status-text">Menyimpan hasil ke Google Sheets...</span>
                     </div>
 
                     <div class="stats-grid">
@@ -1389,17 +1252,18 @@
     </div>
 
     <script>
+        // MEMPERTAHANKAN LINK APPS SCRIPT AYYA
         const CONFIG = {
             API_URL: 'https://script.google.com/macros/s/AKfycbySqTLmBytPjm5Ao2qDzMob4rmmIyK-37LDsgIKDo5evsmXzjBKDOufJRKB6xs5Y-H-fg/exec'
         };
 
         const MOTIVATION_QUOTES = [
-            "Kamu pasti bisa! Kerjakan dengan tenang dan teliti. 🌸",
-            "Setiap soal adalah kesempatan untuk belajar hal baru! ✨",
-            "Percaya pada dirimu sendiri, kamu anak hebat! ⭐",
-            "Belajar itu menyenangkan jika dilakukan dengan riang gembira! 🦄",
-            "Terus semangat belajar, masa depan cerah menantimu! 🌟",
-            "Satu langkah kecil hari ini adalah awal dari kesuksesan besar besok! 🌟"
+            "Ayya pasti bisa! Kerjakan dengan tenang dan teliti. 🌸",
+            "Setiap soal adalah kesempatan untuk belajar hal baru, Ayya! ✨",
+            "Percaya pada dirimu sendiri, Ayya anak hebat! ⭐",
+            "Belajar itu menyenangkan jika dilakukan dengan riang gembira!",
+            "Terus semangat belajar, masa depan cerah menantimu! 🌈",
+            "Satu langkah kecil hari ini adalah awal dari kesuksesan besar besok, Ayya! 🌟"
         ];
 
         const state = {
@@ -1582,14 +1446,29 @@
         }
 
         // ============================================================
-        //  2. FITUR PAPAN TULIS MODAL (BESAR/FULLSCREEN)
+        //  2. FITUR PAPAN TULIS MODAL (LATAR PUTIH, DOT GRID & ZOOM 2 JARI)
         // ============================================================
         const wbState = {
             isDrawing: false,
+            isZooming: false,
+            mode: 'pen',
             color: '#2d1a4a',
             size: 3,
-            lastX: 0,
-            lastY: 0
+            currentPage: 0,
+            pages: [null, null, null],
+            startX: 0,
+            startY: 0,
+            snapshot: null,
+            // TRANSFORM ZOOM & PAN
+            scale: 1,
+            offsetX: 0,
+            offsetY: 0,
+            startDist: 0,
+            startScale: 1,
+            startPanX: 0,
+            startPanY: 0,
+            panStartX: 0,
+            panStartY: 0
         };
 
         function initWhiteboard() {
@@ -1601,22 +1480,84 @@
             const ctx = canvas.getContext('2d');
             const body = document.getElementById('wb-body');
 
+            function fillBackgroundAndDots() {
+                ctx.save();
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#d0c4e8';
+                const dotSpacing = 24;
+                const dotRadius = 1.5;
+
+                for (let x = dotSpacing / 2; x < canvas.width; x += dotSpacing) {
+                    for (let y = dotSpacing / 2; y < canvas.height; y += dotSpacing) {
+                        ctx.beginPath();
+                        ctx.arc(x, y, dotRadius, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                ctx.restore();
+            }
+
+            function saveCurrentPage() {
+                if (canvas.width > 0 && canvas.height > 0) {
+                    wbState.pages[wbState.currentPage] = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            function loadCurrentPage() {
+                fillBackgroundAndDots();
+                if (wbState.pages[wbState.currentPage]) {
+                    ctx.putImageData(wbState.pages[wbState.currentPage], 0, 0);
+                }
+            }
+
             function resizeCanvas() {
+                saveCurrentPage();
                 canvas.width = body.clientWidth;
                 canvas.height = body.clientHeight;
+                loadCurrentPage();
             }
 
             openBtn.addEventListener('click', () => {
                 modal.classList.add('active');
+                wbState.scale = 1;
+                wbState.offsetX = 0;
+                wbState.offsetY = 0;
+                applyTransform();
                 resizeCanvas();
             });
 
             closeBtn.addEventListener('click', () => {
+                saveCurrentPage();
                 modal.classList.remove('active');
             });
 
             clearBtn.addEventListener('click', () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                wbState.pages[wbState.currentPage] = null;
+                fillBackgroundAndDots();
+            });
+
+            document.querySelectorAll('.wb-page-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const newPage = parseInt(e.target.getAttribute('data-page'), 10);
+                    if (newPage === wbState.currentPage) return;
+
+                    saveCurrentPage();
+                    document.querySelectorAll('.wb-page-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    wbState.currentPage = newPage;
+                    loadCurrentPage();
+                });
+            });
+
+            document.querySelectorAll('.wb-mode-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.wb-mode-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    wbState.mode = e.target.getAttribute('data-mode');
+                });
             });
 
             document.querySelectorAll('.modal-color').forEach(dot => {
@@ -1635,53 +1576,183 @@
                 });
             });
 
-            function getPos(e) {
+            function applyTransform() {
+                canvas.style.transform = `translate(${wbState.offsetX}px, ${wbState.offsetY}px) scale(${wbState.scale})`;
+                canvas.style.transformOrigin = '0 0';
+            }
+
+            function getCanvasPos(clientX, clientY) {
                 const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
                 return {
-                    x: clientX - rect.left,
-                    y: clientY - rect.top
+                    x: (clientX - rect.left) / wbState.scale,
+                    y: (clientY - rect.top) / wbState.scale
                 };
             }
 
-            function startDraw(e) {
-                wbState.isDrawing = true;
-                const pos = getPos(e);
-                wbState.lastX = pos.x;
-                wbState.lastY = pos.y;
+            function getDistance(t1, t2) {
+                return Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
             }
 
-            function draw(e) {
-                if (!wbState.isDrawing) return;
-                e.preventDefault();
-                const pos = getPos(e);
+            // TOUCH EVENTS
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                    wbState.isDrawing = false;
+                    wbState.isZooming = true;
+                    wbState.startDist = getDistance(e.touches[0], e.touches[1]);
+                    wbState.startScale = wbState.scale;
+                    
+                    wbState.panStartX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    wbState.panStartY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    wbState.startPanX = wbState.offsetX;
+                    wbState.startPanY = wbState.offsetY;
+                } else if (e.touches.length === 1 && !wbState.isZooming) {
+                    wbState.isDrawing = true;
+                    const pos = getCanvasPos(e.touches[0].clientX, e.touches[0].clientY);
+                    wbState.startX = pos.x;
+                    wbState.startY = pos.y;
+
+                    if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                        wbState.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(pos.x, pos.y);
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('touchmove', (e) => {
+                if (wbState.isZooming && e.touches.length === 2) {
+                    e.preventDefault();
+                    const dist = getDistance(e.touches[0], e.touches[1]);
+                    const scaleFactor = dist / wbState.startDist;
+                    let newScale = wbState.startScale * scaleFactor;
+                    newScale = Math.min(Math.max(0.8, newScale), 5);
+
+                    const currentPanX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    const currentPanY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    
+                    wbState.offsetX = wbState.startPanX + (currentPanX - wbState.panStartX);
+                    wbState.offsetY = wbState.startPanY + (currentPanY - wbState.panStartY);
+                    wbState.scale = newScale;
+
+                    applyTransform();
+                    return;
+                }
+
+                if (wbState.isDrawing && e.touches.length === 1) {
+                    e.preventDefault();
+                    const pos = getCanvasPos(e.touches[0].clientX, e.touches[0].clientY);
+
+                    ctx.lineWidth = wbState.size;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+
+                    if (wbState.mode === 'pen') {
+                        ctx.strokeStyle = wbState.color;
+                        ctx.lineTo(pos.x, pos.y);
+                        ctx.stroke();
+                    } else if (wbState.mode === 'eraser') {
+                        ctx.strokeStyle = '#ffffff';
+                        ctx.lineTo(pos.x, pos.y);
+                        ctx.stroke();
+                    } else if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                        if (wbState.snapshot) {
+                            ctx.putImageData(wbState.snapshot, 0, 0);
+                        }
+                        ctx.strokeStyle = wbState.color;
+                        ctx.beginPath();
+
+                        if (wbState.mode === 'rect') {
+                            const width = pos.x - wbState.startX;
+                            const height = pos.y - wbState.startY;
+                            ctx.strokeRect(wbState.startX, wbState.startY, width, height);
+                        } else if (wbState.mode === 'circle') {
+                            const radius = Math.hypot(pos.x - wbState.startX, pos.y - wbState.startY);
+                            ctx.arc(wbState.startX, wbState.startY, radius, 0, Math.PI * 2);
+                            ctx.stroke();
+                        } else if (wbState.mode === 'triangle') {
+                            ctx.moveTo(wbState.startX, pos.y);
+                            ctx.lineTo(wbState.startX + (pos.x - wbState.startX) / 2, wbState.startY);
+                            ctx.lineTo(pos.x, pos.y);
+                            ctx.closePath();
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }, { passive: false });
+
+            const stopTouch = () => {
+                if (wbState.isDrawing) {
+                    wbState.isDrawing = false;
+                    ctx.beginPath();
+                    saveCurrentPage();
+                }
+                wbState.isZooming = false;
+            };
+
+            canvas.addEventListener('touchend', stopTouch);
+            canvas.addEventListener('touchcancel', stopTouch);
+
+            // MOUSE EVENTS
+            canvas.addEventListener('mousedown', (e) => {
+                wbState.isDrawing = true;
+                const pos = getCanvasPos(e.clientX, e.clientY);
+                wbState.startX = pos.x;
+                wbState.startY = pos.y;
+
+                if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                    wbState.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                }
 
                 ctx.beginPath();
-                ctx.moveTo(wbState.lastX, wbState.lastY);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.strokeStyle = wbState.color;
+                ctx.moveTo(pos.x, pos.y);
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (!wbState.isDrawing) return;
+                const pos = getCanvasPos(e.clientX, e.clientY);
+
                 ctx.lineWidth = wbState.size;
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
-                ctx.stroke();
 
-                wbState.lastX = pos.x;
-                wbState.lastY = pos.y;
-            }
+                if (wbState.mode === 'pen') {
+                    ctx.strokeStyle = wbState.color;
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                } else if (wbState.mode === 'eraser') {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                } else if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
+                    if (wbState.snapshot) {
+                        ctx.putImageData(wbState.snapshot, 0, 0);
+                    }
+                    ctx.strokeStyle = wbState.color;
+                    ctx.beginPath();
 
-            function stopDraw() {
-                wbState.isDrawing = false;
-            }
+                    if (wbState.mode === 'rect') {
+                        const width = pos.x - wbState.startX;
+                        const height = pos.y - wbState.startY;
+                        ctx.strokeRect(wbState.startX, wbState.startY, width, height);
+                    } else if (wbState.mode === 'circle') {
+                        const radius = Math.hypot(pos.x - wbState.startX, pos.y - wbState.startY);
+                        ctx.arc(wbState.startX, wbState.startY, radius, 0, Math.PI * 2);
+                        ctx.stroke();
+                    } else if (wbState.mode === 'triangle') {
+                        ctx.moveTo(wbState.startX, pos.y);
+                        ctx.lineTo(wbState.startX + (pos.x - wbState.startX) / 2, wbState.startY);
+                        ctx.lineTo(pos.x, pos.y);
+                        ctx.closePath();
+                        ctx.stroke();
+                    }
+                }
+            });
 
-            canvas.addEventListener('mousedown', startDraw);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDraw);
-            canvas.addEventListener('mouseleave', stopDraw);
+            canvas.addEventListener('mouseup', stopTouch);
+            canvas.addEventListener('mouseleave', stopTouch);
 
-            canvas.addEventListener('touchstart', startDraw, { passive: false });
-            canvas.addEventListener('touchmove', draw, { passive: false });
-            canvas.addEventListener('touchend', stopDraw);
+            window.addEventListener('resize', resizeCanvas);
         }
 
         // ============================================================
@@ -1714,7 +1785,7 @@
                 secondsElapsed: state.secondsElapsed,
                 startTime: state.startTime
             };
-            localStorage.setItem('quiz_progress_active', JSON.stringify(data));
+            localStorage.setItem('quiz_progress_active_ayya', JSON.stringify(data));
         }
 
         // ============================================================
@@ -1827,10 +1898,10 @@
                     alert('Gagal mengambil butir soal dari modul ini. Pastikan sheet tidak kosong.');
                 }
             } catch (_) {
-                alert('Gagal terhubung ke server soal. Periksa koneksi internet kamu ya.');
+                alert('Gagal terhubung ke server soal. Periksa koneksi internet kamu ya, Ayya.');
             } finally {
                 startBtn.disabled = false;
-                startBtn.innerHTML = '<span>🚀 Mulai Petualangan</span><span>✨</span>';
+                startBtn.innerHTML = '<span>🚀 Mulai Belajar</span>';
             }
         }
 
@@ -1850,7 +1921,6 @@
             const pct = ((state.currentIndex + 1) / total) * 100;
             document.getElementById('quiz-progress-fill').style.width = `${pct}%`;
 
-            // Cerita
             const passageBox = document.getElementById('passage-container');
             const passageTitle = document.getElementById('passage-title');
             const passageContent = document.getElementById('passage-content');
@@ -1865,7 +1935,6 @@
                 passageBox.style.display = 'none';
             }
 
-            // Ilustrasi
             const illBox = document.getElementById('illustration-container');
             const illHtmlWrap = document.getElementById('illustration-html-wrap');
             const illImgWrap = document.getElementById('illustration-img-wrap');
@@ -1889,7 +1958,6 @@
 
             illBox.style.display = hasIllustration ? 'block' : 'none';
 
-            // Tips
             const tipsBox = document.getElementById('tips-container');
             const tipsContent = document.getElementById('tips-content');
             const tipsData = q.tips || q.Tips;
@@ -1901,11 +1969,9 @@
                 tipsBox.style.display = 'none';
             }
 
-            // Pertanyaan
             const qText = q.soal || q.Soal || q.pertanyaan || q.Pertanyaan || '';
             document.getElementById('question-text').innerHTML = `<strong>${state.currentIndex + 1}.</strong> ${qText}`;
 
-            // Pilihan Opsi
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
 
@@ -1934,7 +2000,6 @@
                 optionsContainer.appendChild(div);
             });
 
-            // Navigasi Tombol
             document.getElementById('btn-prev').disabled = state.currentIndex === 0;
             const nextBtn = document.getElementById('btn-next');
             const submitBtn = document.getElementById('btn-submit');
@@ -2026,7 +2091,7 @@
             let answeredCount = Object.keys(state.answers).length;
 
             if (answeredCount < total) {
-                if (!confirm(`Masih ada ${total - answeredCount} soal yang belum dijawab. Yakin ingin menyelesaikan kuis ini?`)) {
+                if (!confirm(`Masih ada ${total - answeredCount} soal yang belum dijawab. Yakin ingin menyelesaikan kuis ini, Ayya?`)) {
                     return;
                 }
             }
@@ -2079,13 +2144,13 @@
 
             const msgBox = document.getElementById('res-message');
             if (score === 100) {
-                msgBox.innerHTML = '🌟 <strong>Sempurna!</strong> Kamu benar-benar luar biasa! Pertahankan ya! ⭐';
+                msgBox.innerHTML = '🌟 <strong>Sempurna Ayya!</strong> Kamu benar-benar luar biasa! Pertahankan ya! ⭐';
             } else if (score >= 80) {
-                msgBox.innerHTML = '🎉 <strong>Hebat sekali!</strong> Nilai yang sangat bagus, kamu hebat! 💪';
+                msgBox.innerHTML = '🎉 <strong>Hebat sekali Ayya!</strong> Nilai yang sangat bagus, kamu hebat! 💪';
             } else if (score >= 60) {
-                msgBox.innerHTML = '🌸 <strong>Bagus!</strong> Tinggal sedikit lagi untuk jadi bintang! Semangat! 🌈';
+                msgBox.innerHTML = '🌸 <strong>Bagus Ayya!</strong> Tinggal sedikit lagi untuk jadi bintang! Semangat! 🌈';
             } else {
-                msgBox.innerHTML = '🌱 <strong>Jangan menyerah!</strong> Belajar dari kesalahan akan membuatmu lebih pintar. Kamu pasti bisa! 💖';
+                msgBox.innerHTML = '🌱 <strong>Jangan menyerah Ayya!</strong> Belajar dari kesalahan akan membuatmu lebih pintar. Kamu pasti bisa! 💖';
             }
 
             const syncBox = document.getElementById('sync-status-box');
@@ -2093,11 +2158,11 @@
             syncBox.innerHTML = `<svg class="spinner" style="width:16px; height:16px; border-width: 2px;" viewBox="0 0 24 24"></svg><span id="sync-status-text">Menyimpan hasil ke Google Sheets...</span>`;
 
             showSection('view-result');
-            localStorage.removeItem('quiz_progress_active');
+            localStorage.removeItem('quiz_progress_active_ayya');
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<span>✨ Selesai ✨</span>';
 
-            // PENGIRIMAN DATA SKOR LENGKAP KE GOOGLE SHEETS
+            // PENGIRIMAN DATA KE GOOGLE SHEETS AYYA
             try {
                 const response = await callApiJsonp({
                     aksi: 'submitHasil',
@@ -2131,7 +2196,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('daily-quote').textContent = `"${MOTIVATION_QUOTES[Math.floor(Math.random() * MOTIVATION_QUOTES.length)]}"`;
 
-            localStorage.removeItem('quiz_progress_active');
+            localStorage.removeItem('quiz_progress_active_ayya');
             showSection('view-home');
             loadSheets();
             initDirectDraw();
@@ -2143,7 +2208,7 @@
             document.getElementById('btn-submit').addEventListener('click', submitQuiz);
 
             const handleHomeClick = () => {
-                if (confirm('Yakin ingin kembali ke Beranda? Progress kuis akan tetap tersimpan otomatis.')) {
+                if (confirm('Yakin ingin kembali ke Beranda, Ayya? Progress kuis akan tetap tersimpan otomatis.')) {
                     stopTimer();
                     loadSheets();
                     showSection('view-home');
@@ -2160,179 +2225,6 @@
                 showSection('view-home');
             });
         });
-
-        // ============================================================
-        //  PARTICLES BACKGROUND ANIMATION
-        // ============================================================
-        (function initParticles() {
-            const canvas = document.getElementById('particle-canvas');
-            const ctx = canvas.getContext('2d');
-            let w, h;
-            const particles = [];
-            const emojis = ['🌸', '✨', '⭐', '🦄', '💖', '🌟', '🌈', '☁️'];
-
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            class Particle {
-                constructor() { this.reset(); }
-                reset() {
-                    this.x = Math.random() * w;
-                    this.y = Math.random() * h - h;
-                    this.size = 14 + Math.random() * 16;
-                    this.speed = 0.3 + Math.random() * 0.5;
-                    this.opacity = 0.15 + Math.random() * 0.25;
-                    this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
-                    this.rotation = Math.random() * 360;
-                    this.rotationSpeed = (Math.random() - 0.5) * 0.02;
-                    this.swing = Math.random() * 0.5;
-                    this.phase = Math.random() * Math.PI * 2;
-                }
-                update() {
-                    this.y += this.speed;
-                    this.x += Math.sin(this.phase) * this.swing;
-                    this.phase += 0.008;
-                    this.rotation += this.rotationSpeed;
-                    if (this.y > h + 50) { this.reset(); this.y = -30; }
-                }
-                draw() {
-                    ctx.save();
-                    ctx.globalAlpha = this.opacity;
-                    ctx.translate(this.x, this.y);
-                    ctx.rotate(this.rotation);
-                    ctx.font = `${this.size}px serif`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(this.emoji, 0, 0);
-                    ctx.restore();
-                }
-            }
-
-            for (let i = 0; i < 20; i++) {
-                const p = new Particle();
-                p.y = Math.random() * h;
-                particles.push(p);
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, w, h);
-                particles.forEach(p => { p.update(); p.draw(); });
-                requestAnimationFrame(animate);
-            }
-            animate();
-        })();
-
-        // ============================================================
-        //  3D INTERACTIVE PET / MASCOT SCRIPT
-        // ============================================================
-        (function initInteractivePet() {
-            const canvas = document.getElementById('sheep-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            let w, h;
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            const particles = [];
-            const pet = {
-                x: window.innerWidth * 0.85,
-                y: window.innerHeight - 45,
-                baseY: window.innerHeight - 45,
-                radius: 28,
-                dir: -1,
-                scaleX: -1,
-                state: 'IDLE',
-                jumpY: 0,
-                jumpVy: 0,
-                idleTimer: 0
-            };
-
-            function triggerPetAction() {
-                pet.state = 'JUMP';
-                pet.jumpVy = -8;
-                for (let i = 0; i < 6; i++) {
-                    particles.push({
-                        x: pet.x + (Math.random() - 0.5) * 30,
-                        y: pet.y - 30 + (Math.random() - 0.5) * 20,
-                        vx: (Math.random() - 0.5) * 2,
-                        vy: -1.5 - Math.random() * 2,
-                        emoji: ['⭐', '✨', '💖'][Math.floor(Math.random() * 3)],
-                        alpha: 1
-                    });
-                }
-            }
-
-            function loop() {
-                ctx.clearRect(0, 0, w, h);
-
-                if (pet.state === 'JUMP') {
-                    pet.jumpY += pet.jumpVy;
-                    pet.jumpVy += 0.45;
-                    if (pet.jumpY >= 0) {
-                        pet.jumpY = 0;
-                        pet.state = 'IDLE';
-                    }
-                }
-
-                ctx.save();
-                ctx.translate(pet.x, pet.y + pet.jumpY);
-                ctx.scale(pet.scaleX, 1);
-
-                ctx.fillStyle = '#fff0f5';
-                ctx.beginPath();
-                ctx.arc(0, 0, pet.radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#c9b1ff';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.moveTo(-16, -20); ctx.lineTo(-24, -36); ctx.lineTo(-6, -26);
-                ctx.moveTo(16, -20); ctx.lineTo(24, -36); ctx.lineTo(6, -26);
-                ctx.fillStyle = '#ffb3d9';
-                ctx.fill();
-
-                ctx.fillStyle = '#3d2a5c';
-                ctx.beginPath();
-                ctx.arc(-8, -4, 3.5, 0, Math.PI * 2);
-                ctx.arc(8, -4, 3.5, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.restore();
-
-                for (let i = particles.length - 1; i >= 0; i--) {
-                    const p = particles[i];
-                    p.x += p.vx; p.y += p.vy; p.alpha -= 0.025;
-                    if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-                    ctx.save();
-                    ctx.globalAlpha = p.alpha;
-                    ctx.font = '16px serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(p.emoji, p.x, p.y);
-                    ctx.restore();
-                }
-
-                requestAnimationFrame(loop);
-            }
-            loop();
-
-            window.addEventListener('pointerdown', (e) => {
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                if (Math.hypot(clientX - pet.x, clientY - pet.y) < 50) {
-                    triggerPetAction();
-                }
-            });
-        })();
     </script>
 </body>
 </html>
