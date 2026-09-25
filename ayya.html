@@ -1046,7 +1046,7 @@
                         <button class="page-btn wb-page-btn" data-page="2">Hal 3</button>
                     </div>
 
-                    <!-- FITUR TOMBOL ZOOM PASA TOOLBAR -->
+                    <!-- FITUR TOMBOL ZOOM PADA TOOLBAR -->
                     <div class="tool-group">
                         <span class="tool-label">Zoom:</span>
                         <button class="size-btn" id="wb-zoom-out-btn" title="Perkecil">🔍-</button>
@@ -1531,8 +1531,9 @@
 
             function resizeCanvas() {
                 saveCurrentPage();
-                canvas.width = body.clientWidth;
-                canvas.height = body.clientHeight * 2; // Ukuran tinggi 2 kali lipat
+                // Ukuran canvas diset 2 kali lebar dan 2 kali tinggi area tampilan
+                canvas.width = body.clientWidth * 2;
+                canvas.height = body.clientHeight * 2;
                 loadCurrentPage();
             }
 
@@ -1558,7 +1559,7 @@
 
                 wbState.scale = clampedScale;
 
-                // Sesuaikan offset agar titik tengah zoom tetap di posisi semula
+                // Sesuaikan offset agar titik fokus zoom tetap di posisi semula
                 wbState.offsetX = centerScreenX - rect.left - canvasX * wbState.scale;
                 wbState.offsetY = centerScreenY - rect.top - canvasY * wbState.scale;
 
@@ -1692,6 +1693,7 @@
                     const canvasY = (wbState.panStartY - rect.top - wbState.startPanY) / wbState.startScale;
 
                     wbState.scale = newScale;
+                    // Geser offset secara horizontal (kanan-kiri) & vertikal (atas-bawah)
                     wbState.offsetX = currentPanX - rect.left - canvasX * newScale;
                     wbState.offsetY = currentPanY - rect.top - canvasY * newScale;
 
@@ -1812,7 +1814,7 @@
             canvas.addEventListener('mouseup', stopTouch);
             canvas.addEventListener('mouseleave', stopTouch);
 
-            // Scroll & Zoom via Wheel / Touchpad
+            // Scroll / Pan & Zoom via Wheel / Touchpad
             body.addEventListener('wheel', (e) => {
                 if (!modal.classList.contains('active')) return;
                 e.preventDefault();
@@ -1822,7 +1824,7 @@
                     const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
                     setZoom(wbState.scale * zoomFactor, e.clientX, e.clientY);
                 } else {
-                    // Scroll / Pan dengan Wheel biasa
+                    // Scroll / Pan horizontal & vertikal dengan wheel / touchpad
                     wbState.offsetX -= e.deltaX;
                     wbState.offsetY -= e.deltaY;
                     applyTransform();
