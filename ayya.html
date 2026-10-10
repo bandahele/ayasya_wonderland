@@ -739,21 +739,21 @@
 
         .draw-toggle-btn {
             position: fixed;
-            top: 14px;
+            bottom: 30px;
             right: 24px;
             z-index: 100;
-            padding: 8px 14px;
+            padding: 14px 24px;
             background: linear-gradient(135deg, #ff7043, #f4511e);
             color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 30px;
             font-weight: 800;
-            font-size: 12px;
+            font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(244, 81, 30, 0.3);
+            box-shadow: 0 6px 16px rgba(244, 81, 30, 0.4);
             display: none;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .draw-toggle-btn.active {
@@ -762,13 +762,14 @@
 
         .draw-toolbar {
             position: fixed;
-            top: 55px;
+            bottom: 85px;
+            top: auto;
             right: 24px;
             z-index: 100;
             background: rgba(255, 255, 255, 0.95);
             border: 1.5px solid var(--purple-dark);
             border-radius: 16px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             display: none;
             flex-direction: column;
@@ -1868,7 +1869,7 @@
         }
 
         // ============================================================
-        //  LOAD MODULES / SHEETS
+        //  LOAD MODULES / SHEETS & HIGHSCORES
         // ============================================================
         async function loadSheets() {
             const container = document.getElementById('package-container');
@@ -1877,8 +1878,18 @@
             const connText = document.getElementById('conn-text');
 
             try {
-                const response = await callApiJsonp({ aksi: 'getSheets' });
+                // Mengambil daftar soal dan skor tertinggi dari server secara paralel
+                const [response, skorResponse] = await Promise.all([
+                    callApiJsonp({ aksi: 'getSheets' }),
+                    callApiJsonp({ aksi: 'getSkor' }).catch(() => ({ status: 'error' }))
+                ]);
                 
+                // Menyimpan mapping skor tertinggi
+                let highestScores = {};
+                if (skorResponse && skorResponse.status === 'success') {
+                    highestScores = skorResponse.data;
+                }
+
                 if (response && response.status === 'success' && Array.isArray(response.data)) {
                     state.isOnline = true;
                     connStatus.className = 'connection-status';
@@ -1908,7 +1919,12 @@
                         const isSelected = idx === 0;
                         const div = document.createElement('div');
                         div.className = `package-item ${isSelected ? 'selected' : ''}`;
-                        div.innerHTML = `<span class="package-name">${pkg.title}</span>`;
+                        
+                        // Menarik skor tertinggi dari data backend
+                        const highScore = highestScores[pkg.sheetId] || highestScores[pkg.title];
+                        const scoreDisplay = highScore !== undefined ? `<br><span style="font-size: 12px; color: #43a047; font-weight: 700;">🏆 Skor: ${highScore}</span>` : '';
+
+                        div.innerHTML = `<span class="package-name">${pkg.title}${scoreDisplay}</span>`;
 
                         div.addEventListener('click', () => {
                             document.querySelectorAll('.package-item').forEach(el => el.classList.remove('selected'));
