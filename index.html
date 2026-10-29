@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff5fb">
+  <meta name="description" content="Asya Wonderland, ruang belajar seru, nyaman, dan penuh warna untuk anak SD.">
+  <title>Asya &amp; Ayya Wonderland | Ruang Belajar Ceria</title>
+  <style>
+    :root {
+      --pink: #f5a8d0;
+      --pink-dark: #c94f98;
+      --pink-soft: #fff0f8;
+      --purple: #a99af5;
+      --purple-dark: #6d5acb;
+      --purple-soft: #f1edff;
+      --mint: #b8eadc;
+      --mint-dark: #287d69;
+      --yellow: #ffe5a3;
+      --ink: #342c4b;
+      --muted: #817a94;
+      --white: #fff;
+      --line: #f0e8f4;
+      --shadow: 0 18px 50px rgba(105, 76, 130, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(245,168,208,.22), transparent 24rem),
+        radial-gradient(circle at 95% 20%, rgba(169,154,245,.20), transparent 25rem),
+        #fffafd;
+      font-family: ui-rounded, "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .page { max-width: 1180px; margin: 0 auto; padding: 24px 28px 36px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:28px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .brand-mark {
+      width:48px; height:48px; display:grid; place-items:center; border-radius:17px;
+      background:linear-gradient(145deg,#ffc8e5,#c8baff); box-shadow:0 8px 18px #d9b7e855;
+      font-size:25px; flex-shrink:0;
+    }
+    .brand-name { font-size:19px; font-weight:850; letter-spacing:-.5px; }
+    .brand-sub { color:var(--muted); font-size:12px; margin-top:2px; }
+    .top-actions { display:flex; align-items:center; gap:10px; }
+    .date-pill { border:1px solid var(--line); background:#ffffffc9; padding:10px 14px; border-radius:99px; color:var(--muted); font-size:13px; }
+    .profile { width:42px;height:42px;border-radius:15px;background:var(--yellow);display:grid;place-items:center;font-size:21px;border:2px solid white;box-shadow:0 4px 14px #e9c76a44; }
+    .hero {
+      position:relative; overflow:hidden; display:grid; grid-template-columns:1.25fr .75fr; gap:20px;
+      background:linear-gradient(115deg,#ffe5f2 0%,#f5eaff 58%,#e7f8f3 100%);
+      border:1px solid #fff; border-radius:30px; padding:clamp(26px,5vw,52px);
+      box-shadow:var(--shadow); min-height:300px; align-items:center;
+    }
+    .hero:before,.hero:after { content:"";position:absolute;border-radius:50%;pointer-events:none; }
+    .hero:before { width:220px;height:220px;background:#ffffff42;right:23%;top:-140px; }
+    .hero:after { width:150px;height:150px;background:#fff8;right:-48px;bottom:-75px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:7px; background:#ffffffb8; color:var(--pink-dark); padding:8px 12px; border-radius:99px; font-size:12px; font-weight:800; letter-spacing:.3px; }
+    h1 { margin:17px 0 12px; font-size:clamp(32px,5vw,54px); line-height:1.08; letter-spacing:-1.8px; max-width:620px; }
+    h1 span { color:var(--pink-dark); }
+    .hero p { margin:0; max-width:520px; line-height:1.7; color:#6f6683; font-size:15px; }
+    .hero-buttons { display:flex;flex-wrap:wrap;gap:11px;margin-top:24px; }
+    .btn { display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:14px;padding:13px 17px;font-weight:800;font-size:14px;transition:transform .18s,box-shadow .18s;cursor:pointer; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn-primary { color:white;background:linear-gradient(135deg,#df77b5,#9b86ec);box-shadow:0 9px 18px #c58acb55; }
+    .btn-light { background:#ffffffd9;color:#625577;border:1px solid #fff; }
+    .hero-art { position:relative; z-index:1; display:grid;place-items:center; min-height:210px; }
+    .planet { width:200px;height:200px;border-radius:48% 52% 48% 52%;background:linear-gradient(145deg,#fff,#ffe6f4);display:grid;place-items:center;box-shadow:inset -12px -12px 0 #e9d8f9,0 18px 38px #b58acb33;transform:rotate(-7deg);font-size:100px; }
+    .float { position:absolute;display:grid;place-items:center;width:47px;height:47px;border-radius:16px;background:#fff;box-shadow:0 8px 20px #a68ab533;font-size:23px; }
+    .float.star { top:8px;right:18%;transform:rotate(12deg); }
+    .float.book { left:5%;bottom:14px;transform:rotate(-12deg); }
+    .float.heart { right:3%;bottom:22px;transform:rotate(9deg); }
+    .section-head { display:flex;justify-content:space-between;align-items:end;gap:16px;margin:34px 2px 16px; }
+    .section-kicker { text-transform:uppercase;letter-spacing:1.7px;color:var(--pink-dark);font-size:10px;font-weight:900;margin-bottom:7px; }
+    h2 { margin:0;font-size:23px;letter-spacing:-.6px; }
+    .section-note { color:var(--muted);font-size:13px; }
+    .cards { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px; }
+    .learning-card { position:relative;display:flex;flex-direction:column;min-height:242px;border-radius:24px;padding:22px;background:white;border:1px solid #f3eaf4;box-shadow:0 8px 25px #73518b0b;overflow:hidden;transition:transform .2s,box-shadow .2s; }
+    .learning-card:hover { transform:translateY(-4px);box-shadow:var(--shadow); }
+    .learning-card:after { content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-38px;top:-38px;background:var(--card-tint);opacity:.8; }
+    .card-top { display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1; }
+    .card-icon { width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:var(--card-tint);font-size:29px; }
+    .card-tag { font-size:10px;font-weight:900;letter-spacing:.8px;color:var(--card-color);background:var(--card-tint);padding:7px 9px;border-radius:99px; }
+    .learning-card h3 { margin:20px 0 7px;font-size:19px;letter-spacing:-.4px; }
+    .learning-card p { margin:0;color:var(--muted);font-size:13px;line-height:1.65;max-width:300px; }
+    .card-link { display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:20px;font-weight:850;color:var(--card-color);font-size:13px; }
+    .arrow { display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--card-tint);font-size:17px; }
+    .pink { --card-tint:#fff0f8;--card-color:#c94f98; }
+    .purple { --card-tint:#f1edff;--card-color:#7866d3; }
+    .mint { --card-tint:#e9faf4;--card-color:#328b75; }
+    .bottom-grid { display:grid;grid-template-columns:1.1fr .9fr;gap:17px;margin-top:24px; }
+    .panel { background:#fff;border:1px solid #f3eaf4;border-radius:24px;padding:22px;box-shadow:0 8px 25px #73518b0b; }
+    .panel-head { display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px; }
+    .panel h3 { margin:0;font-size:17px; }
+    .mini-label { font-size:11px;color:var(--muted); }
+    .steps { display:grid;gap:13px; }
+    .step { display:flex;align-items:center;gap:12px; }
+    .step-number { width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:var(--pink-soft);color:var(--pink-dark);font-weight:900;font-size:13px;flex-shrink:0; }
+    .step:nth-child(2) .step-number { background:var(--purple-soft);color:var(--purple-dark); }
+    .step:nth-child(3) .step-number { background:#e9faf4;color:var(--mint-dark); }
+    .step strong { display:block;font-size:13px;margin-bottom:3px; }
+    .step span { display:block;font-size:12px;color:var(--muted); }
+    .quote-panel { background:linear-gradient(135deg,#f3edff,#fff0f7);position:relative;overflow:hidden; }
+    .quote-mark { font-size:35px;line-height:1;color:#b8a8f2; }
+    .quote { font-size:18px;font-weight:800;line-height:1.5;letter-spacing:-.3px;margin:10px 0 14px;max-width:340px; }
+    .quote-foot { color:var(--muted);font-size:12px; }
+    .sparkle { position:absolute;right:22px;bottom:12px;font-size:57px;opacity:.5; }
+    footer { display:flex;justify-content:space-between;align-items:center;gap:14px;padding:25px 4px 0;color:#9991a7;font-size:11px; }
+    .footer-brand { color:#786c91;font-weight:800; }
+    @media (max-width:760px) {
+      .page { padding:17px 15px 25px; }
+      .topbar { margin-bottom:18px; }
+      .date-pill { display:none; }
+      .hero { grid-template-columns:1fr;gap:0;padding:27px 23px 18px;border-radius:25px; }
+      h1 { font-size:37px; }
+      .hero-art { min-height:170px; }
+      .planet { width:145px;height:145px;font-size:74px; }
+      .float { width:39px;height:39px;font-size:19px; }
+      .float.star { right:22%; }
+      .float.book { left:13%;bottom:7px; }
+      .float.heart { right:12%;bottom:8px; }
+      .section-head { align-items:start;flex-direction:column;gap:7px;margin-top:28px; }
+      .cards { grid-template-columns:1fr;gap:12px; }
+      .learning-card { min-height:200px;padding:19px; }
+      .learning-card h3 { margin-top:15px; }
+      .bottom-grid { grid-template-columns:1fr;gap:12px;margin-top:16px; }
+      footer { align-items:flex-start;flex-direction:column;gap:6px; }
+    }
+    @media (min-width:540px) and (max-width:760px) {
+      .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .learning-card:last-child { grid-column:span 2; }
+    }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important;transition:none!important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Asya Wonderland beranda">
+        <div class="brand-mark">✿</div>
+        <div>
+          <div class="brand-name">Asya Wonderland</div>
+          <div class="brand-sub">Little steps, big dreams</div>
+        </div>
+      </a>
+      <div class="top-actions">
+        <div class="date-pill" id="today">Hari ini adalah hari yang baik untuk belajar</div>
+        <div class="profile" aria-label="Profil pelajar">🎀</div>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">✦ TEMPAT BELAJAR FAVORITMU</div>
+        <h1 id="hero-title">Hai, Asya &amp; Ayya!<br>Mari <span>belajar</span> dan bersinar.</h1>
+        <p>Ruang belajar bersama untuk Asya dan Ayya. Temukan hal baru, asah kemampuan, dan mulai petualangan belajar kalian hari ini!</p>
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="./asya.html">Mulai Belajar <span aria-hidden="true">→</span></a>
+          <a class="btn btn-light" href="./games.html">Jelajahi Games ♡</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="planet">🦄</div>
+        <div class="float star">⭐</div>
+        <div class="float book">📚</div>
+        <div class="float heart">💗</div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">PILIH PETUALANGANMU</div>
+        <h2>Mau belajar apa hari ini?</h2>
+      </div>
+      <div class="section-note">Belajar bersama, tumbuh bersama, setiap hari.</div>
+    </div>
+
+    <section class="cards" aria-label="Menu pembelajaran">
+      <a class="learning-card pink" href="./asya.html">
+        <div class="card-top">
+          <div class="card-icon">📖</div>
+          <div class="card-tag">MATERI 01</div>
+        </div>
+        <h3>Ruang Belajar Asya</h3>
+        <p>Asya dapat mengerjakan soal, menguji pemahaman, dan melihat perkembangan hasil belajarnya.</p>
+        <div class="card-link"><span>Buka pembelajaran</span><span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
+
+      <a class="learning-card purple" href="./ayya.html">
+        <div class="card-top">
+          <div class="card-icon">📝</div>
+          <div class="card-tag">MATERI 02</div>
+        </div>
+        <h3>Ruang Belajar Ayya</h3>
+        <p>Ayya dapat berlatih dengan soal-soal pilihan untuk mengasah ketelitian dan kemampuan berpikir.</p>
+        <div class="card-link"><span>Mulai latihan</span><span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
+
+      <a class="learning-card mint" href="./games.html">
+        <div class="card-top">
+          <div class="card-icon">🎮</div>
+          <div class="card-tag">WAKTUNYA BERMAIN</div>
+        </div>
+        <h3>Wonder Games</h3>
+        <p>Belajar sambil bermain. Uji kecepatan berpikir dan pecahkan tantangan yang tersedia.</p>
+        <div class="card-link"><span>Main sekarang</span><span class="arrow" aria-hidden="true">↗</span></div>
+      </a>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>✨ Cara memulai hari ini</h3>
+          <span class="mini-label">3 langkah mudah</span>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <div><strong>Pilih ruang belajar</strong><span>Buka salah satu menu soal yang tersedia.</span></div>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <div><strong>Kerjakan dengan teliti</strong><span>Baca setiap pertanyaan dan pilih jawabanmu.</span></div>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <div><strong>Coba tantangan berikutnya</strong><span>Gunakan hasil latihan untuk terus berkembang.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel quote-panel">
+        <div class="quote-mark" aria-hidden="true">“</div>
+        <div class="quote">Aku bisa belajar hal baru. Aku berani mencoba. Aku terus berkembang!</div>
+        <div class="quote-foot">Pengingat kecil untuk bintang kecil yang hebat.</div>
+        <div class="sparkle" aria-hidden="true">✧</div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-brand">✿ Asya Wonderland</div>
+      <div>Ruang belajar Asya dan Ayya. Bertumbuh bersama melalui setiap pelajaran.</div>
+    </footer>
+  </main>
+  <script>
+    (function () {
+      const el = document.getElementById('today');
+      try {
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat('id-ID', {
+          weekday: 'long', day: 'numeric', month: 'long'
+        }).format(now);
+        el.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+      } catch (e) {
+        el.textContent = 'Hari ini adalah hari yang baik untuk belajar';
+      }
+    })();
+  </script>
+</body>
+</html>
