@@ -384,7 +384,7 @@ select:focus{border-color:var(--primary)}
       <button class="game-card" type="button" data-target="screen-math">
         <span class="card-icon">⚡</span>
         <h3>Math Challenge</h3>
-        <p>Tambah, kurang, kali — lawan waktu 60 detik.</p>
+        <p>Latihan tambah, kurang, dan perkalian sederhana untuk anak SD.</p>
         <span class="tag">Kecepatan</span>
       </button>
       <button class="game-card" type="button" data-target="screen-caro">
@@ -410,6 +410,12 @@ select:focus{border-color:var(--primary)}
         <h3>Wonder Puzzle</h3>
         <p>Susun 20 potongan gambar dan selesaikan tantangannya.</p>
         <span class="tag">Kreativitas</span>
+      </button>
+      <button class="game-card" type="button" data-target="screen-english">
+        <span class="card-icon">🔤</span>
+        <h3>English Everyday</h3>
+        <p>Tebak arti kosakata bahasa Inggris sehari-hari dalam 60 detik.</p>
+        <span class="tag">Bahasa Inggris</span>
       </button>
     </div>
     <p class="footer">Ara Learning Hub · Belajar, bermain, tumbuh bersama ✨</p>
@@ -452,6 +458,7 @@ select:focus{border-color:var(--primary)}
           <div class="stat"><span>Waktu</span><b id="math-time">60</b></div>
         </div>
       </div>
+      <p class="hint">Soal sederhana untuk anak SD, misalnya 3 × 4, 12 + 7, dan 20 − 8.</p>
       <div class="timebar"><i id="math-bar"></i></div>
       <div class="math-question" id="math-q">Tekan Mulai</div>
       <div class="math-answers" id="math-answers"></div>
@@ -461,12 +468,34 @@ select:focus{border-color:var(--primary)}
             <option value="mix" selected>Campuran</option>
             <option value="add">Tambah (+)</option>
             <option value="sub">Kurang (−)</option>
-            <option value="mul">Kali (×)</option>
+            <option value="mul">Perkalian (×)</option>
           </select>
         </label>
         <button class="btn primary" id="math-start">Mulai</button>
       </div>
       <div class="result" id="math-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- ============ ENGLISH EVERYDAY ============ -->
+  <section class="screen" id="screen-english">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>🔤 English Everyday</h2>
+        <div class="stats">
+          <div class="stat"><span>Skor</span><b id="eng-score">0</b></div>
+          <div class="stat"><span>Benar</span><b id="eng-correct">0</b></div>
+          <div class="stat"><span>Waktu</span><b id="eng-time">60</b></div>
+        </div>
+      </div>
+      <p class="hint">Pilih arti bahasa Indonesia dari kata bahasa Inggris yang sering digunakan sehari-hari.</p>
+      <div class="timebar"><i id="eng-bar"></i></div>
+      <div class="math-question" id="eng-q">Tekan Mulai</div>
+      <div class="math-answers" id="eng-answers"></div>
+      <div class="toolbar">
+        <button class="btn primary" id="eng-start" type="button">Mulai</button>
+      </div>
+      <div class="result" id="eng-result" hidden></div>
     </div>
   </section>
 
@@ -628,6 +657,7 @@ function show(id) {
 
   if (id === 'screen-memory') leaveHandler = () => mem.stop();
   if (id === 'screen-math')   leaveHandler = () => math.stop();
+  if (id === 'screen-english') leaveHandler = () => english.stop();
   if (id === 'screen-sudoku') leaveHandler = () => sud.stop();
 }
 
@@ -638,6 +668,7 @@ $$('[data-target]').forEach(btn => {
     const t = btn.dataset.target;
     if (t === 'screen-memory') mem.newGame();
     if (t === 'screen-math')   math.reset();
+    if (t === 'screen-english') english.reset();
     if (t === 'screen-caro')   caro.newGame();
     if (t === 'screen-ttt')    ttt.newGame();
     if (t === 'screen-sudoku') sud.start();
@@ -799,9 +830,9 @@ const math = (() => {
     const op = mode === 'mix' ? ['add', 'sub', 'mul'][rand(0, 2)] : mode;
 
     let a, b, ans, sym;
-    if (op === 'add')      { a = rand(12, 99); b = rand(12, 99); ans = a + b; sym = '+'; }
-    else if (op === 'sub') { a = rand(30, 99); b = rand(11, a - 1); ans = a - b; sym = '−'; }
-    else                   { a = rand(3, 12);  b = rand(3, 12);  ans = a * b; sym = '×'; }
+    if (op === 'add')      { a = rand(1, 30); b = rand(1, 30); ans = a + b; sym = '+'; }
+    else if (op === 'sub') { a = rand(10, 50); b = rand(1, a); ans = a - b; sym = '−'; }
+    else                   { a = rand(1, 10);  b = rand(1, 10);  ans = a * b; sym = '×'; }
 
     current = { ans };
     $('#math-q').innerHTML = `${a} <span class="op">${sym}</span> ${b} <span class="op">=</span> ?`;
@@ -823,13 +854,13 @@ const math = (() => {
     const set = new Set([ans]);
     let guard = 0;
     while (set.size < 4 && guard++ < 200) {
-      const spread = Math.max(4, Math.round(Math.abs(ans) * 0.18));
+      const spread = Math.max(3, Math.min(12, Math.round(Math.abs(ans) * 0.2)));
       const d = rand(1, spread);
       const cand = Math.random() < 0.5 ? ans - d : ans + d;
       if (cand < 0 || cand === ans) continue;
       set.add(cand);
     }
-    while (set.size < 4) set.add(rand(0, 200));
+    while (set.size < 4) set.add(rand(Math.max(0, ans - 15), ans + 15));
     return shuffle([...set]);
   }
 
@@ -879,6 +910,78 @@ const math = (() => {
   $('#math-start').addEventListener('click', start);
 
   return { reset, stop, start };
+})();
+
+/* =========================================================
+   GAME — ENGLISH EVERYDAY
+   ========================================================= */
+const english = (() => {
+  const TOTAL_TIME = 60;
+  const WORDS = [
+    ['apple','apel'],['book','buku'],['school','sekolah'],['teacher','guru'],['student','murid'],
+    ['pencil','pensil'],['bag','tas'],['chair','kursi'],['table','meja'],['door','pintu'],
+    ['window','jendela'],['house','rumah'],['room','kamar'],['bed','tempat tidur'],['water','air'],
+    ['milk','susu'],['bread','roti'],['rice','nasi'],['egg','telur'],['fish','ikan'],
+    ['chicken','ayam'],['cat','kucing'],['dog','anjing'],['bird','burung'],['flower','bunga'],
+    ['tree','pohon'],['sun','matahari'],['moon','bulan'],['star','bintang'],['rain','hujan'],
+    ['morning','pagi'],['afternoon','siang'],['night','malam'],['today','hari ini'],['tomorrow','besok'],
+    ['yesterday','kemarin'],['happy','senang'],['sad','sedih'],['hungry','lapar'],['thirsty','haus'],
+    ['tired','lelah'],['sleep','tidur'],['eat','makan'],['drink','minum'],['read','membaca'],
+    ['write','menulis'],['play','bermain'],['run','berlari'],['walk','berjalan'],['speak','berbicara'],
+    ['listen','mendengarkan'],['look','melihat'],['help','membantu'],['friend','teman'],['family','keluarga'],
+    ['mother','ibu'],['father','ayah'],['sister','saudara perempuan'],['brother','saudara laki-laki'],['clean','bersih'],
+    ['big','besar'],['small','kecil'],['hot','panas'],['cold','dingin'],['fast','cepat'],['slow','lambat'],
+    ['beautiful','indah'],['please','tolong'],['thank you','terima kasih'],['sorry','maaf'],['good morning','selamat pagi']
+  ];
+  let score = 0, correct = 0, timeLeft = TOTAL_TIME, timer = null, running = false, current = null, used = [];
+  function stop(){ if(timer){clearInterval(timer);timer=null;} running=false; }
+  function reset(){
+    stop(); score=0; correct=0; timeLeft=TOTAL_TIME; current=null; used=[];
+    $('#eng-score').textContent='0'; $('#eng-correct').textContent='0'; $('#eng-time').textContent=TOTAL_TIME;
+    $('#eng-q').textContent='Tekan Mulai'; $('#eng-answers').innerHTML=''; $('#eng-bar').style.width='100%';
+    $('#eng-result').hidden=true; $('#eng-start').disabled=false; $('#eng-start').textContent='Mulai';
+  }
+  function start(){
+    reset(); running=true; $('#eng-start').disabled=true; $('#eng-start').textContent='Bermain…';
+    let last=performance.now();
+    timer=setInterval(()=>{
+      const now=performance.now(); timeLeft-=(now-last)/1000; last=now;
+      if(timeLeft<=0){timeLeft=0;end();}
+      $('#eng-bar').style.width=(timeLeft/TOTAL_TIME*100)+'%'; $('#eng-time').textContent=Math.ceil(timeLeft);
+    },100);
+    next();
+  }
+  function next(){
+    if(!running)return;
+    if(used.length>=WORDS.length)used=[];
+    const available=WORDS.map((w,i)=>i).filter(i=>!used.includes(i));
+    const idx=available[rand(0,available.length-1)]; used.push(idx); current=WORDS[idx];
+    $('#eng-q').textContent=`Apa arti “${current[0]}”?`;
+    const choices=new Set([current[1]]);
+    while(choices.size<4){choices.add(WORDS[rand(0,WORDS.length-1)][1]);}
+    const box=$('#eng-answers');box.innerHTML='';
+    shuffle([...choices]).forEach(word=>{
+      const btn=document.createElement('button');btn.type='button';btn.className='ans-btn';btn.textContent=word;
+      btn.addEventListener('click',()=>answer(word,btn));box.appendChild(btn);
+    });
+  }
+  function answer(value,btn){
+    if(!running)return;
+    if(value===current[1]){score+=10;correct++;btn.classList.add('ok');}
+    else{btn.classList.add('no');$$('#eng-answers .ans-btn').forEach(b=>{if(b.textContent===current[1])b.classList.add('ok');});}
+    $('#eng-score').textContent=score;$('#eng-correct').textContent=correct;
+    $$('#eng-answers .ans-btn').forEach(b=>b.disabled=true);
+    setTimeout(()=>{if(running)next();},450);
+  }
+  function end(){
+    stop();$('#eng-q').textContent='Waktu Habis!';$('#eng-answers').innerHTML='';
+    $('#eng-start').disabled=false;$('#eng-start').textContent='Main Lagi';
+    const res=$('#eng-result');res.hidden=false;
+    res.innerHTML=`<div class="res-title">Sesi Selesai</div><div class="res-line">Jawaban benar <b class="hl">${correct}</b></div><div class="res-line">Skor akhir <b>${score}</b></div><button class="btn primary res-btn" type="button">Coba Lagi</button>`;
+    res.querySelector('.res-btn').addEventListener('click',start);
+  }
+  $('#eng-start').addEventListener('click',start);
+  return {reset,stop,start};
 })();
 
 /* =========================================================
