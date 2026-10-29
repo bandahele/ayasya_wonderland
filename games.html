@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#11121b">
+<title>Games — Asya &amp; Ayya Wonderland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ================= BASE & DASHBOARD INTEGRATION ================= */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#11121b;
+  --surface:#1b1c29;
+  --surface2:#292641;
+  --line:#303044;
+  --text:#f5f3ff;
+  --muted:#a4a2bf;
+  --primary:#9a8cff;
+  --primary2:#7667ec;
+  --accent:#5eead4;
+  --accent2:#a78bfa;
+  --blue:#60a5fa;
+  --pink:#ff8cb4;
+  --good:#72d9ae;
+  --bad:#fb7185;
+  --radius:20px;
+  --shadow:0 12px 35px rgba(0,0,0,.2);
+  --navbg:rgba(27,28,41,.94);
+}
+body.light{
+  --bg:#f5f6fc;
+  --surface:#fff;
+  --surface2:#f0efff;
+  --line:#e9e8f5;
+  --text:#242344;
+  --muted:#82819d;
+  --primary:#6b5ce7;
+  --primary2:#8b7bff;
+  --shadow:0 12px 35px rgba(54,44,117,.08);
+  --navbg:rgba(255,255,255,.92);
+}
+html,body{height:100%}
+body{
+  font-family:'Nunito',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  transition:background .2s,color .2s;
+}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+select{font-family:inherit;cursor:pointer}
+
+/* ================= LAYOUT ================= */
+.topbar{
+  height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 clamp(16px,4vw,32px);
+  background:var(--navbg);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:30;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.brand-icon{
+  width:42px;height:42px;border-radius:15px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--primary2),var(--primary));
+  color:white;font-size:20px;box-shadow:0 7px 18px rgba(107,92,231,.2);
+}
+.brand-title{font-size:17px;font-weight:900;line-height:1.05;letter-spacing:-.4px}
+.brand-sub{font-size:9px;color:var(--muted);font-weight:900;letter-spacing:1.5px;margin-top:4px;display:block}
+
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-button{
+  width:40px;height:40px;border:1px solid var(--line);background:var(--surface);
+  color:var(--text);border-radius:14px;display:grid;place-items:center;font-size:18px;
+}
+
+main{max-width:1080px;margin:0 auto;padding:clamp(16px,3.5vw,34px) clamp(12px,3vw,26px) 110px}
+
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp .34s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ================= HOME / LOBBY ================= */
+.hero{text-align:center;margin:10px 0 28px}
+.hero h1{
+  font-size:clamp(24px,5vw,36px);letter-spacing:-.5px;line-height:1.15;font-weight:900;
+  background:linear-gradient(100deg,var(--accent),var(--blue) 45%,var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{color:var(--muted);margin-top:8px;font-size:13px;font-weight:700}
+
+.game-grid{
+  display:grid;gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+}
+.game-card{
+  position:relative;text-align:left;
+  padding:22px 20px 20px;border-radius:var(--radius);
+  background:var(--surface);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  transition:transform .22s cubic-bezier(.2,.9,.3,1.4),border-color .22s,box-shadow .22s;
+  overflow:hidden;cursor:pointer;
+}
+.game-card:hover{transform:translateY(-6px);border-color:var(--primary);box-shadow:0 22px 50px rgba(0,0,0,.4)}
+.game-card .card-icon{font-size:32px;line-height:1;margin-bottom:12px;display:block}
+.game-card h3{font-size:16px;margin-bottom:6px;font-weight:900}
+.game-card p{font-size:12px;color:var(--muted);line-height:1.5;min-height:36px;font-weight:600}
+.tag{
+  display:inline-block;margin-top:14px;font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;padding:5px 10px;border-radius:999px;
+  background:var(--surface2);border:1px solid var(--line);color:var(--primary);font-weight:800;
+}
+
+/* ================= PANEL ================= */
+.panel{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:clamp(16px,3.4vw,26px);
+  box-shadow:var(--shadow);
+}
+.panel-head{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.panel-head h2{font-size:clamp(17px,3.4vw,21px);font-weight:900}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{
+  min-width:78px;text-align:center;padding:8px 14px;border-radius:12px;
+  background:var(--surface2);border:1px solid var(--line);
+}
+.stat span{display:block;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;font-weight:800}
+.stat b{font-size:16px;color:var(--primary);font-variant-numeric:tabular-nums;font-weight:900}
+
+/* ================= BUTTONS / INPUTS ================= */
+.btn{
+  padding:10px 18px;border-radius:12px;font-size:13px;font-weight:800;
+  background:var(--surface2);border:1px solid var(--line);
+  transition:.18s;letter-spacing:.2px;
+}
+.btn:hover{background:var(--line);transform:translateY(-1px)}
+.btn.primary{
+  background:var(--primary);
+  color:#fff;border-color:transparent;
+  box-shadow:0 8px 26px rgba(154,140,255,.25);
+}
+.btn.primary:hover{opacity:.9}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.ghost{background:transparent}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin-top:18px}
+.toolbar label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:800}
+select{
+  background:var(--surface2);color:var(--text);border:1px solid var(--line);
+  padding:9px 12px;border-radius:10px;font-size:12px;outline:none;font-weight:700;
+}
+select:focus{border-color:var(--primary)}
+.status{font-size:12px;color:var(--muted);padding:0 6px;font-weight:700}
+.hint{font-size:12px;color:var(--muted);text-align:center;margin-bottom:6px;font-weight:600}
+
+/* ================= RESULT ================= */
+.result{
+  margin-top:20px;padding:20px;border-radius:16px;text-align:center;
+  background:linear-gradient(160deg,rgba(114,217,174,.12),rgba(96,165,250,.10));
+  border:1px solid rgba(114,217,174,.3);
+  animation:fadeUp .3s ease both;
+}
+.res-title{font-size:18px;font-weight:900;margin-bottom:8px}
+.res-line{font-size:13px;color:var(--muted);margin:4px 0;font-weight:700}
+.res-line b{color:var(--text)}
+.res-line b.hl{color:var(--primary);font-size:16px;font-weight:900}
+.res-btn{margin-top:12px}
+
+/* ================= MEMORY ================= */
+.mem-board{
+  display:grid;grid-template-columns:repeat(var(--cols,4),1fr);
+  gap:clamp(6px,1.6vw,12px);
+  max-width:540px;margin:20px auto 0;
+}
+.mem-card{aspect-ratio:1;perspective:700px;padding:0;border-radius:12px}
+.mem-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.3,.8,.3,1)}
+.mem-card.flipped .mem-inner{transform:rotateY(180deg)}
+.mem-face{
+  position:absolute;inset:0;display:grid;place-items:center;border-radius:12px;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  font-size:clamp(20px,5.5vw,32px);user-select:none;
+}
+.mem-back{
+  background:var(--surface2);
+  border:1px solid var(--line);
+  color:var(--muted);font-size:16px;
+}
+.mem-front{
+  background:var(--surface);
+  border:1px solid var(--primary);
+  transform:rotateY(180deg);
+}
+.mem-card.done{pointer-events:none}
+.mem-card.done .mem-front{
+  background:rgba(114,217,174,.2);
+  border-color:var(--good);
+}
+.mem-card.done .mem-inner{transform:rotateY(180deg) scale(.94)}
+
+/* ================= MATH ================= */
+.timebar{
+  height:8px;border-radius:999px;background:var(--surface2);
+  overflow:hidden;margin:6px 0 24px;border:1px solid var(--line);
+}
+.timebar i{
+  display:block;height:100%;width:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--good),var(--primary),var(--blue));
+  transition:width .12s linear;
+}
+.math-question{
+  text-align:center;font-size:clamp(28px,7.5vw,46px);font-weight:900;
+  letter-spacing:1px;padding:16px 0 22px;font-variant-numeric:tabular-nums;
+}
+.math-question .op{color:var(--primary)}
+.math-answers{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:10px;max-width:560px;margin:0 auto;
+}
+.ans-btn{
+  padding:16px 10px;border-radius:14px;font-size:clamp(18px,4vw,22px);font-weight:900;
+  background:var(--surface2);border:1px solid var(--line);
+  transition:.16s;font-variant-numeric:tabular-nums;
+}
+.ans-btn:hover:not(:disabled){background:var(--line);transform:translateY(-2px)}
+.ans-btn.ok{background:rgba(114,217,174,.3);border-color:var(--good);color:var(--text)}
+.ans-btn.no{background:rgba(251,113,133,.3);border-color:var(--bad);color:var(--text)}
+
+/* ================= CARO ================= */
+.caro-board{
+  display:grid;grid-template-columns:repeat(var(--n,15),1fr);
+  gap:2px;width:min(94vw,540px);margin:18px auto 0;
+  padding:6px;border-radius:14px;
+  background:var(--surface2);
+  border:1px solid var(--line);
+}
+.caro-cell{
+  aspect-ratio:1;border-radius:3px;background:var(--surface);
+  display:grid;place-items:center;transition:background .14s;cursor:pointer;
+}
+.caro-cell:hover{background:var(--line)}
+.caro-cell::after{
+  content:'';width:72%;height:72%;border-radius:50%;
+  transform:scale(0);transition:transform .16s cubic-bezier(.2,1.4,.4,1);
+}
+.caro-cell.p1::after{background:var(--blue);transform:scale(1)}
+.caro-cell.p2::after{background:var(--pink);transform:scale(1)}
+.caro-cell.win{background:rgba(114,217,174,.4)!important}
+
+/* ================= TIC TAC TOE ================= */
+.ttt-board{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  width:min(88vw,320px);margin:20px auto 0;
+}
+.ttt-cell{
+  aspect-ratio:1;border-radius:16px;
+  background:var(--surface2);
+  border:1px solid var(--line);
+  display:grid;place-items:center;
+  font-size:clamp(32px,10vw,50px);font-weight:900;
+  transition:.18s;cursor:pointer;
+}
+.ttt-cell:hover:not(.taken){background:var(--line);transform:translateY(-3px)}
+.ttt-cell.x{color:var(--primary)}
+.ttt-cell.o{color:var(--pink)}
+.ttt-cell.win{background:rgba(114,217,174,.25);border-color:var(--good)}
+.ttt-cell.taken{cursor:default}
+
+/* ================= SUDOKU ================= */
+.sudoku-wrap{
+  display:flex;gap:20px;flex-wrap:wrap;justify-content:center;align-items:flex-start;
+  margin-top:14px;
+}
+.sudoku{
+  display:grid;grid-template-columns:repeat(9,1fr);
+  width:min(92vw,420px);aspect-ratio:1;
+  border:2px solid var(--line);border-radius:12px;overflow:hidden;
+  background:var(--surface2);
+}
+.sud-cell{
+  display:grid;place-items:center;
+  font-size:clamp(14px,3.6vw,20px);font-weight:700;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  cursor:pointer;user-select:none;transition:background .12s;color:var(--blue);
+}
+.sud-cell:nth-child(9n){border-right:none}
+.sud-cell:nth-child(9n+3),.sud-cell:nth-child(9n+6){border-right:2px solid var(--text)}
+.sud-cell:nth-child(n+19):nth-child(-n+27),
+.sud-cell:nth-child(n+46):nth-child(-n+54){border-bottom:2px solid var(--text)}
+.sud-cell:nth-child(n+73){border-bottom:none}
+.sud-cell.given{color:var(--text);font-weight:900;background:var(--surface)}
+.sud-cell.peer{background:rgba(96,165,250,.08)}
+.sud-cell.same{background:rgba(154,140,255,.15)}
+.sud-cell.sel{background:rgba(154,140,255,.3);box-shadow:inset 0 0 0 2px var(--primary)}
+.sud-cell.wrong{color:var(--bad);background:rgba(251,113,133,.18)}
+.sud-loading{
+  grid-column:1/-1;grid-row:1/-1;display:grid;place-items:center;
+  font-size:13px;color:var(--muted);background:var(--surface);font-weight:700;
+}
+.numpad{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  width:min(92vw,210px);
+}
+.numpad button{
+  aspect-ratio:1.35;border-radius:12px;font-size:18px;font-weight:900;
+  background:var(--surface2);border:1px solid var(--line);transition:.16s;
+}
+.numpad button:hover{background:var(--line);transform:translateY(-2px)}
+.numpad button.wide{grid-column:span 3;aspect-ratio:auto;padding:10px;font-size:13px;color:var(--muted);font-weight:800}
+
+
+/* ================= WONDER PUZZLE ================= */
+.puzzle-preview-wrap{max-width:360px;margin:14px auto 18px;text-align:center}
+.puzzle-preview-label{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.puzzle-preview{width:100%;aspect-ratio:4/3;border-radius:14px;border:1px solid var(--line);background-size:100% 100%;background-position:center;background-repeat:no-repeat;overflow:hidden}
+.puzzle-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;width:min(100%,520px);margin:0 auto;padding:7px;border:1px solid var(--line);border-radius:16px;background:var(--surface2)}
+.puzzle-piece{position:relative;aspect-ratio:1.12;border-radius:7px;border:1px solid rgba(255,255,255,.35);background-repeat:no-repeat;background-size:400% 500%;padding:0;overflow:hidden;transition:transform .12s,outline-color .12s;touch-action:manipulation}
+.puzzle-piece:hover{transform:scale(.97)}
+.puzzle-piece.selected{outline:3px solid var(--primary);outline-offset:-3px;z-index:2;transform:scale(.94)}
+.puzzle-piece.correct{box-shadow:inset 0 0 0 2px var(--good)}
+.puzzle-piece.correct::after{content:'✓';position:absolute;right:3px;top:3px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#173c32;font-size:11px;font-weight:900}
+.puzzle-piece:focus-visible{outline:3px solid var(--primary);outline-offset:1px}
+.puzzle-hard .puzzle-preview-wrap{display:none}
+@media(max-width:480px){.puzzle-board{gap:3px;padding:5px}.puzzle-piece{border-radius:5px;aspect-ratio:1.05}.puzzle-piece.correct::after{width:13px;height:13px;font-size:9px;right:1px;top:1px}.puzzle-preview-wrap{max-width:260px}}
+
+/* ================= BOTTOM NAVIGATION (DASHBOARD SYNC) ================= */
+.bottom-nav{
+  position:fixed;z-index:40;left:50%;bottom:0;transform:translateX(-50%);
+  width:min(100%,680px);display:grid;grid-template-columns:repeat(4,1fr);
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  background:var(--navbg);backdrop-filter:blur(18px);
+  border:1px solid var(--line);border-bottom:0;
+  border-radius:22px 22px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.15);
+}
+.nav-item{
+  border:0;background:transparent;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  gap:4px;padding:7px 3px;border-radius:14px;font-size:9px;font-weight:900;
+}
+.nav-item .nav-emoji{font-size:20px;line-height:1}
+.nav-item.active{color:var(--primary);background:var(--surface2)}
+
+.footer{text-align:center;color:var(--muted);font-size:11px;margin-top:30px;font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="./index.html">
+    <span class="brand-icon">✦</span>
+    <div>
+      <span class="brand-title">Asya &amp; Ayya Wonderland</span>
+      <span class="brand-sub">LEARN · PLAY · GROW</span>
+    </div>
+  </a>
+  <div class="top-actions">
+    <button class="icon-button" id="themeToggle" type="button" title="Ganti Tema">🌙</button>
+    <button class="btn ghost" id="btnHome" type="button" style="font-size:12px; font-weight:800;">⌂ Halaman Awal</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="hero">
+      <h1>Pilih Tantanganmu 🎮</h1>
+      <p>Pilih permainan untuk melatih fokus, logika, kreativitas, dan kecepatan berpikir.</p>
+    </div>
+    <div class="game-grid">
+      <button class="game-card" type="button" data-target="screen-memory">
+        <span class="card-icon">🧠</span>
+        <h3>Memory Match</h3>
+        <p>Temukan semua pasangan kartu secepat mungkin.</p>
+        <span class="tag">Fokus</span>
+      </button>
+      <button class="game-card" type="button" data-target="screen-math">
+        <span class="card-icon">⚡</span>
+        <h3>Math Challenge</h3>
+        <p>Tambah, kurang, kali — lawan waktu 60 detik.</p>
+        <span class="tag">Kecepatan</span>
+      </button>
+      <button class="game-card" type="button" data-target="screen-caro">
+        <span class="card-icon">♟️</span>
+        <h3>Caro / Gomoku</h3>
+        <p>Susun 5 bidak berurutan, kalahkan AI.</p>
+        <span class="tag">Strategi</span>
+      </button>
+      <button class="game-card" type="button" data-target="screen-ttt">
+        <span class="card-icon">⭕</span>
+        <h3>Tic Tac Toe</h3>
+        <p>Duel klasik 3×3 melawan komputer atau teman.</p>
+        <span class="tag">Logika</span>
+      </button>
+      <button class="game-card" type="button" data-target="screen-sudoku">
+        <span class="card-icon">🔢</span>
+        <h3>Sudoku</h3>
+        <p>3 level kesulitan dengan bantuan hint.</p>
+        <span class="tag">Analisis</span>
+      </button>
+      <button class="game-card" type="button" data-target="screen-puzzle">
+        <span class="card-icon">🧩</span>
+        <h3>Wonder Puzzle</h3>
+        <p>Susun 20 potongan gambar dan selesaikan tantangannya.</p>
+        <span class="tag">Kreativitas</span>
+      </button>
+    </div>
+    <p class="footer">Ara Learning Hub · Belajar, bermain, tumbuh bersama ✨</p>
+  </section>
+
+  <!-- ============ MEMORY ============ -->
+  <section class="screen" id="screen-memory">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>🧠 Memory Match</h2>
+        <div class="stats">
+          <div class="stat"><span>Waktu</span><b id="mem-time">0:00</b></div>
+          <div class="stat"><span>Langkah</span><b id="mem-moves">0</b></div>
+          <div class="stat"><span>Pasangan</span><b id="mem-pairs">0/8</b></div>
+        </div>
+      </div>
+      <div class="mem-board" id="mem-board"></div>
+      <div class="toolbar">
+        <label>Level
+          <select id="mem-level">
+            <option value="6">Mudah (4×3)</option>
+            <option value="8" selected>Sedang (4×4)</option>
+            <option value="10">Sulit (5×4)</option>
+          </select>
+        </label>
+        <button class="btn primary" id="mem-new">Game Baru</button>
+      </div>
+      <div class="result" id="mem-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- ============ MATH ============ -->
+  <section class="screen" id="screen-math">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>⚡ Math Challenge</h2>
+        <div class="stats">
+          <div class="stat"><span>Skor</span><b id="math-score">0</b></div>
+          <div class="stat"><span>Streak</span><b id="math-streak">0</b></div>
+          <div class="stat"><span>Waktu</span><b id="math-time">60</b></div>
+        </div>
+      </div>
+      <div class="timebar"><i id="math-bar"></i></div>
+      <div class="math-question" id="math-q">Tekan Mulai</div>
+      <div class="math-answers" id="math-answers"></div>
+      <div class="toolbar">
+        <label>Operasi
+          <select id="math-op">
+            <option value="mix" selected>Campuran</option>
+            <option value="add">Tambah (+)</option>
+            <option value="sub">Kurang (−)</option>
+            <option value="mul">Kali (×)</option>
+          </select>
+        </label>
+        <button class="btn primary" id="math-start">Mulai</button>
+      </div>
+      <div class="result" id="math-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- ============ CARO ============ -->
+  <section class="screen" id="screen-caro">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>♟️ Caro / Gomoku</h2>
+        <div class="stats">
+          <div class="stat"><span>Kamu</span><b id="caro-you">0</b></div>
+          <div class="stat"><span>AI</span><b id="caro-ai">0</b></div>
+        </div>
+      </div>
+      <p class="hint">Susun <b>5 bidak</b> berurutan (horizontal, vertikal, diagonal). Kamu = bidak biru.</p>
+      <div class="caro-board" id="caro-board"></div>
+      <div class="toolbar">
+        <button class="btn primary" id="caro-new">Game Baru</button>
+        <button class="btn" id="caro-undo">Undo</button>
+        <span class="status" id="caro-status">Giliran kamu</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIC TAC TOE ============ -->
+  <section class="screen" id="screen-ttt">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>⭕ Tic Tac Toe</h2>
+        <div class="stats">
+          <div class="stat"><span>X</span><b id="ttt-x">0</b></div>
+          <div class="stat"><span>Seri</span><b id="ttt-d">0</b></div>
+          <div class="stat"><span>O</span><b id="ttt-o">0</b></div>
+        </div>
+      </div>
+      <p class="hint" id="ttt-status">Kamu adalah X — klik kotak untuk mulai.</p>
+      <div class="ttt-board" id="ttt-board"></div>
+      <div class="toolbar">
+        <label>Mode
+          <select id="ttt-mode">
+            <option value="ai" selected>Lawan Komputer</option>
+            <option value="pvp">2 Pemain</option>
+          </select>
+        </label>
+        <button class="btn primary" id="ttt-new">Game Baru</button>
+        <button class="btn" id="ttt-reset">Reset Skor</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WONDER PUZZLE ============ -->
+  <section class="screen" id="screen-puzzle">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>🧩 Wonder Puzzle</h2>
+        <div class="stats">
+          <div class="stat"><span>Level</span><b id="puz-level-label">Sedang</b></div>
+          <div class="stat"><span>Langkah</span><b id="puz-moves">0</b></div>
+          <div class="stat"><span>Benar</span><b id="puz-correct">0/20</b></div>
+        </div>
+      </div>
+      <p class="hint">Pilih satu potongan, lalu pilih potongan lain untuk menukar posisi. Susun gambar sampai utuh.</p>
+      <div class="puzzle-preview-wrap" id="puz-preview-wrap">
+        <div class="puzzle-preview-label">Gambar petunjuk</div>
+        <div class="puzzle-preview" id="puz-preview" role="img" aria-label="Gambar contoh puzzle"></div>
+      </div>
+      <div class="puzzle-board" id="puz-board" aria-label="Papan puzzle 20 potongan"></div>
+      <div class="toolbar">
+        <label>Kesulitan
+          <select id="puz-diff">
+            <option value="medium" selected>Sedang · 20 potongan</option>
+            <option value="hard">Sulit · 20 potongan</option>
+          </select>
+        </label>
+        <button class="btn primary" id="puz-new" type="button">Acak Puzzle</button>
+        <button class="btn" id="puz-preview-toggle" type="button">Sembunyikan petunjuk</button>
+      </div>
+      <div class="result" id="puz-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- ============ SUDOKU ============ -->
+  <section class="screen" id="screen-sudoku">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>🔢 Sudoku</h2>
+        <div class="stats">
+          <div class="stat"><span>Level</span><b id="sud-level">Sedang</b></div>
+          <div class="stat"><span>Waktu</span><b id="sud-time">0:00</b></div>
+          <div class="stat"><span>Sisa</span><b id="sud-left">0</b></div>
+        </div>
+      </div>
+      <div class="sudoku-wrap">
+        <div class="sudoku" id="sud-board"></div>
+        <div class="numpad" id="sud-pad"></div>
+      </div>
+      <div class="toolbar">
+        <label>Kesulitan
+          <select id="sud-diff">
+            <option value="easy">Mudah</option>
+            <option value="medium" selected>Sedang</option>
+            <option value="hard">Sulit</option>
+          </select>
+        </label>
+        <button class="btn primary" id="sud-new">Game Baru</button>
+        <button class="btn" id="sud-hint">Hint (3)</button>
+        <button class="btn" id="sud-check">Cek Jawaban</button>
+      </div>
+      <div class="result" id="sud-result" hidden></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- NAVIGASI BAWAH DASHBOARD -->
+<nav class="bottom-nav" aria-label="Menu utama aplikasi">
+  <button class="nav-item" type="button" onclick="location.href='index.html'"><span class="nav-emoji">⌂</span><span>Menu Utama</span></button>
+  <button class="nav-item" type="button" onclick="location.href='index.html#materi'"><span class="nav-emoji">📚</span><span>Materi</span></button>
+  <button class="nav-item" type="button" onclick="location.href='index.html#soal'"><span class="nav-emoji">✏️</span><span>Soal</span></button>
+  <button class="nav-item active" type="button"><span class="nav-emoji">🎮</span><span>Games</span></button>
+</nav>
+
+<script>
+/* =========================================================
+   UTILITAS & TEMA DASHBOARD
+   ========================================================= */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmtTime = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('gh_' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('gh_' + k, JSON.stringify(v)); } catch (e) {} }
+};
+
+// Sinkronisasi Tema Gelap/Terang
+const themeToggle = $('#themeToggle');
+function setTheme(light) {
+  document.body.classList.toggle('light', light);
+  themeToggle.textContent = light ? '☀️' : '🌙';
+  try { localStorage.setItem('ara-learning-theme', light ? 'light' : 'dark'); } catch (e) {}
+}
+let savedTheme = 'dark';
+try { savedTheme = localStorage.getItem('ara-learning-theme') || 'dark'; } catch (e) {}
+setTheme(savedTheme === 'light');
+themeToggle.addEventListener('click', () => setTheme(!document.body.classList.contains('light')));
+
+/* =========================================================
+   NAVIGASI SCREEN
+   ========================================================= */
+let leaveHandler = null;
+
+function show(id) {
+  if (leaveHandler) { try { leaveHandler(); } catch (e) {} }
+  leaveHandler = null;
+  $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+  $('#btnHome').hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (id === 'screen-memory') leaveHandler = () => mem.stop();
+  if (id === 'screen-math')   leaveHandler = () => math.stop();
+  if (id === 'screen-sudoku') leaveHandler = () => sud.stop();
+}
+
+$('#btnHome').addEventListener('click', () => { window.location.href = './index.html'; });
+
+$$('[data-target]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.target;
+    if (t === 'screen-memory') mem.newGame();
+    if (t === 'screen-math')   math.reset();
+    if (t === 'screen-caro')   caro.newGame();
+    if (t === 'screen-ttt')    ttt.newGame();
+    if (t === 'screen-sudoku') sud.start();
+    if (t === 'screen-puzzle') puzzle.newGame();
+    show(t);
+  });
+});
+
+/* =========================================================
+   GAME 1 — MEMORY MATCH
+   ========================================================= */
+const mem = (() => {
+  const EMOJIS = ['🍎','🚀','🎧','🐱','⚽','🎸','🌈','🍕','👾','🎲','🦊','🌵','🍩','🧩','🎯','🛸','🍄','🐙'];
+  const boardEl = $('#mem-board');
+
+  let pairs = 8, deck = [], first = null, lock = false,
+      moves = 0, matched = 0, sec = 0, timer = null, running = false;
+
+  function stop() { if (timer) { clearInterval(timer); timer = null; } running = false; }
+
+  function newGame() {
+    stop();
+    pairs = parseInt($('#mem-level').value, 10);
+    first = null; lock = false; moves = 0; matched = 0; sec = 0; running = true;
+
+    const res = $('#mem-result');
+    res.hidden = true; res.innerHTML = '';
+
+    const picks = shuffle([...EMOJIS]).slice(0, pairs);
+    deck = shuffle([...picks, ...picks]).map((e, i) => ({ id: i, e, done: false }));
+
+    boardEl.style.setProperty('--cols', pairs === 10 ? 5 : 4);
+    boardEl.innerHTML = '';
+
+    deck.forEach((card, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mem-card';
+      b.innerHTML = `<div class="mem-inner">
+          <div class="mem-face mem-back">✦</div>
+          <div class="mem-face mem-front">${card.e}</div>
+        </div>`;
+      b.addEventListener('click', () => click(i));
+      boardEl.appendChild(b);
+    });
+
+    $('#mem-time').textContent = '0:00';
+    $('#mem-moves').textContent = '0';
+    $('#mem-pairs').textContent = `0/${pairs}`;
+
+    timer = setInterval(() => { sec++; $('#mem-time').textContent = fmtTime(sec); }, 1000);
+  }
+
+  function click(i) {
+    if (lock || !running) return;
+    const card = deck[i];
+    if (card.done || i === first) return;
+
+    flip(i, true);
+
+    if (first === null) { first = i; return; }
+
+    moves++;
+    $('#mem-moves').textContent = moves;
+
+    const a = deck[first], b = deck[i];
+    if (a.e === b.e) {
+      a.done = b.done = true;
+      matched++;
+      $('#mem-pairs').textContent = `${matched}/${pairs}`;
+      boardEl.children[first].classList.add('done');
+      boardEl.children[i].classList.add('done');
+      first = null;
+      if (matched === pairs) win();
+    } else {
+      lock = true;
+      const f = first;
+      first = null;
+      setTimeout(() => {
+        flip(f, false); flip(i, false);
+        lock = false;
+      }, 680);
+    }
+  }
+
+  function flip(i, on) {
+    const el = boardEl.children[i];
+    if (el) el.classList.toggle('flipped', on);
+  }
+
+  function win() {
+    stop();
+    const score = Math.max(50, pairs * 120 - moves * 8 - sec * 3);
+    const best = Math.max(store.get('mem_best', 0), score);
+    store.set('mem_best', best);
+
+    const res = $('#mem-result');
+    res.hidden = false;
+    res.innerHTML = `
+      <div class="res-title">🎉 Semua Pasangan Ditemukan!</div>
+      <div class="res-line">Waktu <b>${fmtTime(sec)}</b> • Langkah <b>${moves}</b></div>
+      <div class="res-line">Skor <b class="hl">${score}</b> • Rekor <b>${best}</b></div>
+      <button class="btn primary res-btn">Main Lagi</button>`;
+    res.querySelector('.res-btn').addEventListener('click', newGame);
+  }
+
+  $('#mem-new').addEventListener('click', newGame);
+  $('#mem-level').addEventListener('change', newGame);
+
+  return { newGame, stop };
+})();
+
+/* =========================================================
+   GAME 2 — MATH CHALLENGE
+   ========================================================= */
+const math = (() => {
+  const TOTAL_TIME = 60;
+  let score = 0, streak = 0, timeLeft = TOTAL_TIME, timer = null,
+      running = false, current = null, best = store.get('math_best', 0);
+
+  function stop() { if (timer) { clearInterval(timer); timer = null; } running = false; }
+
+  function reset() {
+    stop();
+    score = 0; streak = 0; timeLeft = TOTAL_TIME; running = false; current = null;
+    $('#math-score').textContent = '0';
+    $('#math-streak').textContent = '0';
+    $('#math-time').textContent = TOTAL_TIME;
+    $('#math-q').textContent = 'Tekan Mulai';
+    $('#math-answers').innerHTML = '';
+    $('#math-bar').style.width = '100%';
+    $('#math-result').hidden = true;
+    $('#math-start').disabled = false;
+    $('#math-start').textContent = 'Mulai';
+  }
+
+  function start() {
+    reset();
+    running = true;
+    $('#math-start').disabled = true;
+    $('#math-start').textContent = 'Bermain…';
+
+    let last = performance.now();
+    timer = setInterval(() => {
+      const now = performance.now();
+      timeLeft -= (now - last) / 1000;
+      last = now;
+      if (timeLeft <= 0) { timeLeft = 0; end(); }
+      $('#math-bar').style.width = (timeLeft / TOTAL_TIME * 100) + '%';
+      $('#math-time').textContent = Math.ceil(timeLeft);
+    }, 100);
+
+    next();
+  }
+
+  function next() {
+    if (!running) return;
+    const mode = $('#math-op').value;
+    const op = mode === 'mix' ? ['add', 'sub', 'mul'][rand(0, 2)] : mode;
+
+    let a, b, ans, sym;
+    if (op === 'add')      { a = rand(12, 99); b = rand(12, 99); ans = a + b; sym = '+'; }
+    else if (op === 'sub') { a = rand(30, 99); b = rand(11, a - 1); ans = a - b; sym = '−'; }
+    else                   { a = rand(3, 12);  b = rand(3, 12);  ans = a * b; sym = '×'; }
+
+    current = { ans };
+    $('#math-q').innerHTML = `${a} <span class="op">${sym}</span> ${b} <span class="op">=</span> ?`;
+
+    const opts = makeOptions(ans);
+    const box = $('#math-answers');
+    box.innerHTML = '';
+    opts.forEach(v => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ans-btn';
+      btn.textContent = v;
+      btn.addEventListener('click', () => answer(v, btn));
+      box.appendChild(btn);
+    });
+  }
+
+  function makeOptions(ans) {
+    const set = new Set([ans]);
+    let guard = 0;
+    while (set.size < 4 && guard++ < 200) {
+      const spread = Math.max(4, Math.round(Math.abs(ans) * 0.18));
+      const d = rand(1, spread);
+      const cand = Math.random() < 0.5 ? ans - d : ans + d;
+      if (cand < 0 || cand === ans) continue;
+      set.add(cand);
+    }
+    while (set.size < 4) set.add(rand(0, 200));
+    return shuffle([...set]);
+  }
+
+  function answer(v, btn) {
+    if (!running) return;
+
+    if (v === current.ans) {
+      streak++;
+      score += 10 + Math.min(streak, 10) * 2;
+      btn.classList.add('ok');
+    } else {
+      streak = 0;
+      score = Math.max(0, score - 5);
+      btn.classList.add('no');
+      $$('.ans-btn').forEach(b => {
+        if (parseInt(b.textContent, 10) === current.ans) b.classList.add('ok');
+      });
+    }
+
+    $('#math-score').textContent = score;
+    $('#math-streak').textContent = streak;
+    $$('.ans-btn').forEach(b => b.disabled = true);
+
+    setTimeout(() => { if (running) next(); }, 330);
+  }
+
+  function end() {
+    stop();
+    best = Math.max(best, score);
+    store.set('math_best', best);
+
+    $('#math-q').textContent = '⏱️ Waktu Habis!';
+    $('#math-answers').innerHTML = '';
+    $('#math-start').disabled = false;
+    $('#math-start').textContent = 'Main Lagi';
+
+    const res = $('#math-result');
+    res.hidden = false;
+    res.innerHTML = `
+      <div class="res-title">⏱️ Selesai!</div>
+      <div class="res-line">Skor akhir <b class="hl">${score}</b></div>
+      <div class="res-line">Rekor terbaik <b>${best}</b></div>
+      <button class="btn primary res-btn">Coba Lagi</button>`;
+    res.querySelector('.res-btn').addEventListener('click', start);
+  }
+
+  $('#math-start').addEventListener('click', start);
+
+  return { reset, stop, start };
+})();
+
+/* =========================================================
+   GAME 3 — CARO / GOMOKU
+   ========================================================= */
+const caro = (() => {
+  const N = 15, WIN = 5;
+  const DIRS = [[0, 1], [1, 0], [1, 1], [1, -1]];
+  const boardEl = $('#caro-board');
+
+  let board = [], turn = 1, over = false, history = [], cells = [];
+  let wins = { you: 0, ai: 0 }, thinking = false;
+
+  function newGame() {
+    board = Array.from({ length: N }, () => new Array(N).fill(0));
+    turn = 1; over = false; history = []; thinking = false;
+    buildGrid();
+    $('#caro-status').textContent = 'Giliran kamu';
+  }
+
+  function buildGrid() {
+    boardEl.style.setProperty('--n', N);
+    boardEl.innerHTML = '';
+    cells = [];
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        const d = document.createElement('div');
+        d.className = 'caro-cell';
+        d.addEventListener('click', () => play(r, c));
+        boardEl.appendChild(d);
+        cells.push(d);
+      }
+    }
+  }
+
+  const idx = (r, c) => r * N + c;
+
+  function paint(r, c, p) {
+    const el = cells[idx(r, c)];
+    if (!el) return;
+    el.classList.remove('p1', 'p2');
+    if (p === 1) el.classList.add('p1');
+    if (p === 2) el.classList.add('p2');
+  }
+
+  function play(r, c) {
+    if (over || turn !== 1 || thinking) return;
+    if (board[r][c] !== 0) return;
+
+    board[r][c] = 1;
+    paint(r, c, 1);
+    history.push([r, c, 1]);
+
+    if (checkWin(board, r, c, 1)) { finish(1); return; }
+    if (isFull()) { finish(0); return; }
+
+    turn = 2;
+    $('#caro-status').textContent = 'AI sedang berpikir…';
+    thinking = true;
+    setTimeout(aiTurn, 260);
+  }
+
+  function aiTurn() {
+    if (over) { thinking = false; return; }
+    const move = bestMove();
+    if (!move) { thinking = false; return; }
+
+    const [r, c] = move;
+    board[r][c] = 2;
+    paint(r, c, 2);
+    history.push([r, c, 2]);
+    thinking = false;
+
+    if (checkWin(board, r, c, 2)) { finish(2); return; }
+    if (isFull()) { finish(0); return; }
+
+    turn = 1;
+    $('#caro-status').textContent = 'Giliran kamu';
+  }
+
+  function candidates() {
+    const out = [];
+    let any = false;
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (board[r][c] !== 0) { any = true; continue; }
+        let near = false;
+        for (let dr = -2; dr <= 2 && !near; dr++) {
+          for (let dc = -2; dc <= 2; dc++) {
+            const rr = r + dr, cc = c + dc;
+            if (rr >= 0 && rr < N && cc >= 0 && cc < N && board[rr][cc] !== 0) { near = true; break; }
+          }
+        }
+        if (near) out.push([r, c]);
+      }
+    }
+    if (!any) return [[Math.floor(N / 2), Math.floor(N / 2)]];
+    return out;
+  }
+
+  function scoreAt(r, c, p) {
+    let total = 0;
+    for (const [dr, dc] of DIRS) {
+      let count = 1;
+      let openA = false, openB = false;
+      let i = 1, rr, cc;
+
+      while (true) {
+        rr = r + dr * i; cc = c + dc * i;
+        if (rr < 0 || rr >= N || cc < 0 || cc >= N || board[rr][cc] !== p) break;
+        count++; i++;
+      }
+      rr = r + dr * i; cc = c + dc * i;
+      if (rr >= 0 && rr < N && cc >= 0 && cc < N && board[rr][cc] === 0) openA = true;
+
+      i = 1;
+      while (true) {
+        rr = r - dr * i; cc = c - dc * i;
+        if (rr < 0 || rr >= N || cc < 0 || cc >= N || board[rr][cc] !== p) break;
+        count++; i++;
+      }
+      rr = r - dr * i; cc = c - dc * i;
+      if (rr >= 0 && rr < N && cc >= 0 && cc < N && board[rr][cc] === 0) openB = true;
+
+      const opens = (openA ? 1 : 0) + (openB ? 1 : 0);
+
+      if (count >= 5)      total += 1000000;
+      else if (count === 4) total += opens === 2 ? 120000 : opens === 1 ? 15000 : 0;
+      else if (count === 3) total += opens === 2 ? 9000 : opens === 1 ? 1100 : 0;
+      else if (count === 2) total += opens === 2 ? 600 : opens === 1 ? 90 : 0;
+      else                  total += opens === 2 ? 45 : 12;
+    }
+    return total;
+  }
+
+  function bestMove() {
+    const cands = candidates();
+    let best = null, bestScore = -Infinity;
+
+    for (const [r, c] of cands) {
+      const atk = scoreAt(r, c, 2);
+      const def = scoreAt(r, c, 1);
+      const s = atk * 1.12 + def + Math.random() * 8;
+      if (s > bestScore) { bestScore = s; best = [r, c]; }
+    }
+    return best;
+  }
+
+  function checkWin(bd, r, c, p) {
+    for (const [dr, dc] of DIRS) {
+      let cnt = 1;
+      for (let s = 1; s < WIN; s++) {
+        const rr = r + dr * s, cc = c + dc * s;
+        if (rr < 0 || rr >= N || cc < 0 || cc >= N || bd[rr][cc] !== p) break;
+        cnt++;
+      }
+      for (let s = 1; s < WIN; s++) {
+        const rr = r - dr * s, cc = c - dc * s;
+        if (rr < 0 || rr >= N || cc < 0 || cc >= N || bd[rr][cc] !== p) break;
+        cnt++;
+      }
+      if (cnt >= WIN) return true;
+    }
+    return false;
+  }
+
+  function isFull() {
+    return board.every(row => row.every(v => v !== 0));
+  }
+
+  function highlightWin(r, c, p) {
+    for (const [dr, dc] of DIRS) {
+      const line = [[r, c]];
+      for (let s = 1; s < WIN; s++) {
+        const rr = r + dr * s, cc = c + dc * s;
+        if (rr < 0 || rr >= N || cc < 0 || cc >= N || board[rr][cc] !== p) break;
+        line.push([rr, cc]);
+      }
+      for (let s = 1; s < WIN; s++) {
+        const rr = r - dr * s, cc = c - dc * s;
+        if (rr < 0 || rr >= N || cc < 0 || cc >= N || board[rr][cc] !== p) break;
+        line.push([rr, cc]);
+      }
+      if (line.length >= WIN) {
+        line.forEach(([rr, cc]) => cells[idx(rr, cc)].classList.add('win'));
+        return;
+      }
+    }
+  }
+
+  function finish(winner) {
+    over = true;
+    thinking = false;
+    if (winner === 1) {
+      wins.you++;
+      $('#caro-status').textContent = '🎉 Kamu menang!';
+      highlightWin(history[history.length - 1][0], history[history.length - 1][1], 1);
+    } else if (winner === 2) {
+      wins.ai++;
+      $('#caro-status').textContent = '🤖 AI menang. Coba lagi!';
+      highlightWin(history[history.length - 1][0], history[history.length - 1][1], 2);
+    } else {
+      $('#caro-status').textContent = '🤝 Seri!';
+    }
+    $('#caro-you').textContent = wins.you;
+    $('#caro-ai').textContent = wins.ai;
+  }
+
+  function undo() {
+    if (thinking || history.length === 0) return;
+    let steps = Math.min(2, history.length);
+    while (steps-- > 0) {
+      const [r, c, p] = history.pop();
+      board[r][c] = 0;
+      cells[idx(r, c)].classList.remove('p1', 'p2', 'win');
+    }
+    over = false;
+    turn = 1;
+    cells.forEach(c => c.classList.remove('win'));
+    $('#caro-status').textContent = 'Giliran kamu';
+  }
+
+  $('#caro-new').addEventListener('click', newGame);
+  $('#caro-undo').addEventListener('click', undo);
+
+  return { newGame };
+})();
+
+/* =========================================================
+   GAME 4 — TIC TAC TOE
+   ========================================================= */
+const ttt = (() => {
+  const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  const boardEl = $('#ttt-board');
+
+  let b = Array(9).fill(''), over = false, mode = 'ai', turn = 'X';
+  let score = { X: 0, O: 0, D: 0 };
+  let cells = [];
+
+  function build() {
+    boardEl.innerHTML = '';
+    cells = [];
+    for (let i = 0; i < 9; i++) {
+      const d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'ttt-cell';
+      d.addEventListener('click', () => click(i));
+      boardEl.appendChild(d);
+      cells.push(d);
+    }
+  }
+
+  function newGame() {
+    b = Array(9).fill('');
+    over = false;
+    turn = 'X';
+    mode = $('#ttt-mode').value;
+    build();
+    setStatus('Giliran X');
+  }
+
+  function setStatus(txt) { $('#ttt-status').textContent = txt; }
+
+  function winner(bd) {
+    for (const [a, b2, c] of WINS)
+      if (bd[a] && bd[a] === bd[b2] && bd[a] === bd[c]) return bd[a];
+    return bd.every(x => x) ? 'D' : null;
+  }
+
+  function click(i) {
+    if (over || b[i]) return;
+    if (mode === 'ai' && turn !== 'X') return;
+
+    place(i, turn);
+
+    const w = winner(b);
+    if (w) { end(w); return; }
+
+    turn = turn === 'X' ? 'O' : 'X';
+
+    if (mode === 'ai' && turn === 'O') {
+      setStatus('Komputer berpikir…');
+      setTimeout(aiMove, 280);
+    } else {
+      setStatus(`Giliran ${turn}`);
+    }
+  }
+
+  function place(i, p) {
+    b[i] = p;
+    cells[i].textContent = p === 'X' ? '✕' : '◯';
+    cells[i].classList.add(p.toLowerCase(), 'taken');
+  }
+
+  function aiMove() {
+    if (over) return;
+    let move;
+    if (Math.random() < 0.12) {
+      const empty = b.map((v, i) => v ? -1 : i).filter(i => i >= 0);
+      move = empty[rand(0, empty.length - 1)];
+    } else {
+      move = bestMove();
+    }
+    if (move === undefined || move < 0) return;
+
+    place(move, 'O');
+    const w = winner(b);
+    if (w) { end(w); return; }
+
+    turn = 'X';
+    setStatus('Giliran X');
+  }
+
+  function bestMove() {
+    let bestVal = -Infinity, bestIdx = -1;
+    for (let i = 0; i < 9; i++) {
+      if (b[i]) continue;
+      b[i] = 'O';
+      const v = minimax(b, 'X', 0, -Infinity, Infinity);
+      b[i] = '';
+      if (v > bestVal) { bestVal = v; bestIdx = i; }
+    }
+    return bestIdx;
+  }
+
+  function minimax(bd, player, depth, alpha, beta) {
+    const w = winner(bd);
+    if (w === 'O') return 10 - depth;
+    if (w === 'X') return depth - 10;
+    if (w === 'D') return 0;
+
+    if (player === 'O') {
+      let best = -Infinity;
+      for (let i = 0; i < 9; i++) {
+        if (bd[i]) continue;
+        bd[i] = 'O';
+        best = Math.max(best, minimax(bd, 'X', depth + 1, alpha, beta));
+        bd[i] = '';
+        alpha = Math.max(alpha, best);
+        if (beta <= alpha) break;
+      }
+      return best;
+    } else {
+      let best = Infinity;
+      for (let i = 0; i < 9; i++) {
+        if (bd[i]) continue;
+        bd[i] = 'X';
+        best = Math.min(best, minimax(bd, 'O', depth + 1, alpha, beta));
+        bd[i] = '';
+        beta = Math.min(beta, best);
+        if (beta <= alpha) break;
+      }
+      return best;
+    }
+  }
+
+  function end(w) {
+    over = true;
+    if (w === 'D') {
+      score.D++;
+      setStatus('🤝 Seri!');
+    } else {
+      score[w]++;
+      setStatus(w === 'X' ? '🎉 X menang!' : (mode === 'ai' ? '🤖 Komputer menang!' : '🎉 O menang!'));
+      const line = WINS.find(([a, b2, c]) => b[a] && b[a] === b[b2] && b[a] === b[c]);
+      if (line) line.forEach(i => cells[i].classList.add('win'));
+    }
+    updateScore();
+  }
+
+  function updateScore() {
+    $('#ttt-x').textContent = score.X;
+    $('#ttt-o').textContent = score.O;
+    $('#ttt-d').textContent = score.D;
+  }
+
+  $('#ttt-new').addEventListener('click', newGame);
+  $('#ttt-mode').addEventListener('change', newGame);
+  $('#ttt-reset').addEventListener('click', () => {
+    score = { X: 0, O: 0, D: 0 };
+    updateScore();
+    newGame();
+  });
+
+  return { newGame };
+})();
+
+/* =========================================================
+   GAME 5 — SUDOKU
+   ========================================================= */
+const sud = (() => {
+  const boardEl = $('#sud-board');
+  const padEl = $('#sud-pad');
+
+  const ROWS = [], COLS = [], BOXES = [];
+  for (let i = 0; i < 81; i++) {
+    ROWS.push(Math.floor(i / 9));
+    COLS.push(i % 9);
+    BOXES.push(Math.floor(i / 27) * 3 + Math.floor((i % 9) / 3));
+  }
+
+  let sol = [], cur = [], given = [];
+  let sel = -1, hints = 3, tsec = 0, timer = null, running = false;
+  let cells = [], diff = 'medium';
+
+  function isValid(g, i, v) {
+    const r = ROWS[i], c = COLS[i], bx = BOXES[i];
+    for (let j = 0; j < 81; j++) {
+      if (g[j] !== v) continue;
+      if (ROWS[j] === r || COLS[j] === c || BOXES[j] === bx) return false;
+    }
+    return true;
+  }
+
+  function fillGrid(g) {
+    const i = g.indexOf(0);
+    if (i === -1) return true;
+    const nums = shuffle([1,2,3,4,5,6,7,8,9]);
+    for (const n of nums) {
+      if (isValid(g, i, n)) {
+        g[i] = n;
+        if (fillGrid(g)) return true;
+        g[i] = 0;
+      }
+    }
+    return false;
+  }
+
+  function candidates(g, i) {
+    const used = new Set();
+    const r = ROWS[i], c = COLS[i], bx = BOXES[i];
+    for (let j = 0; j < 81; j++) {
+      if (!g[j]) continue;
+      if (ROWS[j] === r || COLS[j] === c || BOXES[j] === bx) used.add(g[j]);
+    }
+    const out = [];
+    for (let v = 1; v <= 9; v++) if (!used.has(v)) out.push(v);
+    return out;
+  }
+
+  function countSolutions(g, limit) {
+    let best = -1, bestC = null;
+    for (let i = 0; i < 81; i++) {
+      if (g[i]) continue;
+      const c = candidates(g, i);
+      if (c.length === 0) return 0;
+      if (!bestC || c.length < bestC.length) {
+        best = i; bestC = c;
+        if (c.length === 1) break;
+      }
+    }
+    if (best === -1) return 1;
+
+    let total = 0;
+    for (const v of bestC) {
+      g[best] = v;
+      total += countSolutions(g, limit - total);
+      g[best] = 0;
+      if (total >= limit) break;
+    }
+    return total;
+  }
+
+  function generate(level) {
+    const full = new Array(81).fill(0);
+    fillGrid(full);
+
+    const puz = full.slice();
+    const target = level === 'easy' ? 40 : level === 'medium' ? 48 : 54;
+    const order = shuffle([...Array(81).keys()]);
+    let removed = 0;
+
+    for (const i of order) {
+      if (removed >= target) break;
+      if (puz[i] === 0) continue;
+      const backup = puz[i];
+      puz[i] = 0;
+      if (countSolutions(puz.slice(), 2) !== 1) {
+        puz[i] = backup;
+      } else {
+        removed++;
+      }
+    }
+    return { puz, full };
+  }
+
+  function buildCells() {
+    boardEl.innerHTML = '';
+    cells = [];
+    for (let i = 0; i < 81; i++) {
+      const d = document.createElement('div');
+      d.className = 'sud-cell';
+      d.addEventListener('click', () => select(i));
+      boardEl.appendChild(d);
+      cells.push(d);
+    }
+  }
+
+  function buildPad() {
+    padEl.innerHTML = '';
+    for (let v = 1; v <= 9; v++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = v;
+      b.addEventListener('click', () => setValue(v));
+      padEl.appendChild(b);
+    }
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'wide';
+    del.textContent = '⌫ Hapus';
+    del.addEventListener('click', () => setValue(0));
+    padEl.appendChild(del);
+  }
+
+  function conflictAt(i) {
+    const v = cur[i];
+    if (!v) return false;
+    const r = ROWS[i], c = COLS[i], bx = BOXES[i];
+    for (let j = 0; j < 81; j++) {
+      if (j === i || cur[j] !== v) continue;
+      if (ROWS[j] === r || COLS[j] === c || BOXES[j] === bx) return true;
+    }
+    return false;
+  }
+
+  function paint() {
+    for (let i = 0; i < 81; i++) {
+      const d = cells[i];
+      if (!d) continue;
+      d.textContent = cur[i] || '';
+      d.className = 'sud-cell';
+      if (given[i]) d.classList.add('given');
+      if (sel >= 0) {
+        const sr = ROWS[sel], sc = COLS[sel], sb = BOXES[sel];
+        if (ROWS[i] === sr || COLS[i] === sc || BOXES[i] === sb) d.classList.add('peer');
+        if (cur[i] && cur[sel] && cur[i] === cur[sel]) d.classList.add('same');
+        if (i === sel) d.classList.add('sel');
+      }
+      if (!given[i] && cur[i] && conflictAt(i)) d.classList.add('wrong');
+    }
+    const left = cur.filter((v, i) => !v).length;
+    $('#sud-left').textContent = left;
+  }
+
+  function select(i) {
+    if (!running) return;
+    sel = i;
+    paint();
+  }
+
+  function setValue(v) {
+    if (!running || sel < 0 || given[sel]) return;
+    cur[sel] = v;
+    paint();
+    if (checkSolved()) win();
+  }
+
+  function checkSolved() {
+    if (cur.some(v => !v)) return false;
+    for (let i = 0; i < 81; i++) if (conflictAt(i)) return false;
+    return true;
+  }
+
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; }
+    running = false;
+  }
+
+  function start() {
+    stop();
+    diff = $('#sud-diff').value;
+    $('#sud-result').hidden = true;
+    $('#sud-result').innerHTML = '';
+    $('#sud-level').textContent = { easy: 'Mudah', medium: 'Sedang', hard: 'Sulit' }[diff];
+    boardEl.innerHTML = '<div class="sud-loading">Membuat puzzle…</div>';
+    buildPad();
+
+    setTimeout(() => {
+      const { puz, full } = generate(diff);
+      sol = full;
+      cur = puz.slice();
+      given = puz.map(v => v !== 0);
+      sel = -1; hints = 3; tsec = 0; running = true;
+
+      $('#sud-hint').textContent = 'Hint (3)';
+      $('#sud-time').textContent = '0:00';
+
+      buildCells();
+      paint();
+
+      timer = setInterval(() => { tsec++; $('#sud-time').textContent = fmtTime(tsec); }, 1000);
+    }, 60);
+  }
+
+  function hint() {
+    if (!running || hints <= 0) return;
+    const empty = [];
+    for (let i = 0; i < 81; i++) if (!cur[i]) empty.push(i);
+    if (empty.length === 0) return;
+
+    const i = empty[rand(0, empty.length - 1)];
+    cur[i] = sol[i];
+    given[i] = true;
+    hints--;
+    $('#sud-hint').textContent = `Hint (${hints})`;
+    sel = i;
+    paint();
+
+    if (checkSolved()) win();
+  }
+
+  function check() {
+    if (!running) return;
+    let wrongCount = 0;
+    for (let i = 0; i < 81; i++) {
+      if (given[i] || !cur[i]) continue;
+      if (cur[i] !== sol[i]) {
+        wrongCount++;
+        cells[i].classList.add('wrong');
+        setTimeout(() => cells[i] && cells[i].classList.remove('wrong'), 1400);
+      }
+    }
+  }
+
+  function win() {
+    stop();
+    const bonus = Math.max(0, 1200 - tsec * 2);
+    const res = $('#sud-result');
+    res.hidden = false;
+    res.innerHTML = `
+      <div class="res-title">🏆 Sudoku Terpecahkan!</div>
+      <div class="res-line">Level <b>${$('#sud-level').textContent}</b> • Waktu <b>${fmtTime(tsec)}</b></div>
+      <div class="res-line">Bonus skor <b class="hl">${bonus}</b></div>
+      <button class="btn primary res-btn">Main Lagi</button>`;
+    res.querySelector('.res-btn').addEventListener('click', start);
+  }
+
+  $('#sud-new').addEventListener('click', start);
+  $('#sud-diff').addEventListener('change', start);
+  $('#sud-hint').addEventListener('click', hint);
+  $('#sud-check').addEventListener('click', check);
+
+  document.addEventListener('keydown', e => {
+    if (!$('#screen-sudoku').classList.contains('active')) return;
+    if (!running) return;
+    if (e.key >= '1' && e.key <= '9') { setValue(parseInt(e.key, 10)); e.preventDefault(); }
+    else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') { setValue(0); e.preventDefault(); }
+    else if (e.key === 'ArrowRight' && sel >= 0) { select(Math.min(80, sel + 1)); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft'  && sel >= 0) { select(Math.max(0, sel - 1)); e.preventDefault(); }
+    else if (e.key === 'ArrowDown'  && sel >= 0) { select(Math.min(80, sel + 9)); e.preventDefault(); }
+    else if (e.key === 'ArrowUp'    && sel >= 0) { select(Math.max(0, sel - 9)); e.preventDefault(); }
+  });
+
+  return { start, stop };
+})();
+
+
+/* =========================================================
+   GAME 6 — WONDER PUZZLE (20 POTONGAN)
+   ========================================================= */
+const puzzle = (() => {
+  const board = $('#puz-board');
+  const preview = $('#puz-preview');
+  const previewWrap = $('#puz-preview-wrap');
+  const diff = $('#puz-diff');
+  const result = $('#puz-result');
+  const COLS = 4, ROWS = 5, TOTAL = COLS * ROWS;
+  let order = [], selected = -1, moves = 0, showPreview = true;
+
+  const art = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe4f2"/><stop offset="1" stop-color="#c9c3ff"/></linearGradient><linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ff91b8"/><stop offset=".25" stop-color="#ffd37d"/><stop offset=".5" stop-color="#a9e8cc"/><stop offset=".75" stop-color="#91c7ff"/><stop offset="1" stop-color="#c2a4ff"/></linearGradient></defs>
+  <rect width="800" height="600" rx="35" fill="url(#sky)"/><circle cx="650" cy="115" r="57" fill="#fff1a8"/><g fill="#fff" opacity=".95"><ellipse cx="155" cy="130" rx="65" ry="28"/><circle cx="120" cy="119" r="28"/><circle cx="170" cy="105" r="36"/><ellipse cx="675" cy="280" rx="70" ry="25"/><circle cx="642" cy="267" r="29"/><circle cx="690" cy="259" r="32"/></g>
+  <path d="M180 350 A220 220 0 0 1 620 350" fill="none" stroke="url(#rainbow)" stroke-width="34" stroke-linecap="round"/><path d="M220 350 A180 180 0 0 1 580 350" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+  <path d="M0 470 Q170 390 330 470 T800 455 V600 H0Z" fill="#a7e8cf"/><path d="M0 520 Q180 460 390 520 T800 500 V600 H0Z" fill="#7fd5b8"/>
+  <g transform="translate(280 280)"><path d="M-100 180 V20 L0 -60 L100 20 V180Z" fill="#b69af4" stroke="#fff" stroke-width="8"/><path d="M-125 25 L0 -75 L125 25" fill="#f38fbd" stroke="#fff" stroke-width="9" stroke-linejoin="round"/><rect x="-28" y="95" width="56" height="85" rx="25" fill="#ffe4a6"/><rect x="-75" y="40" width="34" height="45" rx="15" fill="#d8f5ff"/><rect x="41" y="40" width="34" height="45" rx="15" fill="#d8f5ff"/><path d="M-10 -70 L0 -115 L10 -70" fill="#ffe4a6" stroke="#fff" stroke-width="5"/></g>
+  <g transform="translate(555 410)"><ellipse cx="0" cy="25" rx="77" ry="62" fill="#fff"/><circle cx="-48" cy="-15" r="44" fill="#fff"/><path d="M-73 -47 L-78 -92 L-48 -63 M-25 -60 L0 -95 L2 -42" fill="#fff" stroke="#d9c5ff" stroke-width="10" stroke-linejoin="round"/><path d="M-45 -24 Q-25 -40 -8 -23" fill="none" stroke="#8c72b5" stroke-width="5" stroke-linecap="round"/><circle cx="-57" cy="-27" r="5" fill="#514567"/><circle cx="-22" cy="-28" r="5" fill="#514567"/><ellipse cx="-63" cy="-7" rx="11" ry="7" fill="#ffb2d2"/><ellipse cx="-15" cy="-7" rx="11" ry="7" fill="#ffb2d2"/><path d="M-46 -75 L-39 -118 L-21 -80" fill="#ffd56d" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></g>
+  <g fill="#fff5a6"><path d="M105 270 l10 24 25 2 -19 16 6 24 -22 -13 -22 13 6 -24 -19 -16 25 -2z"/><path d="M690 390 l8 18 20 2 -15 13 5 20 -18 -10 -18 10 5 -20 -15 -13 20 -2z"/><path d="M410 120 l7 16 18 2 -13 12 4 18 -16 -9 -16 9 4 -18 -13 -12 18 -2z"/></g>
+  <text x="400" y="570" font-family="Arial,sans-serif" font-size="27" font-weight="700" text-anchor="middle" fill="#6b558c">DREAM • PLAY • SHINE</text></svg>`;
+  const imageUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(art);
+  preview.style.backgroundImage = `url("${imageUrl}")`;
+
+  function updateStats() {
+    $('#puz-moves').textContent = moves;
+    const correct = order.reduce((n, v, i) => n + (v === i ? 1 : 0), 0);
+    $('#puz-correct').textContent = `${correct}/${TOTAL}`;
+    return correct;
+  }
+  function render() {
+    board.innerHTML = '';
+    order.forEach((piece, slot) => {
+      const row = Math.floor(piece / COLS), col = piece % COLS;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'puzzle-piece' + (selected === slot ? ' selected' : '') + (piece === slot ? ' correct' : '');
+      button.style.backgroundImage = `url("${imageUrl}")`;
+      button.style.backgroundPosition = `${col / (COLS - 1) * 100}% ${row / (ROWS - 1) * 100}%`;
+      button.setAttribute('aria-label', `Potongan ${piece + 1}, posisi ${slot + 1}${piece === slot ? ', sudah benar' : ''}`);
+      button.setAttribute('aria-pressed', selected === slot ? 'true' : 'false');
+      button.addEventListener('click', () => choose(slot));
+      board.appendChild(button);
+    });
+    board.classList.toggle('puzzle-hard', diff.value === 'hard');
+    previewWrap.style.display = showPreview ? '' : 'none';
+    $('#puz-preview-toggle').textContent = showPreview ? 'Sembunyikan petunjuk' : 'Lihat petunjuk';
+  }
+  function choose(slot) {
+    if (selected < 0) {
+      selected = slot;
+      render();
+      return;
+    }
+    if (selected === slot) {
+      selected = -1;
+      render();
+      return;
+    }
+    [order[selected], order[slot]] = [order[slot], order[selected]];
+    selected = -1;
+    moves++;
+    const correct = updateStats();
+    render();
+    if (correct === TOTAL) {
+      result.hidden = false;
+      result.innerHTML = `<div class="res-title">🎉 Puzzle berhasil disusun!</div><div class="res-line">Kamu menyelesaikan 20 potongan dalam <b>${moves}</b> langkah.</div><button class="btn primary res-btn" type="button">Main Lagi</button>`;
+      result.querySelector('.res-btn').addEventListener('click', newGame);
+    }
+  }
+  function newGame() {
+    order = Array.from({length:TOTAL}, (_, i) => i);
+    do { shuffle(order); } while (order.every((v, i) => v === i));
+    selected = -1;
+    moves = 0;
+    showPreview = diff.value === 'medium';
+    $('#puz-level-label').textContent = diff.value === 'hard' ? 'Sulit' : 'Sedang';
+    result.hidden = true;
+    updateStats();
+    render();
+  }
+  $('#puz-new').addEventListener('click', newGame);
+  diff.addEventListener('change', newGame);
+  $('#puz-preview-toggle').addEventListener('click', () => {
+    showPreview = !showPreview;
+    previewWrap.style.display = showPreview ? '' : 'none';
+    $('#puz-preview-toggle').textContent = showPreview ? 'Sembunyikan petunjuk' : 'Lihat petunjuk';
+  });
+  return { newGame };
+})();
+
+</script>
+</body>
+</html>
