@@ -3,42 +3,54 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
-    <title>✨ Ayya's Learning Wonderland ✨</title>
+    <title>✨ Ayya's Learning Wonderland - Versi 8 ✨</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
         :root {
+            /* Ayasya Wonderland Color Palette */
             --pink: #ffb3d9;
             --pink-dark: #f58ab3;
+            --pink-soft: #fff0f6;
             --purple: #c9b1ff;
-            --purple-dark: #a88beb;
+            --purple-dark: #8e62e0;
+            --purple-deep: #432874;
             --mint: #a8f0d4;
+            --mint-dark: #38b284;
             --peach: #ffd9b3;
-            --gold: #ffdb8a;
-            --lavender: #e8ddff;
-            --bg-start: #fce4ec;
-            --bg-end: #f3e5f5;
-            --card-bg: rgba(255, 255, 255, 0.92);
-            --card-border: rgba(255, 255, 255, 0.8);
-            --text-main: #3d2a5c;
-            --text-muted: #7a6a8f;
-            --primary: #b388ff;
-            --primary-hover: #9a6ee8;
-            --primary-light: #f0ebff;
-            --primary-glow: rgba(179, 136, 255, 0.3);
-            --shadow-card: 0 12px 36px rgba(179, 136, 255, 0.15);
-            --radius-sm: 14px;
-            --radius-md: 22px;
-            --radius-lg: 32px;
-            --font: 'Nunito', 'Quicksand', sans-serif;
+            --gold: #ffd166;
+            --gold-dark: #d49e15;
+            --lavender: #f0ebff;
+            --bg-start: #fdf2f8;
+            --bg-mid: #f5eefb;
+            --bg-end: #edf5ff;
+            
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-border: rgba(230, 220, 250, 0.85);
+            --text-main: #34224f;
+            --text-muted: #74648d;
+            --primary: #9d65f5;
+            --primary-hover: #884beb;
+            --primary-light: #f3ecff;
+            --primary-glow: rgba(157, 101, 245, 0.28);
+            
+            --shadow-sm: 0 4px 14px rgba(138, 92, 224, 0.08);
+            --shadow-card: 0 14px 40px rgba(138, 92, 224, 0.12);
+            --shadow-float: 0 18px 48px rgba(80, 45, 140, 0.22);
+            
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 26px;
+            --radius-xl: 32px;
+            --font: 'Nunito', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         /* ===== RESET & BASE ===== */
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -47,7 +59,7 @@
 
         body {
             font-family: var(--font);
-            background: linear-gradient(145deg, var(--bg-start) 0%, var(--bg-end) 50%, #f8f0ff 100%);
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 45%, var(--bg-end) 100%);
             min-height: 100vh;
             color: var(--text-main);
             line-height: 1.5;
@@ -57,28 +69,57 @@
             position: relative;
         }
 
+        /* Delicate background decoration */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -10vw;
+            right: -10vw;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 179, 217, 0.2) 0%, rgba(255, 179, 217, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -10vw;
+            left: -10vw;
+            width: 45vw;
+            height: 45vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 240, 212, 0.25) 0%, rgba(168, 240, 212, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 720px;
+            max-width: 760px;
             margin: 0 auto;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 14px 16px 85px;
+            padding: 16px 18px 85px;
             position: relative;
             z-index: 1;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER & TOP BAR ===== */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 16px;
+            padding: 12px 18px;
             background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1.5px solid var(--card-border);
             border-radius: var(--radius-md);
-            box-shadow: var(--shadow-card);
+            box-shadow: var(--shadow-sm);
             margin-bottom: 16px;
             position: relative;
             z-index: 2;
@@ -87,51 +128,78 @@
         .user-tag {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .user-avatar-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffe0f0, #eeddff);
+            border: 2px solid #ffc2df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(255, 179, 217, 0.35);
+        }
+
+        .user-meta-title {
             font-size: 15px;
             font-weight: 800;
-            color: var(--primary);
+            color: var(--purple-deep);
+            line-height: 1.2;
         }
 
         .connection-status {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            font-size: 11.5px;
-            font-weight: 700;
-            padding: 4px 10px;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 9px;
             border-radius: 20px;
-            background: rgba(168, 240, 212, 0.3);
-            color: #2e7d32;
+            background: rgba(168, 240, 212, 0.45);
+            color: #217a4b;
+            margin-top: 2px;
         }
 
         .connection-status.offline {
-            background: rgba(255, 179, 217, 0.3);
+            background: rgba(255, 179, 217, 0.45);
             color: #c53030;
         }
 
         .connection-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: #43a047;
+            background: #2e7d32;
+            box-shadow: 0 0 6px rgba(46, 125, 50, 0.6);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
         }
 
         .connection-status.offline .connection-dot {
             background: #e53935;
+            box-shadow: 0 0 6px rgba(229, 57, 53, 0.6);
         }
 
         .timer-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
-            color: var(--purple-dark);
-            padding: 6px 14px;
+            gap: 7px;
+            background: linear-gradient(135deg, var(--primary-light), #fff0f7);
+            color: var(--purple-deep);
+            padding: 7px 14px;
             border-radius: var(--radius-sm);
             font-weight: 800;
-            font-size: 13px;
-            border: 1.5px solid rgba(179, 136, 255, 0.25);
+            font-size: 13.5px;
+            border: 1.5px solid rgba(179, 136, 255, 0.3);
+            box-shadow: 0 2px 8px rgba(179, 136, 255, 0.15);
         }
 
         /* ===== VIEW SECTIONS ===== */
@@ -139,19 +207,27 @@
             display: none;
             flex-direction: column;
             flex: 1;
+            animation: fadeIn 0.3s ease;
         }
 
         .view-section.active {
             display: flex;
         }
 
-        /* ===== CARD ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARDS ===== */
         .card {
             background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            padding: 24px 18px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: var(--radius-xl);
+            padding: 24px 20px;
             box-shadow: var(--shadow-card);
-            border: 1.5px solid var(--card-border);
+            border: 2px solid var(--card-border);
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -159,125 +235,135 @@
             overflow: hidden;
         }
 
-        /* ===== HOME ===== */
+        /* ===== HOME VIEW ===== */
         .home-header {
             text-align: center;
-            margin-bottom: 16px;
-            margin-top: 10px;
+            margin-bottom: 18px;
+            margin-top: 6px;
         }
 
         .home-badge {
-            display: inline-block;
-            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
-            color: var(--purple-dark);
-            padding: 5px 16px;
+            letter-spacing: 1.2px;
+            background: linear-gradient(135deg, #fcedf7, #ede6ff);
+            color: var(--purple-deep);
+            padding: 6px 18px;
             border-radius: 30px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(179, 136, 255, 0.2);
+            margin-bottom: 10px;
+            border: 1.5px solid rgba(179, 136, 255, 0.3);
+            box-shadow: 0 2px 8px rgba(179, 136, 255, 0.12);
         }
 
         .home-title {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 26px;
+            font-family: 'Quicksand', var(--font);
+            font-size: 28px;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--purple-dark), var(--pink-dark));
+            background: linear-gradient(135deg, #6c31bf 0%, #b8458b 50%, #f46279 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             letter-spacing: -0.5px;
         }
 
         .home-subtitle {
-            font-size: 13.5px;
+            font-size: 14px;
             color: var(--text-muted);
             font-weight: 600;
         }
 
-        /* ===== MOTIVATION CARD ===== */
         .motivation-card {
-            background: linear-gradient(135deg, #fdf2f8, #f3edff);
-            border: 1.5px solid rgba(255, 179, 217, 0.4);
+            background: linear-gradient(135deg, #fff5fa, #f7f1ff 70%, #edfcf6);
+            border: 2px solid rgba(255, 179, 217, 0.5);
             border-radius: var(--radius-md);
-            padding: 14px 16px;
-            margin-bottom: 18px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
             display: flex;
             gap: 12px;
             align-items: center;
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .motivation-icon {
+            font-size: 26px;
+            flex-shrink: 0;
         }
 
         .motivation-text {
             font-size: 13.5px;
             font-weight: 700;
-            color: #5a3d7a;
+            color: #553473;
             line-height: 1.45;
         }
 
-        /* ===== PACKAGE GRID ===== */
         .section-subheading {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 800;
-            color: var(--purple-dark);
-            margin-bottom: 12px;
+            color: var(--purple-deep);
+            margin-bottom: 14px;
             text-align: center;
             position: relative;
         }
+
         .section-subheading::after {
             content: '';
             display: block;
-            width: 40px;
-            height: 3px;
-            background: var(--primary);
+            width: 48px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pink), var(--purple));
             border-radius: 10px;
-            margin: 4px auto 0;
+            margin: 6px auto 0;
         }
 
         .package-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 18px;
+            gap: 14px;
+            margin-bottom: 20px;
             flex: 1;
             overflow-y: auto;
             max-height: 380px;
-            padding-right: 4px;
+            padding: 4px 4px 6px;
         }
 
-        @media (max-width: 360px) {
+        @media (max-width: 400px) {
             .package-grid { grid-template-columns: 1fr; }
         }
 
         .package-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 18px 12px;
-            border: 2px solid transparent;
+            padding: 18px 14px;
+            border: 2px solid rgba(210, 190, 240, 0.7);
             border-radius: var(--radius-md);
             cursor: pointer;
-            transition: all 0.2s ease;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
-            box-shadow: 0 4px 12px rgba(179, 136, 255, 0.08);
+            transition: all 0.22s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 246, 255, 0.8));
+            box-shadow: 0 4px 14px rgba(160, 120, 230, 0.08);
             position: relative;
             overflow: hidden;
         }
 
         .package-item:hover {
             border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-glow);
         }
-        
+
         .package-item:active { transform: scale(0.98); }
 
         .package-item.selected {
-            background: linear-gradient(135deg, var(--purple-dark), var(--pink-dark));
-            box-shadow: 0 6px 18px var(--primary-glow);
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #8a57e6, #db5c9f);
+            box-shadow: 0 8px 24px var(--primary-glow);
         }
 
         .package-name {
@@ -289,7 +375,7 @@
         }
 
         .package-item.selected .package-name {
-            color: #fff;
+            color: #ffffff;
         }
 
         /* ===== BUTTONS ===== */
@@ -310,48 +396,61 @@
             position: relative;
         }
 
-        .btn:active { transform: scale(0.97); }
+        .btn:active { transform: scale(0.98); }
 
         .btn-primary {
-            background: linear-gradient(135deg, #b388ff, #a06cd5);
-            color: #fff;
-            box-shadow: 0 4px 16px var(--primary-glow);
+            background: linear-gradient(135deg, #a46afc, #8445e6);
+            color: #ffffff;
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #b07bfd, #9053ee);
+            box-shadow: 0 8px 24px rgba(164, 106, 252, 0.4);
+            transform: translateY(-1px);
         }
 
         .btn-secondary {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: linear-gradient(135deg, #f1e9ff, #feeef7);
+            color: var(--purple-deep);
+            border: 1.5px solid rgba(179, 136, 255, 0.4);
         }
 
         .btn-outline {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1.5px solid var(--card-border);
-            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid var(--card-border);
+            color: var(--purple-deep);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: #fff;
         }
 
         .btn:disabled {
-            opacity: 0.45;
+            opacity: 0.5;
             cursor: not-allowed;
             box-shadow: none;
             transform: none !important;
         }
 
-        /* ===== QUIZ SECTION ===== */
+        /* ===== QUIZ SECTION & PROGRESS ===== */
         .quiz-package-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            gap: 10px;
         }
 
         .quiz-sheet-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
-            color: var(--purple-dark);
-            border: 1px solid rgba(179, 136, 255, 0.2);
-            padding: 5px 14px;
+            background: linear-gradient(135deg, var(--primary-light), #fff0f7);
+            color: var(--purple-deep);
+            border: 1.5px solid rgba(179, 136, 255, 0.35);
+            padding: 6px 14px;
             border-radius: 30px;
             font-size: 13px;
             font-weight: 800;
@@ -359,35 +458,93 @@
 
         .quiz-progress-bar {
             width: 100%;
-            height: 8px;
-            background: var(--primary-light);
+            height: 10px;
+            background: rgba(210, 190, 240, 0.35);
             border-radius: 20px;
             margin-bottom: 14px;
             overflow: hidden;
+            position: relative;
         }
 
         .quiz-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--pink), var(--purple), var(--mint));
+            background: linear-gradient(90deg, #ff85c0, #b37feb 50%, #5cdbd3 100%);
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 20px;
+            box-shadow: 0 0 10px rgba(179, 136, 255, 0.6);
         }
 
         .quiz-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            font-size: 13px;
+            margin-bottom: 14px;
+            font-size: 13.5px;
             color: var(--text-muted);
-            font-weight: 700;
+            font-weight: 800;
+        }
+
+        /* ===== TOMBOL BUKA PAPAN CORETAN (MENCOLOK & MENARIK) ===== */
+        .whiteboard-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 13px 18px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff5eb 0%, #ffe9d6 50%, #ffd8be 100%);
+            border: 2px solid #ffb076;
+            border-radius: var(--radius-md);
+            color: #d44a00;
+            font-weight: 800;
+            font-size: 14.5px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(255, 140, 0, 0.18);
+            transition: all 0.22s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whiteboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-20deg);
+            animation: shine-btn 4s infinite;
+        }
+
+        @keyframes shine-btn {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .whiteboard-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 140, 0, 0.28);
+            background: linear-gradient(135deg, #fff7ef, #ffedd9);
+        }
+
+        .whiteboard-btn:active { transform: scale(0.98); }
+
+        .wb-btn-badge {
+            font-size: 11px;
+            font-weight: 800;
+            background: #ff6f00;
+            color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-left: auto;
+            letter-spacing: 0.3px;
         }
 
         .quiz-content-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             flex: 1;
         }
 
@@ -399,26 +556,30 @@
 
         /* PASSAGE / CERITA */
         .passage-box {
-            background: linear-gradient(135deg, #fcfaff, #fdf2f8);
-            border: 1.5px solid rgba(179, 136, 255, 0.2);
+            background: linear-gradient(135deg, #fcfaff, #fff3f8);
+            border: 2px solid rgba(179, 136, 255, 0.25);
             border-radius: var(--radius-md);
-            padding: 16px;
+            padding: 16px 18px;
             margin-bottom: 14px;
             max-height: 220px;
             overflow-y: auto;
+            box-shadow: inset 0 2px 6px rgba(179, 136, 255, 0.05);
         }
 
         .passage-title {
             font-weight: 800;
-            color: var(--purple-dark);
+            color: var(--purple-deep);
             margin-bottom: 6px;
-            font-size: 14.5px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .passage-content {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #3d2a5c;
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: #3b2857;
             white-space: pre-line;
         }
 
@@ -428,94 +589,113 @@
             text-align: center;
             border-radius: var(--radius-md);
             overflow: hidden;
-            background: rgba(255,255,255,0.7);
-            border: 1.5px solid var(--card-border);
-            padding: 8px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid var(--card-border);
+            padding: 10px;
+            box-shadow: var(--shadow-sm);
         }
 
         .illustration-box img {
             max-width: 100%;
-            max-height: 180px;
+            max-height: 200px;
             object-fit: contain;
             border-radius: var(--radius-sm);
         }
 
         /* TIPS */
         .tips-box {
-            background: linear-gradient(135deg, #fffcf0, #fff7d9);
-            border: 1.5px solid #ffeeba;
+            background: linear-gradient(135deg, #fffdf0, #fff9de);
+            border: 2px solid #ffdf7a;
             border-radius: var(--radius-md);
-            padding: 14px 16px;
+            padding: 14px 18px;
             margin-bottom: 14px;
-            font-size: 13.5px;
-            color: #856404;
+            font-size: 14px;
+            color: #7d5e00;
             font-weight: 600;
             display: flex;
             gap: 12px;
             align-items: flex-start;
+            box-shadow: var(--shadow-sm);
         }
 
         /* QUESTION & OPTIONS */
         .question-box {
-            font-size: 15.5px;
-            font-weight: 700;
-            line-height: 1.6;
-            margin-bottom: 14px;
-            color: #2d1a4a;
+            font-size: 16.5px;
+            font-weight: 800;
+            line-height: 1.65;
+            margin-bottom: 16px;
+            color: var(--purple-deep);
+            background: rgba(255, 255, 255, 0.65);
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            border-left: 5px solid var(--primary);
         }
 
         .options-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 11px;
+            margin-bottom: 18px;
         }
 
         .option-item {
             display: flex;
             align-items: center;
-            padding: 13px 16px;
-            border: 2px solid var(--card-border);
+            padding: 14px 18px;
+            border: 2px solid rgba(220, 205, 245, 0.85);
             border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 14.5px;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.6);
-            transition: all 0.2s;
+            font-size: 15px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.85);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(160, 120, 220, 0.05);
+        }
+
+        .option-item:hover {
+            border-color: var(--primary);
+            background: #ffffff;
+            transform: translateX(3px);
         }
 
         .option-item:active { transform: scale(0.98); }
 
         .option-item.selected {
             border-color: var(--primary);
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
+            background: linear-gradient(135deg, #f6eeff, #fff0f7);
+            box-shadow: 0 4px 16px var(--primary-glow);
         }
 
         .option-label {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            background: #f2eefa;
-            color: var(--text-muted);
-            font-size: 13px;
+            background: #ede6f7;
+            color: var(--purple-deep);
+            font-size: 14px;
             font-weight: 800;
-            margin-right: 12px;
+            margin-right: 14px;
             flex-shrink: 0;
+            transition: all 0.2s ease;
         }
 
         .option-item.selected .option-label {
-            background: linear-gradient(135deg, var(--purple), var(--pink));
-            color: #fff;
+            background: linear-gradient(135deg, #a46afc, #f462a6);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(164, 106, 252, 0.4);
         }
 
-        .option-text { flex: 1; }
+        .option-text {
+            flex: 1;
+            color: var(--text-main);
+        }
 
         .nav-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: auto;
             padding-top: 10px;
         }
@@ -526,196 +706,47 @@
         .palette-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 6px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 2px dashed rgba(179, 136, 255, 0.15);
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 2px dashed rgba(179, 136, 255, 0.25);
         }
 
         .palette-btn {
             aspect-ratio: 1;
-            border: 2px solid var(--card-border);
+            border: 2px solid rgba(220, 205, 245, 0.8);
             border-radius: var(--radius-sm);
-            background: rgba(255, 255, 255, 0.5);
-            font-size: 13px;
+            background: rgba(255, 255, 255, 0.7);
+            font-size: 13.5px;
             font-weight: 800;
             color: var(--text-muted);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.18s ease;
+        }
+
+        .palette-btn:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
         }
 
         .palette-btn.active {
             border-color: var(--primary);
             background: var(--primary-light);
-            color: var(--purple-dark);
-            transform: scale(1.05);
+            color: var(--purple-deep);
+            box-shadow: 0 4px 10px var(--primary-glow);
+            transform: scale(1.08);
         }
 
         .palette-btn.answered {
-            background: #e8f5e9;
-            border-color: #81c784;
-            color: #2e7d32;
+            background: #e8f8f0;
+            border-color: #5cdbd3;
+            color: #0d684f;
         }
 
-        /* ===== FITUR PAPAN TULIS / SCRATCHPAD MODAL CANGGIH ===== */
-        .whiteboard-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            border: 1.5px solid #ffb74d;
-            border-radius: var(--radius-md);
-            color: #e65100;
-            font-weight: 800;
-            font-size: 13.5px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .whiteboard-btn:active { transform: scale(0.98); }
-
-        #whiteboard-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(40, 25, 60, 0.65);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
-        }
-
-        #whiteboard-modal.active {
-            display: flex;
-        }
-
-        .whiteboard-card {
-            width: 96vw;
-            height: 92vh;
-            background: #ffffff;
-            border-radius: var(--radius-lg);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 3px solid var(--purple);
-        }
-
-        .whiteboard-header {
-            padding: 10px 16px;
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
-            border-bottom: 2px solid var(--card-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .whiteboard-title {
-            font-weight: 800;
-            font-size: 15px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .whiteboard-tools {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tool-group {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(255,255,255,0.8);
-            padding: 3px 8px;
-            border-radius: 20px;
-            border: 1px solid var(--card-border);
-        }
-
-        .tool-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--text-muted);
-        }
-
-        .color-dot {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-        }
-        .color-dot.active {
-            transform: scale(1.2);
-            border-color: var(--purple-dark);
-        }
-
-        .size-btn, .mode-btn, .page-btn {
-            padding: 4px 10px;
-            border-radius: 12px;
-            border: 1px solid var(--card-border);
-            background: #fff;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            color: var(--text-main);
-        }
-        .size-btn.active, .mode-btn.active, .page-btn.active {
-            background: var(--purple-dark);
-            color: #fff;
-            border-color: var(--purple-dark);
-        }
-
-        .wb-btn-clear {
-            padding: 5px 12px;
-            background: #ffebee;
-            color: #c53030;
-            border: 1px solid #ffcdd2;
-            border-radius: 16px;
-            font-weight: 800;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .wb-btn-close {
-            padding: 5px 14px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            font-weight: 800;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .whiteboard-body {
-            flex: 1;
-            position: relative;
-            background: #ffffff;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        #wb-canvas {
-            display: block;
-            touch-action: none;
-            cursor: crosshair;
-        }
-
-        /* ===== FITUR CORET-CORET LANGSUNG PADA SOAL ===== */
+        /* ===== DIRECT DRAW CANVAS OVERLAY (CORET SOAL) ===== */
         .quiz-card-relative {
             position: relative;
         }
@@ -726,9 +757,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 50;
+            z-index: 40;
             pointer-events: none;
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-xl);
         }
 
         #direct-draw-canvas.drawing-active {
@@ -739,21 +770,22 @@
 
         .draw-toggle-btn {
             position: fixed;
-            bottom: 30px;
-            right: 24px;
-            z-index: 100;
-            padding: 14px 24px;
+            bottom: 24px;
+            right: 20px;
+            z-index: 90;
+            padding: 13px 22px;
             background: linear-gradient(135deg, #ff7043, #f4511e);
             color: #fff;
             border: none;
             border-radius: 30px;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 14.5px;
             cursor: pointer;
-            box-shadow: 0 6px 16px rgba(244, 81, 30, 0.4);
+            box-shadow: 0 6px 18px rgba(244, 81, 30, 0.4);
             display: none;
             align-items: center;
             gap: 8px;
+            transition: all 0.2s ease;
         }
 
         .draw-toggle-btn.active {
@@ -762,23 +794,21 @@
 
         .draw-toolbar {
             position: fixed;
-            bottom: 85px;
-            top: auto;
-            right: 24px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1.5px solid var(--purple-dark);
-            border-radius: 16px;
+            bottom: 80px;
+            right: 20px;
+            z-index: 90;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--purple-dark);
+            border-radius: 18px;
             padding: 10px 14px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
             display: none;
             flex-direction: column;
             gap: 8px;
         }
 
-        .draw-toolbar.show {
-            display: flex;
-        }
+        .draw-toolbar.show { display: flex; }
 
         .draw-toolbar .tool-row {
             display: flex;
@@ -786,7 +816,7 @@
             gap: 6px;
         }
 
-        /* ===== RESULT SECTION ===== */
+        /* ===== RESULT VIEW ===== */
         .result-box {
             text-align: center;
             padding: 4px 0 0;
@@ -794,75 +824,81 @@
 
         .score-circle-wrapper {
             position: relative;
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 14px;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 16px;
         }
 
         .score-circle {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
-            border: 4px solid rgba(179, 136, 255, 0.25);
+            background: linear-gradient(135deg, var(--primary-light), #ffe6f2);
+            border: 5px solid rgba(179, 136, 255, 0.35);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 8px 24px var(--primary-glow);
         }
 
         .score-value {
             font-family: 'Quicksand', sans-serif;
-            font-size: 40px;
+            font-size: 44px;
             font-weight: 800;
             line-height: 1;
-            background: linear-gradient(135deg, var(--purple-dark), var(--pink-dark));
+            background: linear-gradient(135deg, #7c3aed, #db2777);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .score-label {
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .result-message-box {
-            background: linear-gradient(135deg, var(--primary-light), #fce4ec);
+            background: linear-gradient(135deg, var(--primary-light), #fff0f7);
+            border: 2px solid rgba(179, 136, 255, 0.25);
             border-radius: var(--radius-md);
-            padding: 14px;
-            margin-bottom: 14px;
-            font-size: 13.5px;
+            padding: 16px;
+            margin-bottom: 16px;
+            font-size: 14px;
             font-weight: 700;
-            color: #5a3d7a;
+            color: var(--purple-deep);
+            line-height: 1.5;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 14px;
+            gap: 10px;
+            margin-bottom: 16px;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1.5px solid var(--card-border);
-            padding: 10px;
+            background: rgba(255, 255, 255, 0.75);
+            border: 2px solid var(--card-border);
+            padding: 12px;
             border-radius: var(--radius-md);
             text-align: center;
+            box-shadow: 0 2px 8px rgba(160, 120, 220, 0.05);
         }
 
         .stat-num {
             font-family: 'Quicksand', sans-serif;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
         }
 
         .stat-text {
-            font-size: 11px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 800;
             color: var(--text-muted);
             margin-top: 2px;
         }
@@ -871,8 +907,8 @@
             background: linear-gradient(135deg, #fff5f5, #fef0f0);
             border: 2px dashed #feb2b2;
             border-radius: var(--radius-md);
-            padding: 12px;
-            margin-bottom: 14px;
+            padding: 14px;
+            margin-bottom: 16px;
             text-align: left;
         }
 
@@ -880,18 +916,18 @@
             font-weight: 800;
             color: #c53030;
             margin-bottom: 4px;
-            font-size: 13px;
+            font-size: 13.5px;
         }
 
         .sync-status-box {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #5a3d7a;
-            margin-bottom: 14px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            margin-bottom: 16px;
             padding: 10px;
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: var(--radius-sm);
-            border: 1px solid var(--card-border);
+            border: 1.5px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -899,33 +935,35 @@
         }
 
         .sync-status-box.success {
-            color: #2e7d32;
-            background: rgba(168, 240, 212, 0.2);
-            border-color: #a8f0d4;
-        }
-        
-        .sync-status-box.error {
-            color: #c53030;
-            background: rgba(255, 179, 217, 0.2);
-            border-color: #ffb3d9;
+            color: #217a4b;
+            background: rgba(168, 240, 212, 0.3);
+            border-color: #8ce3bf;
         }
 
-        /* SECURITY TOAST */
+        .sync-status-box.error {
+            color: #c53030;
+            background: rgba(255, 179, 217, 0.3);
+            border-color: #ff9ebb;
+        }
+
+        /* ===== TOAST & UTILITIES ===== */
         #security-toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 24px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(61, 42, 92, 0.92);
+            transform: translateX(-50%) translateY(120px);
+            background: rgba(52, 34, 79, 0.94);
+            backdrop-filter: blur(8px);
             color: #fff;
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 13px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 13.5px;
             font-weight: 700;
-            z-index: 2000;
-            transition: transform 0.3s ease;
+            z-index: 2100;
+            transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
             pointer-events: none;
             text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
         }
 
         #security-toast.show {
@@ -937,16 +975,16 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 30px 0;
+            gap: 14px;
+            padding: 34px 0;
             color: var(--text-muted);
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .spinner {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border: 4px solid var(--primary-light);
             border-top-color: var(--primary);
             border-radius: 50%;
@@ -955,24 +993,728 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== RESPONSIVE LANDSCAPE MODE & TABLET ADJUSTMENTS ===== */
+
+        /* ============================================================ */
+        /* ===== DIGITAL WHITEBOARD PROFESIONAL (MODAL MODERN) ===== */
+        /* ============================================================ */
+        #whiteboard-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(30, 18, 48, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        #whiteboard-modal.active {
+            display: flex;
+            animation: modalFadeIn 0.25s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .whiteboard-card {
+            width: 98vw;
+            height: 96vh;
+            max-width: 1400px;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2.5px solid var(--primary);
+            box-shadow: 0 24px 60px rgba(25, 10, 50, 0.4);
+            position: relative;
+        }
+
+        /* ===== WHITEBOARD HEADER & TOOLBAR ===== */
+        .whiteboard-header {
+            background: linear-gradient(135deg, #f9f5ff 0%, #fff2f8 50%, #f0fdf8 100%);
+            border-bottom: 2px solid rgba(210, 190, 240, 0.6);
+            display: flex;
+            flex-direction: column;
+            z-index: 20;
+            box-shadow: 0 4px 14px rgba(120, 80, 200, 0.08);
+            flex-shrink: 0;
+        }
+
+        /* Top Bar: Brand, Pages, Actions */
+        .whiteboard-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+            gap: 10px;
+            border-bottom: 1px solid rgba(220, 205, 245, 0.5);
+            flex-wrap: wrap;
+        }
+
+        .wb-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 15px;
+            color: var(--purple-deep);
+        }
+
+        .wb-brand-badge {
+            font-size: 10.5px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a46afc, #f462a6);
+            color: #fff;
+            padding: 3px 9px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .wb-pages-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3px 8px;
+            border-radius: 30px;
+            border: 1.5px solid rgba(210, 190, 240, 0.6);
+        }
+
+        .wb-label-small {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-right: 2px;
+        }
+
+        .wb-btn-chip {
+            padding: 4px 12px;
+            border-radius: 16px;
+            border: 1px solid transparent;
+            background: transparent;
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: all 0.18s ease;
+        }
+
+        .wb-btn-chip:hover {
+            background: rgba(164, 106, 252, 0.1);
+        }
+
+        .wb-btn-chip.active {
+            background: linear-gradient(135deg, #8a57e6, #a46afc);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(138, 87, 230, 0.35);
+        }
+
+        .wb-top-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: auto;
+        }
+
+        .wb-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 14px;
+            border: 1.5px solid rgba(210, 190, 240, 0.7);
+            background: #ffffff;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .wb-action-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .wb-action-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .wb-action-btn.btn-clear {
+            background: #fff1f3;
+            color: #d63353;
+            border-color: #ffccd5;
+        }
+
+        .wb-action-btn.btn-clear:hover {
+            background: #ffe3e8;
+            border-color: #ff99ab;
+        }
+
+        .wb-action-btn.btn-close {
+            background: linear-gradient(135deg, #9d65f5, #7c3aed);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 2px 8px rgba(157, 101, 245, 0.35);
+        }
+
+        .wb-action-btn.btn-close:hover {
+            background: linear-gradient(135deg, #aa78f8, #884beb);
+            transform: translateY(-1px);
+        }
+
+        /* Middle Bar: Primary Tool Switcher */
+        .whiteboard-tools-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .whiteboard-tools-bar::-webkit-scrollbar { display: none; }
+
+        .wb-tool-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.75);
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(160, 120, 220, 0.05);
+        }
+
+        .wb-tool-item:hover {
+            background: #ffffff;
+            border-color: rgba(164, 106, 252, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .wb-tool-item.active {
+            background: linear-gradient(135deg, #9d65f5, #b87bf8);
+            color: #ffffff;
+            border-color: #8047e6;
+            box-shadow: 0 4px 12px rgba(157, 101, 245, 0.35);
+        }
+
+        .wb-tool-icon {
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Bottom Bar: Contextual Sub-panel */
+        .whiteboard-sub-bar {
+            padding: 7px 14px;
+            background: rgba(255, 255, 255, 0.88);
+            border-top: 1px solid rgba(220, 205, 245, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .whiteboard-sub-bar::-webkit-scrollbar { display: none; }
+
+        .wb-sub-panel {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .wb-sub-panel.active {
+            display: flex;
+        }
+
+        .sub-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 240, 255, 0.65);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(210, 190, 240, 0.6);
+            flex-shrink: 0;
+        }
+
+        .sub-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-right: 2px;
+            white-space: nowrap;
+        }
+
+        /* Color Dots */
+        .wb-palette-dots {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: nowrap;
+        }
+
+        .color-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+            transition: all 0.18s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .color-dot:hover { transform: scale(1.15); }
+
+        .color-dot.active {
+            transform: scale(1.25);
+            border-color: #3d2a5c;
+            box-shadow: 0 0 0 2px #fff, 0 3px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .color-picker-wrapper {
+            position: relative;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-picker-input {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Size Selector Buttons */
+        .wb-size-chip {
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(210, 190, 240, 0.7);
+            background: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            cursor: pointer;
+            transition: all 0.16s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .wb-size-chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .wb-size-chip.active {
+            background: var(--purple-dark);
+            color: #ffffff;
+            border-color: var(--purple-dark);
+            box-shadow: 0 2px 6px rgba(142, 98, 224, 0.35);
+        }
+
+        .size-indicator-circle {
+            background: currentColor;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Shape Buttons */
+        .wb-shape-btn {
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(210, 190, 240, 0.7);
+            background: #ffffff;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            cursor: pointer;
+            transition: all 0.16s ease;
+            white-space: nowrap;
+        }
+
+        .wb-shape-btn:hover { border-color: var(--primary); background: var(--primary-light); }
+        .wb-shape-btn.active {
+            background: var(--purple-dark);
+            color: #ffffff;
+            border-color: var(--purple-dark);
+        }
+
+        /* Mode Pill (Outline vs Filled) */
+        .wb-pill-toggle {
+            display: inline-flex;
+            background: #ffffff;
+            border: 1.5px solid rgba(210, 190, 240, 0.7);
+            border-radius: 16px;
+            overflow: hidden;
+            padding: 2px;
+        }
+
+        .wb-pill-option {
+            padding: 3px 9px;
+            border-radius: 14px;
+            border: none;
+            background: transparent;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            cursor: pointer;
+        }
+
+        .wb-pill-option.active {
+            background: var(--purple-dark);
+            color: #fff;
+        }
+
+        /* Zoom Badge & Buttons */
+        .wb-zoom-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(210, 190, 240, 0.6);
+        }
+
+        .wb-btn-icon-tiny {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(210, 190, 240, 0.7);
+            background: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple-deep);
+        }
+
+        .wb-btn-icon-tiny:hover { background: var(--primary-light); border-color: var(--primary); }
+
+        #wb-zoom-badge {
+            font-size: 11px;
+            font-weight: 800;
+            min-width: 40px;
+            text-align: center;
+            color: var(--purple-deep);
+        }
+
+        /* ===== WHITEBOARD CANVAS BODY ===== */
+        .whiteboard-body {
+            flex: 1;
+            position: relative;
+            background-color: #ffffff;
+            /* Dot-grid graph paper effect */
+            background-image: radial-gradient(#d6cbef 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            background-position: 0 0;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        /* Interactive Layers Container */
+        .wb-viewport-stage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: 0 0;
+            touch-action: none;
+        }
+
+        #wb-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        #wb-objects-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* ===== STICKER & TEXT OBJECTS ===== */
+        .wb-obj-item {
+            position: absolute;
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            cursor: move;
+            border: 2px dashed transparent;
+            border-radius: 12px;
+            transition: border-color 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wb-obj-item.selected {
+            border-color: #9d65f5;
+            background: rgba(157, 101, 245, 0.05);
+            box-shadow: 0 4px 14px rgba(157, 101, 245, 0.15);
+        }
+
+        .wb-obj-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .wb-obj-content svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.12));
+        }
+
+        /* Object action controls (visible when selected) */
+        .wb-obj-del-btn {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ff4d6d;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 25;
+            pointer-events: auto;
+        }
+
+        .wb-obj-resize-handle {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #9d65f5;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: nwse-resize;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 25;
+            pointer-events: auto;
+        }
+
+        .wb-obj-item.selected .wb-obj-del-btn,
+        .wb-obj-item.selected .wb-obj-resize-handle {
+            display: flex;
+        }
+
+        /* Editable Text Box Object */
+        .wb-text-element {
+            min-width: 120px;
+            min-height: 40px;
+            padding: 8px 12px;
+            font-family: var(--font);
+            font-weight: 800;
+            line-height: 1.4;
+            outline: none;
+            word-break: break-word;
+            pointer-events: auto;
+            cursor: text;
+        }
+
+        /* Circular Eraser Preview Cursor */
+        #wb-eraser-cursor {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(220, 50, 80, 0.8);
+            background: rgba(255, 100, 130, 0.15);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 30;
+        }
+
+        /* Sticker Drawer Panel */
+        .wb-stickers-drawer {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            max-height: 130px;
+            overflow-y: auto;
+            padding: 6px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .wb-stickers-drawer { grid-template-columns: repeat(4, 1fr); max-height: 115px; }
+        }
+
+        .wb-sticker-thumb {
+            aspect-ratio: 1;
+            padding: 6px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid rgba(210, 190, 240, 0.7);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.18s ease;
+        }
+
+        .wb-sticker-thumb:hover {
+            transform: scale(1.08);
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(157, 101, 245, 0.2);
+        }
+
+        /* Friendly Confirmation Modal */
+        .wb-confirm-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(40, 20, 60, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .wb-confirm-overlay.show {
+            display: flex;
+            animation: modalFadeIn 0.2s ease;
+        }
+
+        .wb-confirm-box {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: var(--shadow-float);
+            border: 2px solid var(--card-border);
+        }
+
+        .wb-confirm-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .wb-confirm-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--purple-deep);
+            margin-bottom: 8px;
+        }
+
+        .wb-confirm-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 18px;
+            line-height: 1.45;
+        }
+
+        .wb-confirm-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .wb-confirm-actions button {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            border: none;
+        }
+
+        .wb-confirm-cancel {
+            background: #f0eaf8;
+            color: var(--purple-deep);
+        }
+
+        .wb-confirm-yes {
+            background: linear-gradient(135deg, #ff4d6d, #e62e5c);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.35);
+        }
+
+        /* ===== RESPONSIVE LANDSCAPE & TABLETS ===== */
         @media (orientation: landscape) and (min-width: 600px) {
             .container {
-                max-width: 1000px;
-                padding-bottom: 20px;
+                max-width: 1040px;
+                padding-bottom: 24px;
             }
 
             .quiz-content-wrapper {
                 flex-direction: row;
-                gap: 20px;
+                gap: 22px;
                 align-items: flex-start;
             }
 
             .quiz-left-col {
                 width: 50%;
-                max-height: 70vh;
+                max-height: 72vh;
                 overflow-y: auto;
-                padding-right: 6px;
+                padding-right: 8px;
             }
 
             .quiz-right-col {
@@ -988,17 +1730,17 @@
             }
 
             .draw-toggle-btn {
-                right: calc((100vw - 1000px) / 2 + 24px);
+                right: calc((100vw - 1040px) / 2 + 24px);
             }
 
             .draw-toolbar {
-                right: calc((100vw - 1000px) / 2 + 24px);
+                right: calc((100vw - 1040px) / 2 + 24px);
             }
         }
 
-        @media (orientation: landscape) and (max-width: 1040px) {
+        @media (orientation: landscape) and (max-width: 1080px) {
             .draw-toggle-btn, .draw-toolbar {
-                right: 5vw;
+                right: 4vw;
             }
         }
     </style>
@@ -1015,7 +1757,7 @@
 
     <div id="direct-draw-toolbar" class="draw-toolbar">
         <div class="tool-row">
-            <span class="tool-label">Warna:</span>
+            <span class="sub-label">Warna:</span>
             <div class="color-dot active direct-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
             <div class="color-dot direct-color" style="background:#e53935;" data-color="#e53935"></div>
             <div class="color-dot direct-color" style="background:#1e88e5;" data-color="#1e88e5"></div>
@@ -1023,70 +1765,252 @@
             <div class="color-dot direct-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
         </div>
         <div class="tool-row">
-            <span class="tool-label">Ukuran:</span>
-            <button class="size-btn active direct-size" data-size="3">Halus</button>
-            <button class="size-btn direct-size" data-size="6">Sedang</button>
-            <button class="size-btn direct-size" data-size="12">Tebal</button>
-            <button class="wb-btn-clear" id="direct-clear-btn" style="padding: 3px 8px; font-size: 11px;">🗑️ Hapus</button>
+            <span class="sub-label">Ukuran:</span>
+            <button class="wb-size-chip active direct-size" data-size="3">Halus</button>
+            <button class="wb-size-chip direct-size" data-size="6">Sedang</button>
+            <button class="wb-size-chip direct-size" data-size="12">Tebal</button>
+            <button class="wb-action-btn btn-clear" id="direct-clear-btn" style="padding: 3px 8px; font-size: 11px;">🗑️ Hapus</button>
         </div>
     </div>
 
-    <!-- ===== PAPAN TULIS MODAL OVERLAY ===== -->
+    <!-- ===== PAPAN CORETAN DIGITAL WHITEBOARD WONDERLAND (MODAL) ===== -->
     <div id="whiteboard-modal">
         <div class="whiteboard-card">
+            <!-- Whiteboard Header & Controls -->
             <div class="whiteboard-header">
-                <div class="whiteboard-title">
-                    <span>✏️ Papan Coretan &amp; Bangun Datar</span>
-                    <span style="font-size: 11px; font-weight: 700; color: #7a6a8f; background: rgba(255,255,255,0.7); padding: 2px 8px; border-radius: 10px;">📐 Area 2x (Cubit Zoom &amp; Geser 2 Jari)</span>
+                <!-- Top Row: Title, Pages, Quick Actions -->
+                <div class="whiteboard-top-bar">
+                    <div class="wb-brand">
+                        <span class="wb-brand-badge">✨ Digital Whiteboard</span>
+                        <span>🎨 Papan Ajaib Ayya</span>
+                    </div>
+
+                    <!-- Page Tabs -->
+                    <div class="wb-pages-row">
+                        <span class="wb-label-small">Halaman:</span>
+                        <button class="wb-btn-chip active wb-page-btn" data-page="0">Hal 1</button>
+                        <button class="wb-btn-chip wb-page-btn" data-page="1">Hal 2</button>
+                        <button class="wb-btn-chip wb-page-btn" data-page="2">Hal 3</button>
+                    </div>
+
+                    <!-- Actions: Undo, Redo, Zoom, Clear, Close -->
+                    <div class="wb-top-actions">
+                        <button class="wb-action-btn" id="wb-undo-btn" title="Undo (Batalkan)">
+                            <span>↶</span> Undo
+                        </button>
+                        <button class="wb-action-btn" id="wb-redo-btn" title="Redo (Ulangi)">
+                            <span>↷</span> Redo
+                        </button>
+
+                        <div class="wb-zoom-group">
+                            <button class="wb-btn-icon-tiny" id="wb-zoom-out-btn" title="Perkecil">🔍−</button>
+                            <span id="wb-zoom-badge">100%</span>
+                            <button class="wb-btn-icon-tiny" id="wb-zoom-in-btn" title="Perbesar">🔍+</button>
+                            <button class="wb-btn-icon-tiny" id="wb-zoom-reset-btn" title="Reset Zoom">🔄</button>
+                        </div>
+
+                        <button class="wb-action-btn btn-clear" id="wb-clear-btn" title="Bersihkan Semua Coretan">
+                            <span>🗑️</span> Bersihkan
+                        </button>
+                        <button class="wb-action-btn btn-close" id="wb-close-btn" title="Simpan &amp; Tutup">
+                            <span>❌</span> Tutup
+                        </button>
+                    </div>
                 </div>
-                <div class="whiteboard-tools">
-                    <div class="tool-group">
-                        <span class="tool-label">Halaman:</span>
-                        <button class="page-btn active wb-page-btn" data-page="0">Hal 1</button>
-                        <button class="page-btn wb-page-btn" data-page="1">Hal 2</button>
-                        <button class="page-btn wb-page-btn" data-page="2">Hal 3</button>
+
+                <!-- Middle Row: Main Tools -->
+                <div class="whiteboard-tools-bar">
+                    <button class="wb-tool-item active" data-tool="pen">
+                        <span class="wb-tool-icon">✏️</span>
+                        <span>Pulpen</span>
+                    </button>
+                    <button class="wb-tool-item" data-tool="highlighter">
+                        <span class="wb-tool-icon">🖍️</span>
+                        <span>Stabilo</span>
+                    </button>
+                    <button class="wb-tool-item" data-tool="shape">
+                        <span class="wb-tool-icon">📐</span>
+                        <span>Bentuk</span>
+                    </button>
+                    <button class="wb-tool-item" data-tool="sticker">
+                        <span class="wb-tool-icon">🦄</span>
+                        <span>Stiker Lucu</span>
+                    </button>
+                    <button class="wb-tool-item" data-tool="text">
+                        <span class="wb-tool-icon">🔤</span>
+                        <span>Teks</span>
+                    </button>
+                    <button class="wb-tool-item" data-tool="eraser">
+                        <span class="wb-tool-icon">🧹</span>
+                        <span>Penghapus</span>
+                    </button>
+                </div>
+
+                <!-- Bottom Row: Dynamic Contextual Sub-bar -->
+                <div class="whiteboard-sub-bar" id="wb-sub-bar">
+                    <!-- Sub-panel: Pen -->
+                    <div class="wb-sub-panel active" id="sub-panel-pen">
+                        <div class="sub-group">
+                            <span class="sub-label">Ketebalan:</span>
+                            <button class="wb-size-chip pen-size" data-size="2"><span class="size-indicator-circle" style="width:3px; height:3px;"></span> 2px</button>
+                            <button class="wb-size-chip active pen-size" data-size="4"><span class="size-indicator-circle" style="width:5px; height:5px;"></span> 4px</button>
+                            <button class="wb-size-chip pen-size" data-size="8"><span class="size-indicator-circle" style="width:8px; height:8px;"></span> 8px</button>
+                            <button class="wb-size-chip pen-size" data-size="14"><span class="size-indicator-circle" style="width:11px; height:11px;"></span> 14px</button>
+                            <button class="wb-size-chip pen-size" data-size="22"><span class="size-indicator-circle" style="width:15px; height:15px;"></span> 22px</button>
+                        </div>
+                        <div class="sub-group">
+                            <span class="sub-label">Warna:</span>
+                            <div class="wb-palette-dots" id="pen-palette-dots">
+                                <!-- Basic & Pastel Dots -->
+                                <div class="color-dot active modal-color" style="background:#2d1a4a;" data-color="#2d1a4a" title="Hitam Malam"></div>
+                                <div class="color-dot modal-color" style="background:#ff4d4f;" data-color="#ff4d4f" title="Merah Ceria"></div>
+                                <div class="color-dot modal-color" style="background:#1890ff;" data-color="#1890ff" title="Biru Langit"></div>
+                                <div class="color-dot modal-color" style="background:#52c41a;" data-color="#52c41a" title="Hijau Daun"></div>
+                                <div class="color-dot modal-color" style="background:#fadb14;" data-color="#fadb14" title="Kuning Madu"></div>
+                                <div class="color-dot modal-color" style="background:#722ed1;" data-color="#722ed1" title="Ungu Terong"></div>
+                                <div class="color-dot modal-color" style="background:#eb2f96;" data-color="#eb2f96" title="Pink Permen"></div>
+                                <div class="color-dot modal-color" style="background:#fa8c16;" data-color="#fa8c16" title="Oranye Segar"></div>
+                                <div class="color-dot modal-color" style="background:#873800;" data-color="#873800" title="Cokelat"></div>
+                                <div class="color-dot modal-color" style="background:#ffadd2;" data-color="#ffadd2" title="Pastel Pink"></div>
+                                <div class="color-dot modal-color" style="background:#d3adf7;" data-color="#d3adf7" title="Pastel Lilac"></div>
+                                <div class="color-dot modal-color" style="background:#91d5ff;" data-color="#91d5ff" title="Pastel Sky"></div>
+                                <div class="color-dot modal-color" style="background:#b7eb8f;" data-color="#b7eb8f" title="Pastel Mint"></div>
+                                <div class="color-dot modal-color" style="background:#ffd591;" data-color="#ffd591" title="Pastel Peach"></div>
+                                <div class="color-dot modal-color" style="background:#ffffff; border:2px solid #ccc;" data-color="#ffffff" title="Putih"></div>
+                            </div>
+                            <!-- Color Picker -->
+                            <div class="color-picker-wrapper" title="Pilih Warna Bebas (Color Picker)">
+                                <input type="color" class="color-picker-input" id="pen-color-picker" value="#2d1a4a" />
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- FITUR TOMBOL ZOOM PADA TOOLBAR -->
-                    <div class="tool-group">
-                        <span class="tool-label">Zoom:</span>
-                        <button class="size-btn" id="wb-zoom-out-btn" title="Perkecil">🔍-</button>
-                        <span id="wb-zoom-badge" style="font-size: 11px; font-weight: 800; min-width: 36px; text-align: center; color: var(--purple-dark);">100%</span>
-                        <button class="size-btn" id="wb-zoom-in-btn" title="Perbesar">🔍+</button>
-                        <button class="size-btn" id="wb-zoom-reset-btn" title="Reset Zoom">🔄 100%</button>
+                    <!-- Sub-panel: Stabilo (Highlighter) -->
+                    <div class="wb-sub-panel" id="sub-panel-highlighter">
+                        <div class="sub-group">
+                            <span class="sub-label">Lebar Stabilo:</span>
+                            <button class="wb-size-chip highlighter-size" data-size="12">12px</button>
+                            <button class="wb-size-chip active highlighter-size" data-size="20">20px</button>
+                            <button class="wb-size-chip highlighter-size" data-size="30">30px</button>
+                            <button class="wb-size-chip highlighter-size" data-size="42">42px</button>
+                            <button class="wb-size-chip highlighter-size" data-size="54">54px</button>
+                        </div>
+                        <div class="sub-group">
+                            <span class="sub-label">Warna Stabilo:</span>
+                            <div class="wb-palette-dots" id="highlighter-palette-dots">
+                                <div class="color-dot active highlighter-color" style="background:#fff566;" data-color="#fff566" title="Kuning Stabilo"></div>
+                                <div class="color-dot highlighter-color" style="background:#73d13d;" data-color="#73d13d" title="Hijau Stabilo"></div>
+                                <div class="color-dot highlighter-color" style="background:#ff85c0;" data-color="#ff85c0" title="Merah Muda Stabilo"></div>
+                                <div class="color-dot highlighter-color" style="background:#69c0ff;" data-color="#69c0ff" title="Biru Stabilo"></div>
+                                <div class="color-dot highlighter-color" style="background:#b37feb;" data-color="#b37feb" title="Ungu Stabilo"></div>
+                                <div class="color-dot highlighter-color" style="background:#ffc069;" data-color="#ffc069" title="Oranye Stabilo"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="tool-group">
-                        <span class="tool-label">Alat:</span>
-                        <button class="mode-btn active wb-mode-btn" data-mode="pen">✏️ Pen</button>
-                        <button class="mode-btn wb-mode-btn" data-mode="eraser">🧹 Hapus</button>
-                        <button class="mode-btn wb-mode-btn" data-mode="rect">🔲 Kotak</button>
-                        <button class="mode-btn wb-mode-btn" data-mode="circle">⚪ Lingkaran</button>
-                        <button class="mode-btn wb-mode-btn" data-mode="triangle">🔺 Segitiga</button>
+                    <!-- Sub-panel: Shapes -->
+                    <div class="wb-sub-panel" id="sub-panel-shape">
+                        <div class="sub-group">
+                            <span class="sub-label">Bentuk:</span>
+                            <button class="wb-shape-btn active shape-type-btn" data-shape="line">📏 Garis</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="arrow">➔ Panah</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="rect">▭ Persegi Panjang</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="square">🔲 Persegi</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="circle">⚪ Lingkaran</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="oval">⬭ Oval</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="triangle">🔺 Segitiga</button>
+                            <button class="wb-shape-btn shape-type-btn" data-shape="star">⭐ Bintang</button>
+                        </div>
+                        <div class="sub-group">
+                            <span class="sub-label">Model:</span>
+                            <div class="wb-pill-toggle">
+                                <button class="wb-pill-option active" id="shape-mode-outline">Garis Luar</button>
+                                <button class="wb-pill-option" id="shape-mode-filled">Berisi</button>
+                            </div>
+                        </div>
+                        <div class="sub-group">
+                            <span class="sub-label">Tebal:</span>
+                            <button class="wb-size-chip shape-stroke-size" data-size="2">2px</button>
+                            <button class="wb-size-chip active shape-stroke-size" data-size="4">4px</button>
+                            <button class="wb-size-chip shape-stroke-size" data-size="8">8px</button>
+                            <button class="wb-size-chip shape-stroke-size" data-size="14">14px</button>
+                        </div>
                     </div>
 
-                    <div class="tool-group" id="wb-color-group">
-                        <span class="tool-label">Warna:</span>
-                        <div class="color-dot active modal-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
-                        <div class="color-dot modal-color" style="background:#e53935;" data-color="#e53935"></div>
-                        <div class="color-dot modal-color" style="background:#1e88e5;" data-color="#1e88e5"></div>
-                        <div class="color-dot modal-color" style="background:#43a047;" data-color="#43a047"></div>
-                        <div class="color-dot modal-color" style="background:#8e24aa;" data-color="#8e24aa"></div>
+                    <!-- Sub-panel: Stickers -->
+                    <div class="wb-sub-panel" id="sub-panel-sticker" style="flex-direction: column; align-items: flex-start; gap: 6px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+                            <span class="sub-label">🧸 Klik stiker untuk menempelkan ke papan:</span>
+                            <span style="font-size:11px; color:var(--text-muted); font-weight:700;">(Bisa digeser, diperbesar &amp; dihapus)</span>
+                        </div>
+                        <div class="wb-stickers-drawer" id="wb-stickers-list">
+                            <!-- Populated dynamically with Cute Pastel SVGs -->
+                        </div>
                     </div>
 
-                    <div class="tool-group">
-                        <span class="tool-label">Ukuran:</span>
-                        <button class="size-btn active modal-size" data-size="3">Halus</button>
-                        <button class="size-btn modal-size" data-size="6">Sedang</button>
-                        <button class="size-btn modal-size" data-size="14">Tebal</button>
+                    <!-- Sub-panel: Text -->
+                    <div class="wb-sub-panel" id="sub-panel-text">
+                        <button class="wb-action-btn" id="wb-add-text-btn" style="background:var(--primary-light); color:var(--purple-deep); border-color:var(--primary);">
+                            <span>➕</span> Tambah Teks
+                        </button>
+                        <div class="sub-group">
+                            <span class="sub-label">Ukuran Huruf:</span>
+                            <button class="wb-size-chip text-size-btn" data-size="16">Kecil (16)</button>
+                            <button class="wb-size-chip active text-size-btn" data-size="24">Sedang (24)</button>
+                            <button class="wb-size-chip text-size-btn" data-size="34">Besar (34)</button>
+                            <button class="wb-size-chip text-size-btn" data-size="46">Jumbo (46)</button>
+                        </div>
+                        <div class="sub-group">
+                            <span class="sub-label">Warna Teks:</span>
+                            <div class="wb-palette-dots" id="text-palette-dots">
+                                <div class="color-dot active text-color" style="background:#2d1a4a;" data-color="#2d1a4a"></div>
+                                <div class="color-dot text-color" style="background:#ff4d4f;" data-color="#ff4d4f"></div>
+                                <div class="color-dot text-color" style="background:#1890ff;" data-color="#1890ff"></div>
+                                <div class="color-dot text-color" style="background:#52c41a;" data-color="#52c41a"></div>
+                                <div class="color-dot text-color" style="background:#722ed1;" data-color="#722ed1"></div>
+                                <div class="color-dot text-color" style="background:#eb2f96;" data-color="#eb2f96"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <button class="wb-btn-clear" id="wb-clear-btn">🗑️ Bersihkan</button>
-                    <button class="wb-btn-close" id="wb-close-btn">❌ Tutup</button>
+                    <!-- Sub-panel: Eraser -->
+                    <div class="wb-sub-panel" id="sub-panel-eraser">
+                        <div class="sub-group">
+                            <span class="sub-label">Ukuran Penghapus:</span>
+                            <button class="wb-size-chip eraser-size" data-size="8">8px</button>
+                            <button class="wb-size-chip eraser-size" data-size="16">16px</button>
+                            <button class="wb-size-chip active eraser-size" data-size="28">28px</button>
+                            <button class="wb-size-chip eraser-size" data-size="44">44px</button>
+                            <button class="wb-size-chip eraser-size" data-size="64">64px</button>
+                        </div>
+                        <button class="wb-action-btn btn-clear" id="wb-eraser-clear-btn">
+                            <span>🗑️</span> Bersihkan Seluruh Coretan Halaman Ini
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <!-- Whiteboard Canvas Body -->
             <div class="whiteboard-body" id="wb-body">
-                <canvas id="wb-canvas"></canvas>
+                <div class="wb-viewport-stage" id="wb-stage">
+                    <canvas id="wb-canvas"></canvas>
+                    <div id="wb-objects-container"></div>
+                </div>
+                <!-- Floating Eraser Cursor Preview -->
+                <div id="wb-eraser-cursor"></div>
+            </div>
+
+            <!-- Friendly Clear Confirmation Modal -->
+            <div id="wb-confirm-modal" class="wb-confirm-overlay">
+                <div class="wb-confirm-box">
+                    <div class="wb-confirm-icon">🗑️</div>
+                    <h3 class="wb-confirm-title">Bersihkan Papan Coretan?</h3>
+                    <p class="wb-confirm-desc">Ayya yakin ingin menghapus semua coretan dan stiker di halaman ini? Tenang, Ayya masih bisa membatalkannya dengan tombol <strong>Undo</strong> kok! 😊</p>
+                    <div class="wb-confirm-actions">
+                        <button class="wb-confirm-cancel" id="wb-cancel-clear">Batal</button>
+                        <button class="wb-confirm-yes" id="wb-do-clear">Ya, Bersihkan!</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1097,8 +2021,9 @@
         <!-- ===== TOP BAR ===== -->
         <header class="top-bar">
             <div class="user-tag">
+                <div class="user-avatar-icon">🌸</div>
                 <div>
-                    <div>🌸 Ruang Ayya</div>
+                    <div class="user-meta-title">Ruang Ayya Wonderland</div>
                     <div id="conn-indicator" class="connection-status">
                         <span class="connection-dot"></span>
                         <span id="conn-text">Online</span>
@@ -1106,7 +2031,7 @@
                 </div>
             </div>
             <div class="timer-badge" id="timer-box" style="display: none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 16 14"></polyline></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 16 14"></polyline></svg>
                 <span id="timer-display">00:00:00</span>
             </div>
         </header>
@@ -1115,28 +2040,29 @@
         <section id="view-home" class="view-section active">
             <div class="card">
                 <div class="home-header">
-                    <div class="home-badge">🌟 Ayya, Yuk Belajar!</div>
+                    <div class="home-badge">🌟 Ayya, Yuk Belajar Ceria!</div>
                     <h1 class="home-title">Quiz Wonderland</h1>
-                    <p class="home-subtitle">Pilih pelajaran yang ingin kamu kerjakan, Ayya ✨</p>
+                    <p class="home-subtitle">Pilih modul materi yang ingin kamu pelajari hari ini, Ayya ✨</p>
                 </div>
 
                 <div class="motivation-card">
+                    <div class="motivation-icon">🌈</div>
                     <div class="motivation-text" id="daily-quote">
-                        "Hai Ayya! Kamu pasti bisa! Kerjakan dengan tenang dan teliti. 🌸"
+                        "Hai Ayya! Kamu pasti bisa! Kerjakan dengan tenang dan teliti ya. 🌸"
                     </div>
                 </div>
 
-                <div class="section-subheading">Pilih Pelajaran</div>
+                <div class="section-subheading">Pilihan Modul Pelajaran</div>
                 
                 <div id="package-container" class="package-grid">
                     <div class="loader" style="grid-column: 1 / -1;">
                         <div class="spinner"></div>
-                        <span>Sedang mencari soal-soal...</span>
+                        <span>Sedang mencari soal-soal Ayya...</span>
                     </div>
                 </div>
 
-                <button id="btn-start" class="btn btn-primary" disabled style="margin-top: 4px;">
-                    <span>🚀 Mulai Belajar</span>
+                <button id="btn-start" class="btn btn-primary" disabled style="margin-top: 6px;">
+                    <span>🚀 Mulai Belajar Sekarang</span>
                 </button>
             </div>
         </section>
@@ -1148,10 +2074,10 @@
 
                 <div class="quiz-package-header">
                     <div class="quiz-sheet-badge">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                         <span id="label-package-title">Modul Belajar</span>
                     </div>
-                    <button id="btn-home-confirm" class="btn btn-outline" style="padding: 4px 10px; font-size: 12px; width: auto; border-radius: 12px;">🏠 Home</button>
+                    <button id="btn-home-confirm" class="btn btn-outline" style="padding: 5px 12px; font-size: 12px; width: auto; border-radius: 14px;">🏠 Beranda</button>
                 </div>
 
                 <div class="quiz-progress-bar">
@@ -1160,17 +2086,20 @@
 
                 <div class="quiz-meta">
                     <span id="label-progress">Soal 1 dari 10</span>
-                    <span id="label-subject" class="quiz-sheet-badge" style="background: rgba(179,136,255,0.12); font-size: 11px;">Materi</span>
+                    <span id="label-subject" class="quiz-sheet-badge" style="background: rgba(179,136,255,0.14); font-size: 11.5px;">Materi</span>
                 </div>
 
+                <!-- Tombol Buka Papan Coretan Ajaib -->
                 <button class="whiteboard-btn" id="open-whiteboard-btn">
-                    <span>✏️ Buka Papan Tulis / Oret-oretan</span>
+                    <span>🎨</span>
+                    <span>Buka Papan Coretan Ajaib Ayya ✨</span>
+                    <span class="wb-btn-badge">Papan Tulis &amp; Gambar</span>
                 </button>
 
                 <div class="quiz-content-wrapper">
                     <div class="quiz-left-col">
                         <div id="passage-container" class="passage-box" style="display: none;">
-                            <div id="passage-title" class="passage-title">Cerita / Bacaan</div>
+                            <div id="passage-title" class="passage-title">📖 Cerita / Bacaan</div>
                             <div id="passage-content" class="passage-content"></div>
                         </div>
 
@@ -1180,10 +2109,10 @@
                         </div>
 
                         <div id="tips-container" class="tips-box" style="display: none;">
-                            <span style="font-size: 18px;">💡</span>
+                            <span style="font-size: 20px;">💡</span>
                             <div style="flex:1;">
-                                <strong style="display: block; margin-bottom: 3px; color:#d39e00;">Tips Belajar:</strong>
-                                <div id="tips-content" style="line-height: 1.5; font-weight: 500;"></div>
+                                <strong style="display: block; margin-bottom: 3px; color:#997300;">Tips Belajar:</strong>
+                                <div id="tips-content" style="line-height: 1.5; font-weight: 600;"></div>
                             </div>
                         </div>
 
@@ -1194,9 +2123,9 @@
                         <div class="options-list" id="options-container"></div>
 
                         <div class="nav-actions">
-                            <button id="btn-prev" class="btn btn-outline" style="flex: 0.6;">⬅️</button>
+                            <button id="btn-prev" class="btn btn-outline" style="flex: 0.6;">⬅️ Sebelumnya</button>
                             <button id="btn-next" class="btn btn-secondary" style="flex: 1;">Berikutnya ➡️</button>
-                            <button id="btn-submit" class="btn btn-primary" style="display: none; flex: 1;">✨ Selesai ✨</button>
+                            <button id="btn-submit" class="btn btn-primary" style="display: none; flex: 1;">✨ Selesai Kuis ✨</button>
                         </div>
 
                         <div class="palette-grid" id="palette-container"></div>
@@ -1210,8 +2139,8 @@
         <section id="view-result" class="view-section">
             <div class="card">
                 <div class="result-box">
-                    <div class="quiz-sheet-badge" style="margin-bottom: 14px;">
-                        🎉 Kuis Selesai!
+                    <div class="quiz-sheet-badge" style="margin-bottom: 16px;">
+                        🎉 Kuis Selesai! Kerja Bagus, Ayya!
                     </div>
 
                     <div class="score-circle-wrapper">
@@ -1232,30 +2161,30 @@
 
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-num" style="color: #43a047;" id="res-correct">-</div>
+                            <div class="stat-num" style="color: #2e7d32;" id="res-correct">-</div>
                             <div class="stat-text">✅ Benar</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-num" style="color: #e57373;" id="res-incorrect">-</div>
+                            <div class="stat-num" style="color: #d32f2f;" id="res-incorrect">-</div>
                             <div class="stat-text">🔄 Salah</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-num" style="color: #ffb74d;" id="res-unanswered">-</div>
+                            <div class="stat-num" style="color: #f57c00;" id="res-unanswered">-</div>
                             <div class="stat-text">❓ Kosong</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-num" style="color: var(--purple-dark);" id="res-duration">-</div>
+                            <div class="stat-num" style="color: var(--purple-deep);" id="res-duration">-</div>
                             <div class="stat-text">⏱️ Durasi</div>
                         </div>
                     </div>
 
                     <div class="wrong-list-box" id="wrong-container" style="display: none;">
-                        <div class="wrong-title">⚠️ Evaluasi Soal yang Salah:</div>
-                        <div id="wrong-numbers" style="color: #4a5568; font-weight: 700; font-size: 13px;">-</div>
+                        <div class="wrong-title">⚠️ Evaluasi Soal yang Perlu Dipelajari Lagi:</div>
+                        <div id="wrong-numbers" style="color: #4a5568; font-weight: 800; font-size: 13.5px;">-</div>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <button id="btn-retry" class="btn btn-primary">🔄 Ulangi Ujian</button>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px;">
+                        <button id="btn-retry" class="btn btn-primary">🔄 Ulangi Kuis Modul Ini</button>
                         <button id="btn-home-final" class="btn btn-outline">🏠 Kembali ke Beranda</button>
                     </div>
                 </div>
@@ -1264,8 +2193,11 @@
 
     </div>
 
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ============================================================ -->
     <script>
-        // MEMPERTAHANKAN LINK APPS SCRIPT AYYA
+        // MEMPERTAHANKAN LINK APPS SCRIPT AYYA - WAJIB & TIDAK BERUBAH
         const CONFIG = {
             API_URL: 'https://script.google.com/macros/s/AKfycbySqTLmBytPjm5Ao2qDzMob4rmmIyK-37LDsgIKDo5evsmXzjBKDOufJRKB6xs5Y-H-fg/exec'
         };
@@ -1273,10 +2205,10 @@
         const MOTIVATION_QUOTES = [
             "Ayya pasti bisa! Kerjakan dengan tenang dan teliti. 🌸",
             "Setiap soal adalah kesempatan untuk belajar hal baru, Ayya! ✨",
-            "Percaya pada dirimu sendiri, Ayya anak hebat! ⭐",
+            "Percaya pada dirimu sendiri, Ayya anak hebat dan cerdas! ⭐",
             "Belajar itu menyenangkan jika dilakukan dengan riang gembira!",
-            "Terus semangat belajar, masa depan cerah menantimu! 🌈",
-            "Satu langkah kecil hari ini adalah awal dari kesuksesan besar besok, Ayya! 🌟"
+            "Terus semangat belajar, masa depan cerah menantimu, Ayya! 🌈",
+            "Satu langkah kecil hari ini adalah awal dari kesuksesan besar besok! 🌟"
         ];
 
         const state = {
@@ -1293,7 +2225,7 @@
         };
 
         // ============================================================
-        //  JSONP API HELPER
+        //  JSONP API HELPER (MEMPERTAHANKAN SISTEM ASLI)
         // ============================================================
         function callApiJsonp(params) {
             return new Promise((resolve, reject) => {
@@ -1454,34 +2386,133 @@
 
         function clearDirectDrawCanvas() {
             const canvas = document.getElementById('direct-draw-canvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
         // ============================================================
-        //  2. FITUR PAPAN TULIS MODAL (LATAR PUTIH, DOT GRID, UKURAN 2X & SCROLL 2 JARI)
+        //  2. DIGITAL WHITEBOARD PROFESIONAL LENGKAP & MODERN
         // ============================================================
+
+        // KOLEKSI 12 STIKER CUTE PASTEL LOKAL (SVG MURNI TANPA EXTERNAL REQUEST)
+        const CUTE_STICKERS = [
+            {
+                id: 'teddy',
+                name: 'Boneka Lucu',
+                category: 'hewan',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="28" cy="28" r="14" fill="#ffd1b3" stroke="#e09f7a" stroke-width="3"/><circle cx="28" cy="28" r="8" fill="#ffbfa0"/><circle cx="72" cy="28" r="14" fill="#ffd1b3" stroke="#e09f7a" stroke-width="3"/><circle cx="72" cy="28" r="8" fill="#ffbfa0"/><ellipse cx="50" cy="55" rx="36" ry="32" fill="#ffd1b3" stroke="#e09f7a" stroke-width="3"/><ellipse cx="50" cy="62" rx="16" ry="12" fill="#fff5eb"/><ellipse cx="50" cy="57" rx="5" ry="3.5" fill="#5c3c2e"/><path d="M46 63 Q50 67 54 63" fill="none" stroke="#5c3c2e" stroke-width="2.5" stroke-linecap="round"/><circle cx="37" cy="48" r="4.5" fill="#3d271d"/><circle cx="38.5" cy="46.5" r="1.5" fill="#ffffff"/><circle cx="63" cy="48" r="4.5" fill="#3d271d"/><circle cx="64.5" cy="46.5" r="1.5" fill="#ffffff"/><circle cx="30" cy="55" r="5" fill="#ff9ebb" opacity="0.6"/><circle cx="70" cy="55" r="5" fill="#ff9ebb" opacity="0.6"/><path d="M42 84 L58 84 L50 88 Z" fill="#ff70a6"/><circle cx="50" cy="84" r="4" fill="#ff5c8a"/></svg>`
+            },
+            {
+                id: 'kitty',
+                name: 'Kucing Manis',
+                category: 'hewan',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><polygon points="20,45 28,15 46,32" fill="#ffe5ec" stroke="#f08ab1" stroke-width="3"/><polygon points="26,40 31,22 42,32" fill="#ffb3c6"/><polygon points="80,45 72,15 54,32" fill="#ffe5ec" stroke="#f08ab1" stroke-width="3"/><polygon points="74,40 69,22 58,32" fill="#ffb3c6"/><ellipse cx="50" cy="55" rx="38" ry="32" fill="#fff0f5" stroke="#f08ab1" stroke-width="3"/><circle cx="36" cy="50" r="4" fill="#4a2840"/><circle cx="37.5" cy="48.5" r="1.5" fill="#fff"/><circle cx="64" cy="50" r="4" fill="#4a2840"/><circle cx="65.5" cy="48.5" r="1.5" fill="#fff"/><circle cx="28" cy="57" r="5" fill="#ff9ebb" opacity="0.65"/><circle cx="72" cy="57" r="5" fill="#ff9ebb" opacity="0.65"/><polygon points="50,56 46,53 54,53" fill="#ff758f"/><path d="M44 60 Q50 64 50 60 Q50 64 56 60" fill="none" stroke="#4a2840" stroke-width="2" stroke-linecap="round"/><path d="M16 52 L30 54 M14 58 L28 58 M68 54 L84 52 M70 58 L86 58" stroke="#f08ab1" stroke-width="2" stroke-linecap="round"/></svg>`
+            },
+            {
+                id: 'bear',
+                name: 'Beruang Madu',
+                category: 'hewan',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="26" cy="28" r="13" fill="#e8b87d" stroke="#c48a47" stroke-width="3"/><circle cx="26" cy="28" r="7" fill="#d49a5b"/><circle cx="74" cy="28" r="13" fill="#e8b87d" stroke="#c48a47" stroke-width="3"/><circle cx="74" cy="28" r="7" fill="#d49a5b"/><circle cx="50" cy="55" r="36" fill="#f4caa1" stroke="#c48a47" stroke-width="3"/><ellipse cx="50" cy="62" rx="16" ry="12" fill="#fff3e0"/><ellipse cx="50" cy="57" rx="5" ry="3.5" fill="#4a2f13"/><path d="M46 63 Q50 67 54 63" fill="none" stroke="#4a2f13" stroke-width="2.5" stroke-linecap="round"/><circle cx="36" cy="48" r="4" fill="#331f0c"/><circle cx="37" cy="47" r="1.5" fill="#fff"/><circle cx="64" cy="48" r="4" fill="#331f0c"/><circle cx="65" cy="47" r="1.5" fill="#fff"/><circle cx="28" cy="56" r="5" fill="#ffa07a" opacity="0.6"/><circle cx="72" cy="56" r="5" fill="#ffa07a" opacity="0.6"/></svg>`
+            },
+            {
+                id: 'bunny',
+                name: 'Kelinci Ceria',
+                category: 'hewan',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><ellipse cx="34" cy="26" rx="9" ry="24" fill="#ffffff" stroke="#e0b1cb" stroke-width="3"/><ellipse cx="34" cy="26" rx="5" ry="17" fill="#ffccd5"/><ellipse cx="66" cy="26" rx="9" ry="24" fill="#ffffff" stroke="#e0b1cb" stroke-width="3"/><ellipse cx="66" cy="26" rx="5" ry="17" fill="#ffccd5"/><ellipse cx="50" cy="64" rx="34" ry="28" fill="#ffffff" stroke="#e0b1cb" stroke-width="3"/><circle cx="37" cy="60" r="4" fill="#4a2840"/><circle cx="38" cy="59" r="1.5" fill="#fff"/><circle cx="63" cy="60" r="4" fill="#4a2840"/><circle cx="64" cy="59" r="1.5" fill="#fff"/><polygon points="50,67 47,64 53,64" fill="#ff758f"/><path d="M46 70 Q50 73 54 70" fill="none" stroke="#4a2840" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="67" r="5" fill="#ffb3c6" opacity="0.7"/><circle cx="73" cy="67" r="5" fill="#ffb3c6" opacity="0.7"/></svg>`
+            },
+            {
+                id: 'star',
+                name: 'Bintang Berkilau',
+                category: 'alam',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 12 L61 36 L87 39 L68 57 L73 83 L50 70 L27 83 L32 57 L13 39 L39 36 Z" fill="#ffe066" stroke="#f59e0b" stroke-width="3" stroke-linejoin="round"/><circle cx="43" cy="48" r="3.5" fill="#451a03"/><circle cx="44" cy="47" r="1.2" fill="#fff"/><circle cx="57" cy="48" r="3.5" fill="#451a03"/><circle cx="58" cy="47" r="1.2" fill="#fff"/><path d="M46 56 Q50 60 54 56" fill="none" stroke="#451a03" stroke-width="2" stroke-linecap="round"/><circle cx="37" cy="54" r="3.5" fill="#f87171" opacity="0.6"/><circle cx="63" cy="54" r="3.5" fill="#f87171" opacity="0.6"/><circle cx="20" cy="22" r="3" fill="#fde047"/><circle cx="80" cy="25" r="2.5" fill="#fde047"/></svg>`
+            },
+            {
+                id: 'heart',
+                name: 'Hati Manis',
+                category: 'alam',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 84 C18 64 8 40 22 24 C34 10 46 20 50 28 C54 20 66 10 78 24 C92 40 82 64 50 84 Z" fill="#ff85a1" stroke="#e05780" stroke-width="3" stroke-linejoin="round"/><circle cx="41" cy="44" r="3.5" fill="#400e1f"/><circle cx="42" cy="43" r="1.2" fill="#fff"/><circle cx="59" cy="44" r="3.5" fill="#400e1f"/><circle cx="60" cy="43" r="1.2" fill="#fff"/><path d="M46 51 Q50 55 54 51" fill="none" stroke="#400e1f" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="49" r="4" fill="#ffffff" opacity="0.65"/><circle cx="66" cy="49" r="4" fill="#ffffff" opacity="0.65"/><circle cx="70" cy="28" r="4" fill="#ffffff" opacity="0.5"/></svg>`
+            },
+            {
+                id: 'cloud',
+                name: 'Awan Ceria',
+                category: 'alam',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M30 68 L72 68 A16 16 0 0 0 84 48 A18 18 0 0 0 66 26 A24 24 0 0 0 28 34 A16 16 0 0 0 30 68 Z" fill="#d0f4de" stroke="#70d6a8" stroke-width="3" stroke-linejoin="round"/><circle cx="44" cy="47" r="3.5" fill="#1b4332"/><circle cx="45" cy="46" r="1.2" fill="#fff"/><circle cx="60" cy="47" r="3.5" fill="#1b4332"/><circle cx="61" cy="46" r="1.2" fill="#fff"/><path d="M48 54 Q52 58 56 54" fill="none" stroke="#1b4332" stroke-width="2" stroke-linecap="round"/><circle cx="37" cy="53" r="3.5" fill="#ff9ebb" opacity="0.7"/><circle cx="67" cy="53" r="3.5" fill="#ff9ebb" opacity="0.7"/><circle cx="36" cy="80" r="3" fill="#a0c4ff"/><circle cx="52" cy="83" r="3.5" fill="#ffd166"/><circle cx="68" cy="80" r="3" fill="#ff99c8"/></svg>`
+            },
+            {
+                id: 'flower',
+                name: 'Bunga Tersenyum',
+                category: 'alam',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="50" cy="22" r="14" fill="#ffccd5" stroke="#f48fb1" stroke-width="2.5"/><circle cx="74" cy="36" r="14" fill="#ffccd5" stroke="#f48fb1" stroke-width="2.5"/><circle cx="74" cy="64" r="14" fill="#ffccd5" stroke="#f48fb1" stroke-width="2.5"/><circle cx="50" cy="78" r="14" fill="#ffccd5" stroke="#f48fb1" stroke-width="2.5"/><circle cx="26" cy="64" r="14" fill="#ffccd5" stroke="#f48fb1" stroke-width="2.5"/><circle cx="26" cy="36" r="14" fill="#ffccd5" stroke="#f48fb1" stroke-width="2.5"/><circle cx="50" cy="50" r="18" fill="#ffea79" stroke="#e0a800" stroke-width="3"/><circle cx="44" cy="47" r="3" fill="#4d3800"/><circle cx="56" cy="47" r="3" fill="#4d3800"/><path d="M47 54 Q50 58 53 54" fill="none" stroke="#4d3800" stroke-width="2" stroke-linecap="round"/><circle cx="38" cy="53" r="2.5" fill="#ff85a2" opacity="0.7"/><circle cx="62" cy="53" r="2.5" fill="#ff85a2" opacity="0.7"/></svg>`
+            },
+            {
+                id: 'sun',
+                name: 'Matahari Pagi',
+                category: 'alam',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><g stroke="#f59e0b" stroke-width="4" stroke-linecap="round"><line x1="50" y1="12" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="88"/><line x1="12" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="88" y2="50"/><line x1="23" y1="23" x2="29" y2="29"/><line x1="71" y1="71" x2="77" y2="77"/><line x1="77" y1="23" x2="71" y2="29"/><line x1="29" y1="71" x2="23" y2="77"/></g><circle cx="50" cy="50" r="26" fill="#ffd166" stroke="#f59e0b" stroke-width="3"/><circle cx="42" cy="46" r="3.5" fill="#522e04"/><circle cx="43" cy="45" r="1.2" fill="#fff"/><circle cx="58" cy="46" r="3.5" fill="#522e04"/><circle cx="59" cy="45" r="1.2" fill="#fff"/><path d="M46 54 Q50 59 54 54" fill="none" stroke="#522e04" stroke-width="2" stroke-linecap="round"/><circle cx="35" cy="52" r="3.5" fill="#f87171" opacity="0.7"/><circle cx="65" cy="52" r="3.5" fill="#f87171" opacity="0.7"/></svg>`
+            },
+            {
+                id: 'rainbow',
+                name: 'Pelangi Ajaib',
+                category: 'alam',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M16 66 A36 36 0 0 1 84 66" fill="none" stroke="#ff9ebb" stroke-width="7" stroke-linecap="round"/><path d="M23 66 A29 29 0 0 1 77 66" fill="none" stroke="#ffd166" stroke-width="7" stroke-linecap="round"/><path d="M30 66 A22 22 0 0 1 70 66" fill="none" stroke="#06d6a0" stroke-width="7" stroke-linecap="round"/><path d="M37 66 A15 15 0 0 1 63 66" fill="none" stroke="#118ab2" stroke-width="7" stroke-linecap="round"/><circle cx="18" cy="68" r="10" fill="#ffffff" stroke="#c0d6df" stroke-width="2"/><circle cx="28" cy="68" r="8" fill="#ffffff" stroke="#c0d6df" stroke-width="2"/><circle cx="82" cy="68" r="10" fill="#ffffff" stroke="#c0d6df" stroke-width="2"/><circle cx="72" cy="68" r="8" fill="#ffffff" stroke="#c0d6df" stroke-width="2"/></svg>`
+            },
+            {
+                id: 'emoji',
+                name: 'Bintang Ceria',
+                category: 'emoji',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="50" cy="50" r="38" fill="#ffdb58" stroke="#e0a800" stroke-width="3"/><path d="M36 36 L38 41 L43 41 L39 44 L40 49 L36 46 L32 49 L33 44 L29 41 L34 41 Z" fill="#4a2c00"/><path d="M64 36 L66 41 L71 41 L67 44 L68 49 L64 46 L60 49 L61 44 L57 41 L62 41 Z" fill="#4a2c00"/><path d="M36 57 Q50 74 64 57 Z" fill="#c92a2a" stroke="#871a1a" stroke-width="2"/><path d="M43 65 Q50 72 57 65 Z" fill="#ff8787"/><circle cx="26" cy="54" r="5" fill="#ff6b6b" opacity="0.6"/><circle cx="74" cy="54" r="5" fill="#ff6b6b" opacity="0.6"/></svg>`
+            },
+            {
+                id: 'study',
+                name: 'Buku & Pensil Pintar',
+                category: 'edukasi',
+                svg: `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M14 68 Q50 62 50 36 Q50 62 86 68 L86 44 Q50 38 50 18 Q50 38 14 44 Z" fill="#b8c0ff" stroke="#7371fc" stroke-width="3" stroke-linejoin="round"/><path d="M50 18 L50 70" stroke="#7371fc" stroke-width="3"/><rect x="58" y="24" width="8" height="34" rx="3" transform="rotate(25 62 41)" fill="#ffd166" stroke="#f59e0b" stroke-width="2"/><polygon points="68,52 64,62 74,56" fill="#f87171"/><polygon points="65,60 64,62 67,61" fill="#2d3748"/><circle cx="34" cy="42" r="3" fill="#2b2d42"/><circle cx="44" cy="42" r="3" fill="#2b2d42"/><path d="M37 47 Q39 50 41 47" fill="none" stroke="#2b2d42" stroke-width="1.8" stroke-linecap="round"/><circle cx="28" cy="46" r="2.5" fill="#ff70a6" opacity="0.6"/></svg>`
+            }
+        ];
+
+        // STATE WHITEBOARD ENGINE
         const wbState = {
+            activeTool: 'pen', // 'pen', 'highlighter', 'shape', 'sticker', 'text', 'eraser'
+            penColor: '#2d1a4a',
+            penSize: 4,
+            highlighterColor: '#fff566',
+            highlighterSize: 20,
+            eraserSize: 28,
+            shapeType: 'line',
+            shapeFilled: false,
+            shapeStrokeSize: 4,
+            textColor: '#2d1a4a',
+            textSize: 24,
+
+            currentPage: 0,
+            pages: [
+                { canvasData: null, objects: [], undoStack: [], redoStack: [] },
+                { canvasData: null, objects: [], undoStack: [], redoStack: [] },
+                { canvasData: null, objects: [], undoStack: [], redoStack: [] }
+            ],
+
             isDrawing: false,
             isZooming: false,
-            mode: 'pen',
-            color: '#2d1a4a',
-            size: 3,
-            currentPage: 0,
-            pages: [null, null, null],
             startX: 0,
             startY: 0,
-            snapshot: null,
-            // TRANSFORM ZOOM & PAN
+            strokePoints: [],
+            preStrokeSnapshot: null,
+
+            // Transform Zoom & Pan
             scale: 1,
             offsetX: 0,
             offsetY: 0,
             startDist: 0,
             startScale: 1,
+            panStartX: 0,
+            panStartY: 0,
             startPanX: 0,
             startPanY: 0,
-            panStartX: 0,
-            panStartY: 0
+
+            selectedObjectId: null,
+            draggedObject: null,
+            resizingObject: null
         };
 
         function initWhiteboard() {
@@ -1489,58 +2520,44 @@
             const openBtn = document.getElementById('open-whiteboard-btn');
             const closeBtn = document.getElementById('wb-close-btn');
             const clearBtn = document.getElementById('wb-clear-btn');
+            const eraserClearBtn = document.getElementById('wb-eraser-clear-btn');
+            const undoBtn = document.getElementById('wb-undo-btn');
+            const redoBtn = document.getElementById('wb-redo-btn');
+
             const canvas = document.getElementById('wb-canvas');
             const ctx = canvas.getContext('2d');
             const body = document.getElementById('wb-body');
+            const stage = document.getElementById('wb-stage');
+            const objectsContainer = document.getElementById('wb-objects-container');
+            const eraserCursor = document.getElementById('wb-eraser-cursor');
+
+            const confirmModal = document.getElementById('wb-confirm-modal');
+            const cancelClearBtn = document.getElementById('wb-cancel-clear');
+            const doClearBtn = document.getElementById('wb-do-clear');
 
             const zoomInBtn = document.getElementById('wb-zoom-in-btn');
             const zoomOutBtn = document.getElementById('wb-zoom-out-btn');
             const zoomResetBtn = document.getElementById('wb-zoom-reset-btn');
             const zoomBadge = document.getElementById('wb-zoom-badge');
 
-            function fillBackgroundAndDots() {
-                ctx.save();
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // --- 1. Populate Stickers Drawer ---
+            const stickersList = document.getElementById('wb-stickers-list');
+            stickersList.innerHTML = '';
+            CUTE_STICKERS.forEach(stk => {
+                const div = document.createElement('div');
+                div.className = 'wb-sticker-thumb';
+                div.title = stk.name;
+                div.innerHTML = stk.svg;
+                div.addEventListener('click', () => {
+                    addStickerToBoard(stk.id);
+                });
+                stickersList.appendChild(div);
+            });
 
-                ctx.fillStyle = '#d0c4e8';
-                const dotSpacing = 24;
-                const dotRadius = 1.5;
-
-                for (let x = dotSpacing / 2; x < canvas.width; x += dotSpacing) {
-                    for (let y = dotSpacing / 2; y < canvas.height; y += dotSpacing) {
-                        ctx.beginPath();
-                        ctx.arc(x, y, dotRadius, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                }
-                ctx.restore();
-            }
-
-            function saveCurrentPage() {
-                if (canvas.width > 0 && canvas.height > 0) {
-                    wbState.pages[wbState.currentPage] = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                }
-            }
-
-            function loadCurrentPage() {
-                fillBackgroundAndDots();
-                if (wbState.pages[wbState.currentPage]) {
-                    ctx.putImageData(wbState.pages[wbState.currentPage], 0, 0);
-                }
-            }
-
-            function resizeCanvas() {
-                saveCurrentPage();
-                // Ukuran canvas diset 2 kali lebar dan 2 kali tinggi area tampilan
-                canvas.width = body.clientWidth * 2;
-                canvas.height = body.clientHeight * 2;
-                loadCurrentPage();
-            }
-
+            // --- 2. Transform Zoom & Pan Sync ---
             function applyTransform() {
-                canvas.style.transform = `translate(${wbState.offsetX}px, ${wbState.offsetY}px) scale(${wbState.scale})`;
-                canvas.style.transformOrigin = '0 0';
+                stage.style.transform = `translate(${wbState.offsetX}px, ${wbState.offsetY}px) scale(${wbState.scale})`;
+                stage.style.transformOrigin = '0 0';
                 if (zoomBadge) {
                     zoomBadge.textContent = `${Math.round(wbState.scale * 100)}%`;
                 }
@@ -1548,40 +2565,785 @@
 
             function setZoom(newScale, centerScreenX, centerScreenY) {
                 const rect = body.getBoundingClientRect();
-                
                 if (centerScreenX === undefined) centerScreenX = rect.left + rect.width / 2;
                 if (centerScreenY === undefined) centerScreenY = rect.top + rect.height / 2;
 
                 const clampedScale = Math.min(Math.max(0.5, newScale), 4.0);
-                
-                // Titik koordinat canvas sebelum zoom
                 const canvasX = (centerScreenX - rect.left - wbState.offsetX) / wbState.scale;
                 const canvasY = (centerScreenY - rect.top - wbState.offsetY) / wbState.scale;
 
                 wbState.scale = clampedScale;
-
-                // Sesuaikan offset agar titik fokus zoom tetap di posisi semula
                 wbState.offsetX = centerScreenX - rect.left - canvasX * wbState.scale;
                 wbState.offsetY = centerScreenY - rect.top - canvasY * wbState.scale;
 
                 applyTransform();
             }
 
-            if (zoomInBtn) {
-                zoomInBtn.addEventListener('click', () => setZoom(wbState.scale * 1.25));
+            if (zoomInBtn) zoomInBtn.addEventListener('click', () => setZoom(wbState.scale * 1.25));
+            if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => setZoom(wbState.scale / 1.25));
+            if (zoomResetBtn) zoomResetBtn.addEventListener('click', () => {
+                wbState.scale = 1;
+                wbState.offsetX = 0;
+                wbState.offsetY = 0;
+                applyTransform();
+            });
+
+            // --- 3. Canvas Resizing & Memory Management ---
+            function resizeCanvas() {
+                saveCurrentPageState();
+                const curW = body.clientWidth * 2;
+                const curH = body.clientHeight * 2;
+                if (curW > 0 && curH > 0) {
+                    canvas.width = curW;
+                    canvas.height = curH;
+                    stage.style.width = curW + 'px';
+                    stage.style.height = curH + 'px';
+                }
+                loadCurrentPageState();
             }
-            if (zoomOutBtn) {
-                zoomOutBtn.addEventListener('click', () => setZoom(wbState.scale / 1.25));
+
+            function saveCurrentPageState() {
+                const page = wbState.pages[wbState.currentPage];
+                if (canvas.width > 0 && canvas.height > 0) {
+                    page.canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                }
             }
-            if (zoomResetBtn) {
-                zoomResetBtn.addEventListener('click', () => {
-                    wbState.scale = 1;
-                    wbState.offsetX = 0;
-                    wbState.offsetY = 0;
-                    applyTransform();
+
+            function loadCurrentPageState() {
+                const page = wbState.pages[wbState.currentPage];
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (page.canvasData) {
+                    ctx.putImageData(page.canvasData, 0, 0);
+                }
+                renderObjectsLayer();
+                updateUndoRedoUI();
+            }
+
+            // --- 4. Undo & Redo History System ---
+            function pushUndoState() {
+                const page = wbState.pages[wbState.currentPage];
+                const snapshot = {
+                    canvasData: ctx.getImageData(0, 0, canvas.width, canvas.height),
+                    objects: JSON.parse(JSON.stringify(page.objects))
+                };
+                page.undoStack.push(snapshot);
+                if (page.undoStack.length > 20) {
+                    page.undoStack.shift();
+                }
+                page.redoStack = [];
+                updateUndoRedoUI();
+            }
+
+            function undo() {
+                const page = wbState.pages[wbState.currentPage];
+                if (page.undoStack.length === 0) return;
+
+                const currentState = {
+                    canvasData: ctx.getImageData(0, 0, canvas.width, canvas.height),
+                    objects: JSON.parse(JSON.stringify(page.objects))
+                };
+                page.redoStack.push(currentState);
+
+                const prevState = page.undoStack.pop();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (prevState.canvasData) {
+                    ctx.putImageData(prevState.canvasData, 0, 0);
+                }
+                page.objects = JSON.parse(JSON.stringify(prevState.objects));
+                renderObjectsLayer();
+                updateUndoRedoUI();
+            }
+
+            function redo() {
+                const page = wbState.pages[wbState.currentPage];
+                if (page.redoStack.length === 0) return;
+
+                const currentState = {
+                    canvasData: ctx.getImageData(0, 0, canvas.width, canvas.height),
+                    objects: JSON.parse(JSON.stringify(page.objects))
+                };
+                page.undoStack.push(currentState);
+
+                const nextState = page.redoStack.pop();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (nextState.canvasData) {
+                    ctx.putImageData(nextState.canvasData, 0, 0);
+                }
+                page.objects = JSON.parse(JSON.stringify(nextState.objects));
+                renderObjectsLayer();
+                updateUndoRedoUI();
+            }
+
+            function updateUndoRedoUI() {
+                const page = wbState.pages[wbState.currentPage];
+                if (undoBtn) undoBtn.disabled = page.undoStack.length === 0;
+                if (redoBtn) redoBtn.disabled = page.redoStack.length === 0;
+            }
+
+            if (undoBtn) undoBtn.addEventListener('click', undo);
+            if (redoBtn) redoBtn.addEventListener('click', redo);
+
+            // --- 5. Tool Switching & Sub-panels ---
+            document.querySelectorAll('.wb-tool-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tool = btn.getAttribute('data-tool');
+                    wbState.activeTool = tool;
+
+                    document.querySelectorAll('.wb-tool-item').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Show matching sub panel
+                    document.querySelectorAll('.wb-sub-panel').forEach(p => p.classList.remove('active'));
+                    const targetSub = document.getElementById(`sub-panel-${tool}`);
+                    if (targetSub) targetSub.classList.add('active');
+
+                    // Deselect object if switching to drawing
+                    if (['pen', 'highlighter', 'shape', 'eraser'].includes(tool)) {
+                        deselectObjects();
+                    }
+                });
+            });
+
+            // Sub-panel: Pen Size & Color
+            document.querySelectorAll('.pen-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.pen-size').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    wbState.penSize = parseInt(btn.getAttribute('data-size'), 10);
+                });
+            });
+
+            document.querySelectorAll('.modal-color').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    document.querySelectorAll('.modal-color').forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    wbState.penColor = dot.getAttribute('data-color');
+                });
+            });
+
+            const penPicker = document.getElementById('pen-color-picker');
+            if (penPicker) {
+                penPicker.addEventListener('input', (e) => {
+                    wbState.penColor = e.target.value;
+                    document.querySelectorAll('.modal-color').forEach(d => d.classList.remove('active'));
                 });
             }
 
+            // Sub-panel: Highlighter Size & Color
+            document.querySelectorAll('.highlighter-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.highlighter-size').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    wbState.highlighterSize = parseInt(btn.getAttribute('data-size'), 10);
+                });
+            });
+
+            document.querySelectorAll('.highlighter-color').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    document.querySelectorAll('.highlighter-color').forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    wbState.highlighterColor = dot.getAttribute('data-color');
+                });
+            });
+
+            // Sub-panel: Shapes
+            document.querySelectorAll('.shape-type-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.shape-type-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    wbState.shapeType = btn.getAttribute('data-shape');
+                });
+            });
+
+            const modeOutlineBtn = document.getElementById('shape-mode-outline');
+            const modeFilledBtn = document.getElementById('shape-mode-filled');
+            if (modeOutlineBtn && modeFilledBtn) {
+                modeOutlineBtn.addEventListener('click', () => {
+                    modeOutlineBtn.classList.add('active');
+                    modeFilledBtn.classList.remove('active');
+                    wbState.shapeFilled = false;
+                });
+                modeFilledBtn.addEventListener('click', () => {
+                    modeFilledBtn.classList.add('active');
+                    modeOutlineBtn.classList.remove('active');
+                    wbState.shapeFilled = true;
+                });
+            }
+
+            document.querySelectorAll('.shape-stroke-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.shape-stroke-size').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    wbState.shapeStrokeSize = parseInt(btn.getAttribute('data-size'), 10);
+                });
+            });
+
+            // Sub-panel: Text Controls
+            document.querySelectorAll('.text-size-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.text-size-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    wbState.textSize = parseInt(btn.getAttribute('data-size'), 10);
+                    // Update active text element if selected
+                    if (wbState.selectedObjectId) {
+                        const page = wbState.pages[wbState.currentPage];
+                        const obj = page.objects.find(o => o.id === wbState.selectedObjectId);
+                        if (obj && obj.type === 'text') {
+                            pushUndoState();
+                            obj.fontSize = wbState.textSize;
+                            renderObjectsLayer();
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.text-color').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    document.querySelectorAll('.text-color').forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    wbState.textColor = dot.getAttribute('data-color');
+                    if (wbState.selectedObjectId) {
+                        const page = wbState.pages[wbState.currentPage];
+                        const obj = page.objects.find(o => o.id === wbState.selectedObjectId);
+                        if (obj && obj.type === 'text') {
+                            pushUndoState();
+                            obj.color = wbState.textColor;
+                            renderObjectsLayer();
+                        }
+                    }
+                });
+            });
+
+            const addTextBtn = document.getElementById('wb-add-text-btn');
+            if (addTextBtn) {
+                addTextBtn.addEventListener('click', () => {
+                    addTextToBoard();
+                });
+            }
+
+            // Sub-panel: Eraser Size
+            document.querySelectorAll('.eraser-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.eraser-size').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    wbState.eraserSize = parseInt(btn.getAttribute('data-size'), 10);
+                });
+            });
+
+            // --- 6. Pages Switching ---
+            document.querySelectorAll('.wb-page-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const newPage = parseInt(btn.getAttribute('data-page'), 10);
+                    if (newPage === wbState.currentPage) return;
+
+                    saveCurrentPageState();
+                    document.querySelectorAll('.wb-page-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    wbState.currentPage = newPage;
+                    deselectObjects();
+                    loadCurrentPageState();
+                });
+            });
+
+            // --- 7. Clear All with Friendly Confirmation Modal ---
+            function openClearModal() {
+                confirmModal.classList.add('show');
+            }
+            function closeClearModal() {
+                confirmModal.classList.remove('show');
+            }
+
+            if (clearBtn) clearBtn.addEventListener('click', openClearModal);
+            if (eraserClearBtn) eraserClearBtn.addEventListener('click', openClearModal);
+            if (cancelClearBtn) cancelClearBtn.addEventListener('click', closeClearModal);
+            if (doClearBtn) {
+                doClearBtn.addEventListener('click', () => {
+                    pushUndoState();
+                    const page = wbState.pages[wbState.currentPage];
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    page.canvasData = null;
+                    page.objects = [];
+                    renderObjectsLayer();
+                    closeClearModal();
+                });
+            }
+
+            // --- 8. Object Layer: Stickers & Text ---
+            function addStickerToBoard(stickerId) {
+                pushUndoState();
+                const page = wbState.pages[wbState.currentPage];
+                const viewCenterX = (body.clientWidth / 2 - wbState.offsetX) / wbState.scale;
+                const viewCenterY = (body.clientHeight / 2 - wbState.offsetY) / wbState.scale;
+
+                const newObj = {
+                    id: 'stk_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                    type: 'sticker',
+                    stickerId: stickerId,
+                    x: Math.max(20, viewCenterX - 55),
+                    y: Math.max(20, viewCenterY - 55),
+                    width: 110,
+                    height: 110
+                };
+
+                page.objects.push(newObj);
+                wbState.selectedObjectId = newObj.id;
+                renderObjectsLayer();
+            }
+
+            function addTextToBoard() {
+                pushUndoState();
+                const page = wbState.pages[wbState.currentPage];
+                const viewCenterX = (body.clientWidth / 2 - wbState.offsetX) / wbState.scale;
+                const viewCenterY = (body.clientHeight / 2 - wbState.offsetY) / wbState.scale;
+
+                const newObj = {
+                    id: 'txt_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                    type: 'text',
+                    text: 'Catatan Ayya ✨',
+                    color: wbState.textColor,
+                    fontSize: wbState.textSize,
+                    x: Math.max(20, viewCenterX - 90),
+                    y: Math.max(20, viewCenterY - 30),
+                    width: 180,
+                    height: 50
+                };
+
+                page.objects.push(newObj);
+                wbState.selectedObjectId = newObj.id;
+                renderObjectsLayer();
+            }
+
+            function deselectObjects() {
+                wbState.selectedObjectId = null;
+                document.querySelectorAll('.wb-obj-item').forEach(el => el.classList.remove('selected'));
+            }
+
+            function renderObjectsLayer() {
+                objectsContainer.innerHTML = '';
+                const page = wbState.pages[wbState.currentPage];
+
+                page.objects.forEach(obj => {
+                    const el = document.createElement('div');
+                    el.className = `wb-obj-item ${obj.id === wbState.selectedObjectId ? 'selected' : ''}`;
+                    el.style.left = obj.x + 'px';
+                    el.style.top = obj.y + 'px';
+                    el.style.width = obj.width + 'px';
+                    el.style.height = obj.height + 'px';
+                    el.setAttribute('data-id', obj.id);
+
+                    if (obj.type === 'sticker') {
+                        const stkDef = CUTE_STICKERS.find(s => s.id === obj.stickerId) || CUTE_STICKERS[0];
+                        el.innerHTML = `
+                            <div class="wb-obj-content">${stkDef.svg}</div>
+                            <button class="wb-obj-del-btn" title="Hapus Stiker">✕</button>
+                            <div class="wb-obj-resize-handle" title="Tarik untuk Mengubah Ukuran">↘</div>
+                        `;
+                    } else if (obj.type === 'text') {
+                        el.innerHTML = `
+                            <div class="wb-text-element" contenteditable="true" style="color: ${obj.color}; font-size: ${obj.fontSize}px;">${obj.text}</div>
+                            <button class="wb-obj-del-btn" title="Hapus Teks">✕</button>
+                            <div class="wb-obj-resize-handle" title="Tarik untuk Mengubah Ukuran">↘</div>
+                        `;
+
+                        const textEl = el.querySelector('.wb-text-element');
+                        textEl.addEventListener('input', () => {
+                            obj.text = textEl.innerText;
+                        });
+                        textEl.addEventListener('focus', () => {
+                            wbState.selectedObjectId = obj.id;
+                            document.querySelectorAll('.wb-obj-item').forEach(i => i.classList.remove('selected'));
+                            el.classList.add('selected');
+                        });
+                    }
+
+                    // Delete button handler
+                    const delBtn = el.querySelector('.wb-obj-del-btn');
+                    if (delBtn) {
+                        delBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            pushUndoState();
+                            page.objects = page.objects.filter(o => o.id !== obj.id);
+                            wbState.selectedObjectId = null;
+                            renderObjectsLayer();
+                        });
+                    }
+
+                    // Selection handler
+                    el.addEventListener('pointerdown', (e) => {
+                        if (e.target.classList.contains('wb-obj-resize-handle') || e.target.classList.contains('wb-obj-del-btn')) {
+                            return;
+                        }
+                        wbState.selectedObjectId = obj.id;
+                        document.querySelectorAll('.wb-obj-item').forEach(i => i.classList.remove('selected'));
+                        el.classList.add('selected');
+
+                        // Start dragging
+                        wbState.draggedObject = {
+                            obj: obj,
+                            el: el,
+                            startPointerX: e.clientX,
+                            startPointerY: e.clientY,
+                            origX: obj.x,
+                            origY: obj.y
+                        };
+                        pushUndoState();
+                        e.stopPropagation();
+                    });
+
+                    // Resize handle handler
+                    const resizeHandle = el.querySelector('.wb-obj-resize-handle');
+                    if (resizeHandle) {
+                        resizeHandle.addEventListener('pointerdown', (e) => {
+                            e.stopPropagation();
+                            pushUndoState();
+                            wbState.resizingObject = {
+                                obj: obj,
+                                el: el,
+                                startPointerX: e.clientX,
+                                startPointerY: e.clientY,
+                                origW: obj.width,
+                                origH: obj.height
+                            };
+                        });
+                    }
+
+                    objectsContainer.appendChild(el);
+                });
+            }
+
+            // Window pointer move & up for dragged / resized objects
+            window.addEventListener('pointermove', (e) => {
+                if (wbState.draggedObject) {
+                    const dx = (e.clientX - wbState.draggedObject.startPointerX) / wbState.scale;
+                    const dy = (e.clientY - wbState.draggedObject.startPointerY) / wbState.scale;
+                    const obj = wbState.draggedObject.obj;
+                    obj.x = Math.max(0, wbState.draggedObject.origX + dx);
+                    obj.y = Math.max(0, wbState.draggedObject.origY + dy);
+                    wbState.draggedObject.el.style.left = obj.x + 'px';
+                    wbState.draggedObject.el.style.top = obj.y + 'px';
+                } else if (wbState.resizingObject) {
+                    const dx = (e.clientX - wbState.resizingObject.startPointerX) / wbState.scale;
+                    const dy = (e.clientY - wbState.resizingObject.startPointerY) / wbState.scale;
+                    const obj = wbState.resizingObject.obj;
+                    const delta = Math.max(dx, dy);
+                    const newW = Math.max(40, Math.min(500, wbState.resizingObject.origW + delta));
+                    const newH = Math.max(40, Math.min(500, wbState.resizingObject.origH + delta));
+                    obj.width = newW;
+                    obj.height = newH;
+                    wbState.resizingObject.el.style.width = newW + 'px';
+                    wbState.resizingObject.el.style.height = newH + 'px';
+                }
+            });
+
+            window.addEventListener('pointerup', () => {
+                wbState.draggedObject = null;
+                wbState.resizingObject = null;
+            });
+
+            // --- 9. Canvas Freehand Smooth Drawing & Geometric Shapes ---
+            function getCanvasPos(clientX, clientY) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: (clientX - rect.left) / wbState.scale,
+                    y: (clientY - rect.top) / wbState.scale
+                };
+            }
+
+            function drawSmoothStroke(targetCtx, points, color, size, isHighlighter, isEraser) {
+                if (points.length === 0) return;
+
+                targetCtx.save();
+                targetCtx.lineWidth = size;
+                targetCtx.lineCap = 'round';
+                targetCtx.lineJoin = 'round';
+
+                if (isEraser) {
+                    targetCtx.globalCompositeOperation = 'destination-out';
+                } else if (isHighlighter) {
+                    targetCtx.globalCompositeOperation = 'multiply';
+                    targetCtx.globalAlpha = 0.45;
+                    targetCtx.strokeStyle = color;
+                } else {
+                    targetCtx.globalCompositeOperation = 'source-over';
+                    targetCtx.globalAlpha = 1.0;
+                    targetCtx.strokeStyle = color;
+                }
+
+                if (points.length === 1) {
+                    targetCtx.beginPath();
+                    targetCtx.arc(points[0].x, points[0].y, size / 2, 0, Math.PI * 2);
+                    targetCtx.fillStyle = color;
+                    if (isEraser) targetCtx.fill();
+                    else targetCtx.fill();
+                    targetCtx.restore();
+                    return;
+                }
+
+                targetCtx.beginPath();
+                targetCtx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < points.length - 1; i++) {
+                    const xc = (points[i].x + points[i + 1].x) / 2;
+                    const yc = (points[i].y + points[i + 1].y) / 2;
+                    targetCtx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+                }
+                targetCtx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+                targetCtx.stroke();
+                targetCtx.restore();
+            }
+
+            function drawShape(targetCtx, type, x1, y1, x2, y2, color, strokeWidth, isFilled) {
+                targetCtx.save();
+                targetCtx.lineWidth = strokeWidth;
+                targetCtx.strokeStyle = color;
+                targetCtx.fillStyle = color;
+                targetCtx.lineCap = 'round';
+                targetCtx.lineJoin = 'round';
+
+                if (isFilled) {
+                    // Soft translucent filled color
+                    targetCtx.globalAlpha = 0.45;
+                }
+
+                if (type === 'line') {
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(x1, y1);
+                    targetCtx.lineTo(x2, y2);
+                    targetCtx.stroke();
+                } else if (type === 'arrow') {
+                    const dx = x2 - x1;
+                    const dy = y2 - y1;
+                    const angle = Math.atan2(dy, dx);
+                    const headLen = Math.max(14, strokeWidth * 3.5);
+
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(x1, y1);
+                    targetCtx.lineTo(x2, y2);
+                    targetCtx.stroke();
+
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(x2, y2);
+                    targetCtx.lineTo(x2 - headLen * Math.cos(angle - Math.PI / 6), y2 - headLen * Math.sin(angle - Math.PI / 6));
+                    targetCtx.lineTo(x2 - headLen * Math.cos(angle + Math.PI / 6), y2 - headLen * Math.sin(angle + Math.PI / 6));
+                    targetCtx.closePath();
+                    targetCtx.fill();
+                } else if (type === 'rect') {
+                    const w = x2 - x1;
+                    const h = y2 - y1;
+                    if (isFilled) targetCtx.fillRect(x1, y1, w, h);
+                    targetCtx.strokeRect(x1, y1, w, h);
+                } else if (type === 'square') {
+                    const side = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1));
+                    const w = x2 >= x1 ? side : -side;
+                    const h = y2 >= y1 ? side : -side;
+                    if (isFilled) targetCtx.fillRect(x1, y1, w, h);
+                    targetCtx.strokeRect(x1, y1, w, h);
+                } else if (type === 'circle') {
+                    const radius = Math.hypot(x2 - x1, y2 - y1);
+                    targetCtx.beginPath();
+                    targetCtx.arc(x1, y1, radius, 0, Math.PI * 2);
+                    if (isFilled) targetCtx.fill();
+                    targetCtx.stroke();
+                } else if (type === 'oval') {
+                    const rx = Math.abs(x2 - x1) / 2;
+                    const ry = Math.abs(y2 - y1) / 2;
+                    const cx = (x1 + x2) / 2;
+                    const cy = (y1 + y2) / 2;
+                    targetCtx.beginPath();
+                    targetCtx.ellipse(cx, cy, Math.max(1, rx), Math.max(1, ry), 0, 0, Math.PI * 2);
+                    if (isFilled) targetCtx.fill();
+                    targetCtx.stroke();
+                } else if (type === 'triangle') {
+                    targetCtx.beginPath();
+                    targetCtx.moveTo((x1 + x2) / 2, y1);
+                    targetCtx.lineTo(x2, y2);
+                    targetCtx.lineTo(x1, y2);
+                    targetCtx.closePath();
+                    if (isFilled) targetCtx.fill();
+                    targetCtx.stroke();
+                } else if (type === 'star') {
+                    const radius = Math.hypot(x2 - x1, y2 - y1);
+                    const innerRadius = radius * 0.45;
+                    const spikes = 5;
+                    let rot = Math.PI / 2 * 3;
+                    let x = x1;
+                    let y = y1;
+                    const step = Math.PI / spikes;
+
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(x1, y1 - radius);
+                    for (let i = 0; i < spikes; i++) {
+                        x = x1 + Math.cos(rot) * radius;
+                        y = y1 + Math.sin(rot) * radius;
+                        targetCtx.lineTo(x, y);
+                        rot += step;
+
+                        x = x1 + Math.cos(rot) * innerRadius;
+                        y = y1 + Math.sin(rot) * innerRadius;
+                        targetCtx.lineTo(x, y);
+                        rot += step;
+                    }
+                    targetCtx.lineTo(x1, y1 - radius);
+                    targetCtx.closePath();
+                    if (isFilled) targetCtx.fill();
+                    targetCtx.stroke();
+                }
+
+                targetCtx.restore();
+            }
+
+            // Pointer Drawing Events
+            const activeTouchPointers = new Map();
+
+            canvas.addEventListener('pointerdown', (e) => {
+                activeTouchPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+                if (activeTouchPointers.size === 2) {
+                    // Two fingers = Pinch Zoom & Pan
+                    wbState.isDrawing = false;
+                    wbState.isZooming = true;
+                    const pts = Array.from(activeTouchPointers.values());
+                    wbState.startDist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+                    wbState.startScale = wbState.scale;
+                    wbState.panStartX = (pts[0].x + pts[1].x) / 2;
+                    wbState.panStartY = (pts[0].y + pts[1].y) / 2;
+                    wbState.startPanX = wbState.offsetX;
+                    wbState.startPanY = wbState.offsetY;
+                    return;
+                }
+
+                if (activeTouchPointers.size === 1 && !wbState.isZooming) {
+                    deselectObjects();
+                    wbState.isDrawing = true;
+                    const pos = getCanvasPos(e.clientX, e.clientY);
+                    wbState.startX = pos.x;
+                    wbState.startY = pos.y;
+                    wbState.strokePoints = [pos];
+
+                    wbState.preStrokeSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    if (wbState.activeTool === 'pen') {
+                        drawSmoothStroke(ctx, wbState.strokePoints, wbState.penColor, wbState.penSize, false, false);
+                    } else if (wbState.activeTool === 'highlighter') {
+                        drawSmoothStroke(ctx, wbState.strokePoints, wbState.highlighterColor, wbState.highlighterSize, true, false);
+                    } else if (wbState.activeTool === 'eraser') {
+                        drawSmoothStroke(ctx, wbState.strokePoints, '#ffffff', wbState.eraserSize, false, true);
+                    }
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('pointermove', (e) => {
+                if (activeTouchPointers.has(e.pointerId)) {
+                    activeTouchPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+                }
+
+                // Two Finger Zoom / Pan
+                if (wbState.isZooming && activeTouchPointers.size === 2) {
+                    e.preventDefault();
+                    const pts = Array.from(activeTouchPointers.values());
+                    const dist = Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y);
+                    const scaleFactor = dist / wbState.startDist;
+                    const newScale = Math.min(Math.max(0.5, wbState.startScale * scaleFactor), 4.0);
+
+                    const curPanX = (pts[0].x + pts[1].x) / 2;
+                    const curPanY = (pts[0].y + pts[1].y) / 2;
+                    const rect = body.getBoundingClientRect();
+
+                    const canvasX = (wbState.panStartX - rect.left - wbState.startPanX) / wbState.startScale;
+                    const canvasY = (wbState.panStartY - rect.top - wbState.startPanY) / wbState.startScale;
+
+                    wbState.scale = newScale;
+                    wbState.offsetX = curPanX - rect.left - canvasX * newScale;
+                    wbState.offsetY = curPanY - rect.top - canvasY * newScale;
+                    applyTransform();
+                    return;
+                }
+
+                // Eraser visual cursor
+                if (wbState.activeTool === 'eraser') {
+                    const rect = body.getBoundingClientRect();
+                    eraserCursor.style.display = 'block';
+                    eraserCursor.style.width = (wbState.eraserSize * wbState.scale) + 'px';
+                    eraserCursor.style.height = (wbState.eraserSize * wbState.scale) + 'px';
+                    eraserCursor.style.left = (e.clientX - rect.left) + 'px';
+                    eraserCursor.style.top = (e.clientY - rect.top) + 'px';
+                } else {
+                    eraserCursor.style.display = 'none';
+                }
+
+                if (!wbState.isDrawing) return;
+                e.preventDefault();
+
+                const pos = getCanvasPos(e.clientX, e.clientY);
+
+                if (wbState.activeTool === 'shape') {
+                    if (wbState.preStrokeSnapshot) {
+                        ctx.putImageData(wbState.preStrokeSnapshot, 0, 0);
+                    }
+                    drawShape(ctx, wbState.shapeType, wbState.startX, wbState.startY, pos.x, pos.y, wbState.penColor, wbState.shapeStrokeSize, wbState.shapeFilled);
+                } else {
+                    wbState.strokePoints.push(pos);
+                    if (wbState.preStrokeSnapshot) {
+                        ctx.putImageData(wbState.preStrokeSnapshot, 0, 0);
+                    }
+
+                    if (wbState.activeTool === 'pen') {
+                        drawSmoothStroke(ctx, wbState.strokePoints, wbState.penColor, wbState.penSize, false, false);
+                    } else if (wbState.activeTool === 'highlighter') {
+                        drawSmoothStroke(ctx, wbState.strokePoints, wbState.highlighterColor, wbState.highlighterSize, true, false);
+                    } else if (wbState.activeTool === 'eraser') {
+                        drawSmoothStroke(ctx, wbState.strokePoints, '#ffffff', wbState.eraserSize, false, true);
+                    }
+                }
+            }, { passive: false });
+
+            const finishDrawing = (e) => {
+                activeTouchPointers.delete(e.pointerId);
+
+                if (wbState.isZooming && activeTouchPointers.size < 2) {
+                    wbState.isZooming = false;
+                }
+
+                if (wbState.isDrawing) {
+                    wbState.isDrawing = false;
+                    // Commit to undo stack
+                    if (wbState.preStrokeSnapshot) {
+                        const page = wbState.pages[wbState.currentPage];
+                        page.undoStack.push({
+                            canvasData: wbState.preStrokeSnapshot,
+                            objects: JSON.parse(JSON.stringify(page.objects))
+                        });
+                        if (page.undoStack.length > 20) page.undoStack.shift();
+                        page.redoStack = [];
+                        updateUndoRedoUI();
+                    }
+                    wbState.preStrokeSnapshot = null;
+                    wbState.strokePoints = [];
+                    saveCurrentPageState();
+                }
+            };
+
+            canvas.addEventListener('pointerup', finishDrawing);
+            canvas.addEventListener('pointercancel', finishDrawing);
+            canvas.addEventListener('pointerleave', () => {
+                eraserCursor.style.display = 'none';
+            });
+
+            // Pan & Zoom with Mouse Wheel
+            body.addEventListener('wheel', (e) => {
+                if (!modal.classList.contains('active')) return;
+                e.preventDefault();
+                if (e.ctrlKey) {
+                    const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
+                    setZoom(wbState.scale * zoomFactor, e.clientX, e.clientY);
+                } else {
+                    wbState.offsetX -= e.deltaX;
+                    wbState.offsetY -= e.deltaY;
+                    applyTransform();
+                }
+            }, { passive: false });
+
+            // --- 10. Open & Close Modal Handlers ---
             openBtn.addEventListener('click', () => {
                 modal.classList.add('active');
                 wbState.scale = 1;
@@ -1592,251 +3354,19 @@
             });
 
             closeBtn.addEventListener('click', () => {
-                saveCurrentPage();
+                saveCurrentPageState();
                 modal.classList.remove('active');
             });
 
-            clearBtn.addEventListener('click', () => {
-                wbState.pages[wbState.currentPage] = null;
-                fillBackgroundAndDots();
-            });
-
-            document.querySelectorAll('.wb-page-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const newPage = parseInt(e.target.getAttribute('data-page'), 10);
-                    if (newPage === wbState.currentPage) return;
-
-                    saveCurrentPage();
-                    document.querySelectorAll('.wb-page-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    
-                    wbState.currentPage = newPage;
-                    loadCurrentPage();
-                });
-            });
-
-            document.querySelectorAll('.wb-mode-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.wb-mode-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    wbState.mode = e.target.getAttribute('data-mode');
-                });
-            });
-
-            document.querySelectorAll('.modal-color').forEach(dot => {
-                dot.addEventListener('click', (e) => {
-                    document.querySelectorAll('.modal-color').forEach(d => d.classList.remove('active'));
-                    e.target.classList.add('active');
-                    wbState.color = e.target.getAttribute('data-color');
-                });
-            });
-
-            document.querySelectorAll('.modal-size').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.modal-size').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    wbState.size = parseInt(e.target.getAttribute('data-size'), 10);
-                });
-            });
-
-            function getCanvasPos(clientX, clientY) {
-                const rect = canvas.getBoundingClientRect();
-                return {
-                    x: (clientX - rect.left) / wbState.scale,
-                    y: (clientY - rect.top) / wbState.scale
-                };
-            }
-
-            function getDistance(t1, t2) {
-                return Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-            }
-
-            // TOUCH EVENTS
-            canvas.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 2) {
-                    wbState.isDrawing = false;
-                    wbState.isZooming = true;
-                    wbState.startDist = getDistance(e.touches[0], e.touches[1]);
-                    wbState.startScale = wbState.scale;
-                    
-                    wbState.panStartX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-                    wbState.panStartY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-                    wbState.startPanX = wbState.offsetX;
-                    wbState.startPanY = wbState.offsetY;
-                } else if (e.touches.length === 1 && !wbState.isZooming) {
-                    wbState.isDrawing = true;
-                    const pos = getCanvasPos(e.touches[0].clientX, e.touches[0].clientY);
-                    wbState.startX = pos.x;
-                    wbState.startY = pos.y;
-
-                    if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
-                        wbState.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    }
-
-                    ctx.beginPath();
-                    ctx.moveTo(pos.x, pos.y);
-                }
-            }, { passive: false });
-
-            canvas.addEventListener('touchmove', (e) => {
-                if (wbState.isZooming && e.touches.length === 2) {
-                    e.preventDefault();
-                    const dist = getDistance(e.touches[0], e.touches[1]);
-                    const scaleFactor = dist / wbState.startDist;
-                    let newScale = Math.min(Math.max(0.5, wbState.startScale * scaleFactor), 4.0);
-
-                    const currentPanX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-                    const currentPanY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-
-                    const rect = body.getBoundingClientRect();
-                    
-                    const canvasX = (wbState.panStartX - rect.left - wbState.startPanX) / wbState.startScale;
-                    const canvasY = (wbState.panStartY - rect.top - wbState.startPanY) / wbState.startScale;
-
-                    wbState.scale = newScale;
-                    // Geser offset secara horizontal (kanan-kiri) & vertikal (atas-bawah)
-                    wbState.offsetX = currentPanX - rect.left - canvasX * newScale;
-                    wbState.offsetY = currentPanY - rect.top - canvasY * newScale;
-
-                    applyTransform();
-                    return;
-                }
-
-                if (wbState.isDrawing && e.touches.length === 1) {
-                    e.preventDefault();
-                    const pos = getCanvasPos(e.touches[0].clientX, e.touches[0].clientY);
-
-                    ctx.lineWidth = wbState.size;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-
-                    if (wbState.mode === 'pen') {
-                        ctx.strokeStyle = wbState.color;
-                        ctx.lineTo(pos.x, pos.y);
-                        ctx.stroke();
-                    } else if (wbState.mode === 'eraser') {
-                        ctx.strokeStyle = '#ffffff';
-                        ctx.lineTo(pos.x, pos.y);
-                        ctx.stroke();
-                    } else if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
-                        if (wbState.snapshot) {
-                            ctx.putImageData(wbState.snapshot, 0, 0);
-                        }
-                        ctx.strokeStyle = wbState.color;
-                        ctx.beginPath();
-
-                        if (wbState.mode === 'rect') {
-                            const width = pos.x - wbState.startX;
-                            const height = pos.y - wbState.startY;
-                            ctx.strokeRect(wbState.startX, wbState.startY, width, height);
-                        } else if (wbState.mode === 'circle') {
-                            const radius = Math.hypot(pos.x - wbState.startX, pos.y - wbState.startY);
-                            ctx.arc(wbState.startX, wbState.startY, radius, 0, Math.PI * 2);
-                            ctx.stroke();
-                        } else if (wbState.mode === 'triangle') {
-                            ctx.moveTo(wbState.startX, pos.y);
-                            ctx.lineTo(wbState.startX + (pos.x - wbState.startX) / 2, wbState.startY);
-                            ctx.lineTo(pos.x, pos.y);
-                            ctx.closePath();
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }, { passive: false });
-
-            const stopTouch = () => {
-                if (wbState.isDrawing) {
-                    wbState.isDrawing = false;
-                    ctx.beginPath();
-                    saveCurrentPage();
-                }
-                wbState.isZooming = false;
-            };
-
-            canvas.addEventListener('touchend', stopTouch);
-            canvas.addEventListener('touchcancel', stopTouch);
-
-            // MOUSE EVENTS
-            canvas.addEventListener('mousedown', (e) => {
-                wbState.isDrawing = true;
-                const pos = getCanvasPos(e.clientX, e.clientY);
-                wbState.startX = pos.x;
-                wbState.startY = pos.y;
-
-                if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
-                    wbState.snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                }
-
-                ctx.beginPath();
-                ctx.moveTo(pos.x, pos.y);
-            });
-
-            canvas.addEventListener('mousemove', (e) => {
-                if (!wbState.isDrawing) return;
-                const pos = getCanvasPos(e.clientX, e.clientY);
-
-                ctx.lineWidth = wbState.size;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-
-                if (wbState.mode === 'pen') {
-                    ctx.strokeStyle = wbState.color;
-                    ctx.lineTo(pos.x, pos.y);
-                    ctx.stroke();
-                } else if (wbState.mode === 'eraser') {
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineTo(pos.x, pos.y);
-                    ctx.stroke();
-                } else if (['rect', 'circle', 'triangle'].includes(wbState.mode)) {
-                    if (wbState.snapshot) {
-                        ctx.putImageData(wbState.snapshot, 0, 0);
-                    }
-                    ctx.strokeStyle = wbState.color;
-                    ctx.beginPath();
-
-                    if (wbState.mode === 'rect') {
-                        const width = pos.x - wbState.startX;
-                        const height = pos.y - wbState.startY;
-                        ctx.strokeRect(wbState.startX, wbState.startY, width, height);
-                    } else if (wbState.mode === 'circle') {
-                        const radius = Math.hypot(pos.x - wbState.startX, pos.y - wbState.startY);
-                        ctx.arc(wbState.startX, wbState.startY, radius, 0, Math.PI * 2);
-                        ctx.stroke();
-                    } else if (wbState.mode === 'triangle') {
-                        ctx.moveTo(wbState.startX, pos.y);
-                        ctx.lineTo(wbState.startX + (pos.x - wbState.startX) / 2, wbState.startY);
-                        ctx.lineTo(pos.x, pos.y);
-                        ctx.closePath();
-                        ctx.stroke();
-                    }
+            window.addEventListener('resize', () => {
+                if (modal.classList.contains('active')) {
+                    resizeCanvas();
                 }
             });
-
-            canvas.addEventListener('mouseup', stopTouch);
-            canvas.addEventListener('mouseleave', stopTouch);
-
-            // Scroll / Pan & Zoom via Wheel / Touchpad
-            body.addEventListener('wheel', (e) => {
-                if (!modal.classList.contains('active')) return;
-                e.preventDefault();
-
-                if (e.ctrlKey) {
-                    // Zoom dengan Ctrl + wheel
-                    const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
-                    setZoom(wbState.scale * zoomFactor, e.clientX, e.clientY);
-                } else {
-                    // Scroll / Pan horizontal & vertikal dengan wheel / touchpad
-                    wbState.offsetX -= e.deltaX;
-                    wbState.offsetY -= e.deltaY;
-                    applyTransform();
-                }
-            }, { passive: false });
-
-            window.addEventListener('resize', resizeCanvas);
         }
 
         // ============================================================
-        //  VIEW MANAGEMENT & LOCAL STORAGE
+        //  3. VIEW MANAGEMENT & LOCAL STORAGE
         // ============================================================
         function showSection(id) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
@@ -1869,7 +3399,7 @@
         }
 
         // ============================================================
-        //  LOAD MODULES / SHEETS & HIGHSCORES
+        //  4. LOAD MODULES / SHEETS & HIGHSCORES
         // ============================================================
         async function loadSheets() {
             const container = document.getElementById('package-container');
@@ -1878,13 +3408,11 @@
             const connText = document.getElementById('conn-text');
 
             try {
-                // Mengambil daftar soal dan skor tertinggi dari server secara paralel
                 const [response, skorResponse] = await Promise.all([
                     callApiJsonp({ aksi: 'getSheets' }),
                     callApiJsonp({ aksi: 'getSkor' }).catch(() => ({ status: 'error' }))
                 ]);
                 
-                // Menyimpan mapping skor tertinggi
                 let highestScores = {};
                 if (skorResponse && skorResponse.status === 'success') {
                     highestScores = skorResponse.data;
@@ -1920,9 +3448,9 @@
                         const div = document.createElement('div');
                         div.className = `package-item ${isSelected ? 'selected' : ''}`;
                         
-                        // Menarik skor tertinggi dari data backend
+                        // Menampilkan skor tertinggi tanpa mengubah logika
                         const highScore = highestScores[pkg.sheetId] || highestScores[pkg.title];
-                        const scoreDisplay = highScore !== undefined ? `<br><span style="font-size: 12px; color: #43a047; font-weight: 700;">🏆 Skor: ${highScore}</span>` : '';
+                        const scoreDisplay = highScore !== undefined ? `<br><span style="font-size: 12.5px; color: #2e7d32; font-weight: 800;">🏆 Skor: ${highScore}</span>` : '';
 
                         div.innerHTML = `<span class="package-name">${pkg.title}${scoreDisplay}</span>`;
 
@@ -1963,14 +3491,14 @@
         }
 
         // ============================================================
-        //  START QUIZ
+        //  5. START QUIZ
         // ============================================================
         async function startQuiz() {
             if (!state.selectedPackage) return;
 
             const startBtn = document.getElementById('btn-start');
             startBtn.disabled = true;
-            startBtn.innerHTML = '<span>⏳ Memuat Soal...</span>';
+            startBtn.innerHTML = '<span>⏳ Memuat Soal Ayya...</span>';
 
             try {
                 const response = await callApiJsonp({ aksi: 'getSoal', sheet: state.selectedPackage });
@@ -1996,12 +3524,12 @@
                 alert('Gagal terhubung ke server soal. Periksa koneksi internet kamu ya, Ayya.');
             } finally {
                 startBtn.disabled = false;
-                startBtn.innerHTML = '<span>🚀 Mulai Belajar</span>';
+                startBtn.innerHTML = '<span>🚀 Mulai Belajar Sekarang</span>';
             }
         }
 
         // ============================================================
-        //  RENDER QUESTION
+        //  6. RENDER QUESTION
         // ============================================================
         function renderQuestion() {
             clearDirectDrawCanvas();
@@ -2022,7 +3550,7 @@
             const storyText = q.cerita || q.Cerita;
             
             if (storyText && storyText.trim()) {
-                passageTitle.textContent = q.bab_topik || q['Bab / Topik'] || 'Cerita / Bacaan';
+                passageTitle.textContent = q.bab_topik || q['Bab / Topik'] || '📖 Cerita / Bacaan';
                 passageContent.textContent = storyText;
                 passageBox.style.display = 'block';
                 passageBox.scrollTop = 0;
@@ -2120,7 +3648,7 @@
         }
 
         // ============================================================
-        //  PALETTE
+        //  7. PALETTE
         // ============================================================
         function renderPalette() {
             const container = document.getElementById('palette-container');
@@ -2149,7 +3677,7 @@
         }
 
         // ============================================================
-        //  TIMER
+        //  8. TIMER
         // ============================================================
         function startTimer(isRestored = false) {
             clearInterval(state.timerInterval);
@@ -2179,7 +3707,7 @@
         }
 
         // ============================================================
-        //  SUBMISSION & RESULTS
+        //  9. SUBMISSION & RESULTS
         // ============================================================
         async function submitQuiz() {
             const total = state.questions.length;
@@ -2194,7 +3722,7 @@
             stopTimer();
             const submitBtn = document.getElementById('btn-submit');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>⏳ Memproses...</span>';
+            submitBtn.innerHTML = '<span>⏳ Memproses Nilai...</span>';
 
             let correctCount = 0;
             let incorrectCount = 0;
@@ -2255,9 +3783,9 @@
             showSection('view-result');
             localStorage.removeItem('quiz_progress_active_ayya');
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<span>✨ Selesai ✨</span>';
+            submitBtn.innerHTML = '<span>✨ Selesai Kuis ✨</span>';
 
-            // PENGIRIMAN DATA KE GOOGLE SHEETS AYYA
+            // PENGIRIMAN DATA KE GOOGLE SHEETS AYYA (MEMPERTAHANKAN SISTEM ASLI)
             try {
                 const response = await callApiJsonp({
                     aksi: 'submitHasil',
@@ -2274,19 +3802,19 @@
 
                 if (response && response.status === 'success') {
                     syncBox.className = 'sync-status-box success';
-                    syncBox.innerHTML = `<span>✅ Hasil sukses disimpan!</span>`;
+                    syncBox.innerHTML = `<span>✅ Hasil sukses disimpan ke Google Sheets!</span>`;
                 } else {
                     syncBox.className = 'sync-status-box error';
                     syncBox.innerHTML = `<span>⚠️ Hasil kuis disimpan lokal, gagal kirim ke server.</span>`;
                 }
             } catch (err) {
                 syncBox.className = 'sync-status-box error';
-                syncBox.innerHTML = `<span>🌐 Kendala jaringan saat menyimpan hasil.</span>`;
+                syncBox.innerHTML = `<span>🌐 Kendala jaringan saat menyimpan hasil ke Google Sheets.</span>`;
             }
         }
 
         // ============================================================
-        //  INIT EVENT LISTENERS
+        //  10. INIT EVENT LISTENERS
         // ============================================================
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('daily-quote').textContent = `"${MOTIVATION_QUOTES[Math.floor(Math.random() * MOTIVATION_QUOTES.length)]}"`;
